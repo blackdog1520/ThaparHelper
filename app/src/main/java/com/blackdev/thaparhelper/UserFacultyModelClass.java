@@ -1,0 +1,87 @@
+package com.blackdev.thaparhelper;
+
+public class UserFacultyModelClass {
+    public UserFacultyModelClass() {
+    }
+
+    String name;
+    String uid;
+
+    public String getBatch() {
+        return type;
+    }
+
+    public void setBatch(String type) {
+        this.type = type;
+    }
+
+    String type;
+
+    public UserFacultyModelClass(String name, String uid, String type, String department, String email, String mobNumber, String profileImageLink) {
+        this.name = name;
+        this.uid = uid;
+        this.type = type;
+        this.department = department;
+        this.email = email;
+        this.mobNumber = mobNumber;
+        this.profileImageLink = profileImageLink;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    String department;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    String email;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobNumber() {
+        return mobNumber;
+    }
+
+    public void setMobNumber(String mobNumber) {
+        this.mobNumber = mobNumber;
+    }
+
+    String mobNumber;
+
+    public String getProfileImageLink() {
+        return profileImageLink;
+    }
+
+    public void setProfileImageLink(String profileImageLink) {
+        this.profileImageLink = profileImageLink;
+    }
+
+    String profileImageLink;
+
+}
+

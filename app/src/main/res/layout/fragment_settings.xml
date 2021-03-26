@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dashboard.SettingsFragment">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/userProfileImageSettings"
+            android:src="@drawable/ic_baseline_person_24"
+            android:elevation="2dp"
+            android:background="@color/colorButtonBackground"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:textColor="@color/textColorForBlackBack"
+                android:layout_marginHorizontal="@dimen/marginBetweenText"
+                android:id="@+id/userNameSettings"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxx"
+                android:textColor="@color/textColorForBlackBack"
+                android:layout_marginHorizontal="@dimen/marginBetweenText"
+                android:layout_marginTop="5dp"
+                android:id="@+id/userRollNoSettings"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorForBlackBack"
+                android:text="abcd3_beXX@thapar.edu"
+                android:layout_marginHorizontal="@dimen/marginBetweenText"
+                android:layout_marginTop="5dp"
+                android:id="@+id/userEmailIdSettings"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</ScrollView>

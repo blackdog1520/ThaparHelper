@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fdfdfd</color>
+    <color name="colorPrimaryDark">#505050</color>
+    <color name="colorAccent">#bcbdc8</color>
+    <color name="colorBackground">#ecedea</color>
+    <color name="hintColor">#e3e3e1</color>
+    <color name="textColor">#505050</color>
+    <color name="textColorForBlackBack">#FFFFFF</color>
+    <color name="colorButtonBackground">#505050</color>
+    <color name="ShadeDark">#e3e3e1</color>
+    <color name="ShadeMedium">#ecedea</color>
+    <color name="ShadeLight">#fdfdfd</color>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Thapar Helper</string>
+    <string name="Email_Id">Email</string>
+    <string name="type_your_password_here">Password</string>
+    <string name="name">Name</string>
+    <string name="roll_number">Roll number</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

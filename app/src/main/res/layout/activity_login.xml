@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLoginLayout"
+    android:background="@color/colorBackground"
+    tools:context=".LoginActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailLayoutLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:padding="@dimen/paddingInputText"
+            android:textColorHint="@color/hintColor"
+            android:hint="@string/Email_Id"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/emailLogin"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize"
+                android:inputType="text|textEmailAddress"
+                android:backgroundTint="@color/hintColor"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordLayoutLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/type_your_password_here"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/textColor"
+            android:padding="@dimen/paddingInputText"
+            android:focusableInTouchMode="true"
+            android:textColorHint="@color/hintColor"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordLogin"
+                android:layout_width="match_parent"
+                android:focusableInTouchMode="true"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textPassword"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/forgotPasswordLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:textSize="15sp"
+            android:textColor="@color/textColor"
+            android:clickable="true"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <Button
+            android:id="@+id/loginUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/textSize"
+            android:text="Login"
+            android:layout_marginTop="@dimen/marginButtonText"
+            android:textColor="@color/ShadeLight"
+            android:background="@color/colorButtonBackground"
+            android:layout_marginHorizontal="15dp"
+            android:clickable="true"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textSize">18sp</dimen>
+    <dimen name="marginBetweenText">15dp</dimen>
+    <dimen name="hintSize">15sp</dimen>
+    <dimen name="paddingInputText">5dp</dimen>
+    <dimen name="marginButtonText">5dp</dimen>
+    <dimen name="fab_radius">15dp</dimen>
+
+
+
+
+
+
+</resources>

@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "986524930808",
+    "project_id": "thaparhelper",
+    "storage_bucket": "thaparhelper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986524930808:android:ab88524ede534d8106610d",
+        "android_client_info": {
+          "package_name": "com.blackdev.thaparhelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986524930808-laodf3ccatqevmjuv67gp3ahrf5q8ln6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blackdev.thaparhelper",
+            "certificate_hash": "b896802cb77ad723f74b7ca9585d12f174fbc56e"
+          }
+        },
+        {
+          "client_id": "986524930808-g9vbqsva1t20f5llcefl73rt1b13lert.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG_jEupHPwqLqmsOE1VVgLMD6hv-WQpNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986524930808-g9vbqsva1t20f5llcefl73rt1b13lert.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986524930808:android:0692152e21c4c23b06610d",
+        "android_client_info": {
+          "package_name": "com.blackdev.thaparhelpert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986524930808-g9vbqsva1t20f5llcefl73rt1b13lert.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG_jEupHPwqLqmsOE1VVgLMD6hv-WQpNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986524930808-g9vbqsva1t20f5llcefl73rt1b13lert.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
