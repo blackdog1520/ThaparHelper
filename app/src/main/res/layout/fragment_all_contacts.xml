@@ -3,9 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dashboard.Chat.AllContactsFragments">
+    android:orientation="vertical"
+    tools:context=".dashboard.Chat.AllContactsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="search here"
+        android:id="@+id/search_users"
+        android:animateLayoutChanges="true"
+        android:iconifiedByDefault="false"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allUserRecyclerView"
         android:layout_width="match_parent"

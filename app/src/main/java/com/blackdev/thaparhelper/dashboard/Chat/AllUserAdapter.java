@@ -1,6 +1,7 @@
 package com.blackdev.thaparhelper.dashboard.Chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,12 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
         this.context = context;
         this.list = list;
     }
-    ImageView profile;
-    TextView username,batch;
+
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
+        ImageView profile;
+        TextView username,batch;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             profile = itemView.findViewById(R.id.userProfileImageAllUsers);
@@ -46,16 +48,34 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        UserPersonalData data = list.get(position);
+        final UserPersonalData data = list.get(position);
         if(!data.getProfileImageLink().isEmpty()) {
-            Picasso.get().load(list.get(position).getProfileImageLink()).into(profile);
+            Picasso.get().load(list.get(position).getProfileImageLink()).into(holder.profile);
         }
-        username.setText(data.getName());
-        batch.setText(data.getBatch());
+        holder.username.setText(data.getName());
+        holder.batch.setText(data.getBatch());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UserChatHolderActivity.class);
+                intent.putExtra("HisUID",data.getUid());
+                intent.putExtra("HisName",data.getName());
+                intent.putExtra("HisDept",data.getBatch());
+                intent.putExtra("HisProfile",data.getProfileImageLink());
+                context.startActivity(intent);
+            }
+        });
     }
-
+    void assignList(ArrayList<UserPersonalData> newList) {
+        list = newList;
+        notifyDataSetChanged();
+    }
     void addItem(UserPersonalData data) {
         list.add(data);
+    }
+
+    void clearList() {
+        list.clear();
     }
 
     @Override

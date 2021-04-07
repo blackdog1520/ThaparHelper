@@ -8,17 +8,21 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sdsmdg.harjot.vectormaster.VectorMasterView;
 import com.sdsmdg.harjot.vectormaster.models.PathModel;
 
@@ -31,10 +35,21 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     private static final int action_settings = R.id.action_settings;
     BottomNavigationView bottomNavigationView;
     ViewPager viewPager;
+    FirebaseAuth mAuth;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mAuth.getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
 
     void init() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_dash);
         viewPager = findViewById(R.id.dashboard_view_pager_view);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -46,6 +61,26 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         viewPager.setAdapter(new ViewPagerDashBoardAdapter(getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard_toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                mAuth.signOut();
+                startActivity(new Intent(this,LoginActivity.class));
+                finish();
+                return true;
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -6,6 +6,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_dashboard_24"
         android:title="Dashboard"
+        android:iconTint="#FFFFFF"
         app:showAsAction="ifRoom"/>
 
     <item
@@ -13,12 +14,14 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_explore_24"
         android:title="Explore"
+        android:iconTint="#FFFFFF"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_map"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_map_24"
+        android:iconTint="#FFFFFF"
         android:title="Maps"
         app:showAsAction="ifRoom"/>
 
@@ -27,11 +30,13 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_send_24"
         android:title="Chat"
+        android:iconTint="#FFFFFF"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
+        android:iconTint="#FFFFFF"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="Settings"
         app:showAsAction="ifRoom"/>

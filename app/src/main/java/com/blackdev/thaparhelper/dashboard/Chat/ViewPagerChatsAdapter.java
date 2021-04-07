@@ -1,16 +1,10 @@
 package com.blackdev.thaparhelper.dashboard.Chat;
 
-import com.blackdev.thaparhelper.dashboard.DashboardFragment;
-import com.blackdev.thaparhelper.dashboard.ExploreFragment;
-import com.blackdev.thaparhelper.dashboard.MapsFragment;
-import com.blackdev.thaparhelper.dashboard.SettingsFragment;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class ViewPagerChatsAdapter extends FragmentPagerAdapter {
     public ViewPagerChatsAdapter(@NonNull FragmentManager fm) {
@@ -24,7 +18,7 @@ public class ViewPagerChatsAdapter extends FragmentPagerAdapter {
             case 0:
                 return new AllChatsFragment();
             case 1:
-                return new AllContactsFragments();
+                return new AllContactsFragment();
             default:
                 return null;
         }
