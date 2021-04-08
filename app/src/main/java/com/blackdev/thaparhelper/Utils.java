@@ -5,6 +5,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.blackdev.thaparhelper.dashboard.Chat.ModelChatOneToOne;
+import com.blackdev.thaparhelper.database.ChatData;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Objects;
 
 public class Utils {
@@ -24,6 +28,8 @@ public class Utils {
         }
         return networkInfo !=null;
     }
+
+
 
 
 

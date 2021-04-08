@@ -21,10 +21,19 @@ import android.widget.Toast;
 
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.database.AppDatabase;
+import com.blackdev.thaparhelper.database.ChatData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sdsmdg.harjot.vectormaster.VectorMasterView;
 import com.sdsmdg.harjot.vectormaster.models.PathModel;
+
+import java.util.ArrayList;
 
 public class DashBoardActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -36,6 +45,7 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     BottomNavigationView bottomNavigationView;
     ViewPager viewPager;
     FirebaseAuth mAuth;
+    AppDatabase database;
 
     @Override
     protected void onStart() {
@@ -50,6 +60,8 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         bottomNavigationView = findViewById(R.id.bottom_navigation_dash);
         viewPager = findViewById(R.id.dashboard_view_pager_view);
         mAuth = FirebaseAuth.getInstance();
+        database = AppDatabase.getInstance(this);
+        //readMessages();
     }
 
     @Override
@@ -138,5 +150,41 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    private void readMessages() {
+
+        final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Messages").child(FirebaseAuth.getInstance().getUid()).child("ReceivedMessages");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds: snapshot.getChildren()) {
+                    for(DataSnapshot dd: ds.getChildren()) {
+                        Log.e(dd.getRef().getKey()+" :t", (String) dd.child("fromUID").getValue());
+                    }
+                    Log.e("DASHBOARD",ds.getValue().toString());
+
+//                    String fromUID = (String) ds.child("Sender").getValue();
+//                    String ToUID = FirebaseAuth.getInstance().getUid();
+//                    String Message = (String) ds.child("Message").getValue();
+//                    boolean isMediaFile = (boolean) ds.child("ediaFile").getValue();
+//                    String MediaUrl  ="";
+//                    if(isMediaFile) {
+//                        MediaUrl = (String) ds.child("MediaUrl").getValue();
+//                    }
+//                    boolean isSeen = (boolean) ds.child("IsSeen").getValue();
+//                    String timeStamp = (String) ds.child("TimeStamp").getValue();
+//                    ChatData chatData = new ChatData(fromUID,false,ToUID,Message,isMediaFile,MediaUrl,isSeen,timeStamp);
+                    ChatData chatData = ds.getValue(ChatData.class);
+
+                    database.chatDataDao().insert(chatData);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

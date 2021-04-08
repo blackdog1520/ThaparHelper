@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 @Database(entities =  {ChatData.class, AllUsersData.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase database;
-    private static String DATABASE_NAME = "region_database";
+    private static String DATABASE_NAME = "Thapar_database";
 
     public synchronized static AppDatabase getInstance(Context context) {
         if(database == null) {
@@ -20,6 +20,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return database;
     }
-
+    public  abstract ChatDataDao chatDataDao();
 
 }

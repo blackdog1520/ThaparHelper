@@ -11,4 +11,8 @@
     <color name="ShadeDark">#e3e3e1</color>
     <color name="ShadeMedium">#ecedea</color>
     <color name="ShadeLight">#fdfdfd</color>
+
+    <color name="messageLeftDark">#fd6051</color>
+    <color name="messageLeftlighter">#ff8967</color>
+    <color name="messageRight">#000000</color>
 </resources>

@@ -73,7 +73,8 @@ public class SettingsFragment extends Fragment {
     private void init() {
         mAuth = FirebaseAuth.getInstance();
         mDB = FirebaseDatabase.getInstance();
-        mRef = mDB.getReference().child("Users").child("BasicData").child("Students");
+        mRef = mDB.getReference().child("Users").child("BasicData").child("Administration").child(mAuth.getUid());
+        //set this ref based on the type of user signing in
         userName = getView().findViewById(R.id.userNameSettings);
         rollNumber = getView().findViewById(R.id.userRollNoSettings);
         emailId = getView().findViewById(R.id.userEmailIdSettings);
@@ -101,7 +102,7 @@ public class SettingsFragment extends Fragment {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue()==null){
+                if(snapshot==null){
                     Log.e("Settings",mAuth.getCurrentUser().getEmail());
                     Snackbar.make(getView(),"Login again!",Snackbar.LENGTH_SHORT).show();
                     // logout user
@@ -112,8 +113,8 @@ public class SettingsFragment extends Fragment {
                 } else {
                     Log.e("SETTINGSVal",""+snapshot.getChildrenCount());
                     //for(DataSnapshot dp: snapshot.getChildren()) {
-                        UserPersonalData data = snapshot.child(mAuth.getUid()).getValue(UserPersonalData.class);
-                        Log.e("SETTINGSVal",snapshot.child("email").toString());
+                        UserPersonalData data = snapshot.getValue(UserPersonalData.class);
+                        Log.e("SETTINGSVal",snapshot.child("email").getValue().toString());
                         emailId.setText(data.getEmail());
                         userName.setText(data.getName());
                         rollNumber.setText(data.getRollNumber());
