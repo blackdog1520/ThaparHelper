@@ -1,4 +1,7 @@
-package com.blackdev.thaparhelper.dashboard.Chat;
+package com.blackdev.thaparhelper.dashboard.Chat.adapter;
+
+import com.blackdev.thaparhelper.dashboard.Chat.AllChatsFragment;
+import com.blackdev.thaparhelper.dashboard.Chat.AllContactsFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

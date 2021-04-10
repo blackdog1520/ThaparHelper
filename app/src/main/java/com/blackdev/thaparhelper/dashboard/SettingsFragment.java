@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blackdev.thaparhelper.LoginActivity;
+import com.blackdev.thaparhelper.MySharedPref;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.StaticVariables;
 import com.blackdev.thaparhelper.UserPersonalData;
@@ -118,6 +119,8 @@ public class SettingsFragment extends Fragment {
                         emailId.setText(data.getEmail());
                         userName.setText(data.getName());
                         rollNumber.setText(data.getRollNumber());
+                    MySharedPref pref = new MySharedPref(getActivity(),"User-"+mAuth.getUid());
+                    pref.saveUser(data);
                         if(data.getProfileImageLink()!=null && !data.getProfileImageLink().isEmpty()) {
                             Picasso.get().load(data.getProfileImageLink()).into(profilePic);
                         }

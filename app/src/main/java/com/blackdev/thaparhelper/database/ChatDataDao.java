@@ -22,7 +22,7 @@ public interface ChatDataDao {
     List<ChatData> getMessagesOfUser(String hisUid);
 
 
-    @Query("UPDATE chatsTable SET Seen = :flag where mFROMUID = :hisUID and TimeStamp = :timeStamp")
+    @Query("UPDATE chatsTable SET Seen = :flag where mTOUID = :hisUID and TimeStamp = :timeStamp")
     void updateMessage(boolean flag, String hisUID, String timeStamp);
 
 

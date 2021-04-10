@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.blackdev.thaparhelper.Constants;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.Utils;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,10 +32,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sdsmdg.harjot.vectormaster.VectorMasterView;
 import com.sdsmdg.harjot.vectormaster.models.PathModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DashBoardActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -73,6 +78,18 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         viewPager.setAdapter(new ViewPagerDashBoardAdapter(getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(this);
+
+        updateFirebaseToken();
+    }
+
+    private void updateFirebaseToken() {
+        DatabaseReference databaseReference = Utils.getRefForBasicData(Constants.USER_ADMINISTRATION,FirebaseAuth.getInstance().getUid());
+        // choose path based on user type ;
+        Map<String, Object> map= new HashMap<>();
+
+        map.put("token", FirebaseInstanceId.getInstance().getToken());
+        databaseReference.updateChildren(map);
+
     }
 
     @Override

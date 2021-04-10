@@ -3,6 +3,7 @@ package com.blackdev.thaparhelper.dashboard.Chat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +14,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.blackdev.thaparhelper.Constants;
+import com.blackdev.thaparhelper.MySharedPref;
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.UserPersonalData;
+import com.blackdev.thaparhelper.Utils;
+import com.blackdev.thaparhelper.dashboard.Chat.adapter.OneToOneChatAdapter;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,10 +40,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
-import java.sql.Timestamp;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserChatHolderActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -97,6 +114,21 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         }
         sendButton.setOnClickListener(this);
         updateMessages();
+
+
+        MessageSwipeController messageSwipeController = new MessageSwipeController(this, new SwipeControllerActions() {
+            @Override
+            public void showReplyUI(int position) {
+                showInLog(chatList.get(position));
+            }
+        });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(messageSwipeController);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+    }
+
+    private void showInLog(ChatData chatData) {
+        Log.i("SWIPED MESSAGE","TEST- "+chatData.getMessage());
     }
 
     private void seenMessages() {
@@ -109,7 +141,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                     if (data != null) {
                         if (data.getToUID().equals(firebaseUser.getUid()) && data.getFromUID().equals(hisUID)) {
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("isSeen", true);
+                            hashMap.put("seen", true);
                             ds.getRef().updateChildren(hashMap);
                         }
                     }
@@ -132,8 +164,10 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                 for(DataSnapshot ds: snapshot.getChildren()) {
                     ChatData chatData = ds.getValue(ChatData.class);
                     chatData.setSentByMe(false);
-                    Log.w("Updated","message updated now");
                     database.chatDataDao().insert(chatData);
+                    if(chatData.isSeen()) {
+                       // database.chatDataDao().updateMessage(true,hisUID,);
+                    }
                     updateMessages();
                     seenMessages();
                 }
@@ -160,7 +194,9 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.sendMessageButton:
                 if(!messageET.getText().toString().trim().isEmpty()) {
-                    sendMessage(messageET.getText().toString().trim());
+                    String message = messageET.getText().toString().trim();
+                    sendMessage(message);
+                    getToken(message);
                 }
         }
     }
@@ -168,11 +204,103 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
     private void sendMessage(String message) {
         Long ts = System.currentTimeMillis()/1000;
         String time = ts.toString();
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Messages").child(hisUID).child("ReceivedMessages").child(firebaseUser.getUid());
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Messages").child(hisUID).child("ReceivedMessages").child(firebaseUser.getUid());
         ChatData data = new ChatData(firebaseUser.getUid(),true,hisUID,message,false,"",false,time);
         database.chatDataDao().insert(data);
         dbRef.push().setValue(data);
+
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.w("Updated","message updated now");
+                for(DataSnapshot ds: snapshot.getChildren()) {
+                    ChatData chatData = ds.getValue(ChatData.class);
+                    if (chatData.isSeen()) {
+                        Log.i("Seen","message seen now"+chatData.getMessage());
+                        ds.getRef().removeValue();
+                        database.chatDataDao().updateMessage(true, hisUID, chatData.getTimeStamp());
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         messageET.setText("");
         updateMessages();
     }
+
+    private void getToken(final String message) {
+        MySharedPref sharedPref = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid());
+        final UserPersonalData myData =  sharedPref.getUser();
+        DatabaseReference mRef = Utils.getRefForBasicData(Constants.USER_ADMINISTRATION,hisUID);
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String token = snapshot.child("token").getValue().toString();
+                String profileLink = snapshot.child("profileImageLink").getValue().toString();
+
+                JSONObject to =  new JSONObject();
+                JSONObject data = new JSONObject();
+
+                try {
+                    data.put("title",myData.getName());
+                    data.put("message",message);
+                    data.put("hisUID",firebaseUser.getUid());
+                    data.put("hisDept",myData.getBatch());
+                    data.put("hisProfile",myData.getProfileImageLink());
+
+                    to.put("to",token);
+                    to.put("data", data);
+                    sendNotification(to);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void sendNotification(JSONObject to) {
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,Constants.NOTIFICATION_URL,to, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("notification","sendNotification: "+response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("notification","sendNotification: "+error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("Authorization","Key="+Constants.CLOUD_SERVER_KEY);
+                map.put("Content-Type","application/json");
+                return map;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
+    }
+
+
 }

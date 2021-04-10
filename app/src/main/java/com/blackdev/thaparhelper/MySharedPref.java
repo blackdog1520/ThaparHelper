@@ -9,6 +9,7 @@ public class MySharedPref {
     }
 
     public UserPersonalData getUser() {
+        UserPersonalData user = new UserPersonalData();
         user.setName(myPref.getString("userName",""));
         user.setMobNumber(myPref.getString("userMobile",""));
         user.setEmail(myPref.getString("userEmail",""));
@@ -31,7 +32,7 @@ public class MySharedPref {
 
     UserPersonalData user;
     SharedPreferences myPref;
-    MySharedPref(Context context, String PREFERENCES){
+    public MySharedPref(Context context, String PREFERENCES){
         myPref = context.getSharedPreferences(PREFERENCES,Context.MODE_PRIVATE);
     }
 

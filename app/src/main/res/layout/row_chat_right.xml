@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginBottom="1dp"
+    android:gravity="end"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/message_right_bg">
+        <TextView
+            android:id="@+id/messageRightTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="10"
+            android:maxWidth="@dimen/maxMessageWidth"
+            android:textSize="@dimen/subtextSize"
+            android:textColor="#FFFFFF"
+            android:text="Sample Message I have sent. Multiple lines will look like this."
+            android:textIsSelectable="true"
+            android:fontFamily="sans-serif-light"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            />
+        <ImageView
+            android:id="@+id/messageStatus"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/single_tick"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="3dp"/>
+    </LinearLayout>
+
+</LinearLayout>
+
