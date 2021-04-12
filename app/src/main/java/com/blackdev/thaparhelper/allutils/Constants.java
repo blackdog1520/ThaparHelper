@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper;
+package com.blackdev.thaparhelper.allutils;
 
 public interface Constants {
 

@@ -8,15 +8,16 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blackdev.thaparhelper.LoginActivity;
-import com.blackdev.thaparhelper.MySharedPref;
+import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.R;
-import com.blackdev.thaparhelper.StaticVariables;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,6 +87,8 @@ public class SettingsFragment extends Fragment {
     public View getView(){
         return view;
     }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +97,7 @@ public class SettingsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         //init();
+        setHasOptionsMenu(true);
         // check Data offline
 
 
@@ -146,5 +150,13 @@ public class SettingsFragment extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if(menu != null) {
+            menu.findItem(R.id.action_add_post).setVisible(false);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper.dashboard.Chat;
+package com.blackdev.thaparhelper.notification;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,12 +10,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
-import com.blackdev.thaparhelper.Constants;
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.R;
-import com.blackdev.thaparhelper.Utils;
+import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Chat.UserChatHolderActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

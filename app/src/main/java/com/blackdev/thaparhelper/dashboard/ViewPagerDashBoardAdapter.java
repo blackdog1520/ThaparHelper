@@ -1,6 +1,7 @@
 package com.blackdev.thaparhelper.dashboard;
 
 import com.blackdev.thaparhelper.dashboard.Chat.ChatFragment;
+import com.blackdev.thaparhelper.dashboard.Explore.ExploreFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

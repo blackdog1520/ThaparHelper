@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper;
+package com.blackdev.thaparhelper.allutils;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 
 public class CredentialChecker {
     ArrayList<String> errorCodeToString = new ArrayList<>();
-    CredentialChecker(){
+    public CredentialChecker(){
         errorCodeToString.add("Invalid Email Id");
         errorCodeToString.add("Login with Thapar Id");
         errorCodeToString.add("Password length must be 6.");
@@ -33,10 +33,10 @@ public class CredentialChecker {
     6-> Must Contain numerical values only.
  */
 
-    String getError(int errorCode){
+    public String getError(int errorCode){
         return errorCodeToString.get(errorCode);
     }
-    int validateEmail(String email) {
+    public int validateEmail(String email) {
         Pattern pattern = Pattern.compile(".*thapar.edu*$");
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
@@ -53,7 +53,7 @@ public class CredentialChecker {
         }
     }
 
-    int validatePassword(String password){
+    public int validatePassword(String password){
         if(password.length()<6) {
             return 2;
         } else if(password.length()>20) {
@@ -70,7 +70,7 @@ public class CredentialChecker {
         }
     }
 
-    int validateMobile(String mobNumber){
+    public int validateMobile(String mobNumber){
         if(mobNumber.charAt(0) == '0'){
             mobNumber = mobNumber.substring(1);
         }
@@ -88,7 +88,7 @@ public class CredentialChecker {
         }
     }
 
-    int validateRollNumber(String rollNumber){
+    public int validateRollNumber(String rollNumber){
         if(rollNumber.length() == 9)
             return -1;
         else
@@ -96,7 +96,7 @@ public class CredentialChecker {
     }
 
     boolean returnVal = false;
-    private void checkEmail(String email, DatabaseReference mRef) {
+    public void checkEmail(String email, DatabaseReference mRef) {
         Query query = mRef.orderByChild("email").equalTo(email);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

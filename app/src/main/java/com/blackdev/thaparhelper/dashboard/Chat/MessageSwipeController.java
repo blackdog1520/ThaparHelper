@@ -7,22 +7,17 @@ import android.graphics.drawable.Drawable;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import com.blackdev.thaparhelper.R;
-import com.blackdev.thaparhelper.Utils;
-import com.google.android.gms.common.util.AndroidUtilsLight;
+import com.blackdev.thaparhelper.allutils.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import kotlin.internal.UProgressionUtilKt;
 
 import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE;
 import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
-import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
-import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
 import static androidx.recyclerview.widget.ItemTouchHelper.UP;
 
 class MessageSwipeController extends ItemTouchHelper.Callback {

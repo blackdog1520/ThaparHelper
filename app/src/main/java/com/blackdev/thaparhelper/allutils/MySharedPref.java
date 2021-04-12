@@ -1,7 +1,9 @@
-package com.blackdev.thaparhelper;
+package com.blackdev.thaparhelper.allutils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.blackdev.thaparhelper.UserPersonalData;
 
 public class MySharedPref {
     public SharedPreferences getMyPref() {

@@ -2,27 +2,19 @@ package com.blackdev.thaparhelper.dashboard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.blackdev.thaparhelper.Constants;
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
-import com.blackdev.thaparhelper.Utils;
+import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Explore.CreatePostActivity;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,10 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.sdsmdg.harjot.vectormaster.VectorMasterView;
-import com.sdsmdg.harjot.vectormaster.models.PathModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,8 +95,10 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
                 startActivity(new Intent(this,LoginActivity.class));
                 finish();
                 return true;
-
-
+            case R.id.action_add_post:
+                Intent intent = new Intent(this, CreatePostActivity.class);
+                startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
