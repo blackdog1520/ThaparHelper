@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 import com.blackdev.thaparhelper.LoginActivity;
+import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.bumptech.glide.Glide;
@@ -45,6 +46,17 @@ public class CreatePostActivity extends AppCompatActivity{
         imageList = new ArrayList<>();
         rootLayout = findViewById(R.id.create_post_root_layout);
         manager = new GridLayoutManager(this, 3);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!Utils.checkUserLoggedIn()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootLayoutAddPostDetails"
     android:background="@color/appBackgroundDefault"
     tools:context=".dashboard.Explore.AddPostDetailsActivity"
     android:orientation="vertical"
@@ -26,15 +27,59 @@
             />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/postDescriptionET"
+                android:minHeight="200dp"
+                android:hint="Description..."
+                android:fontFamily="sans-serif-light"
+                android:textColorHint="@color/hintColor"
+                android:textColor="@color/textColorForBlackBack"
+                android:textSize="@dimen/textSize"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="start|top"
+
+                android:backgroundTint="@color/hintColor"
+
+                />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/locationET"
+                android:hint="Location"
+                android:fontFamily="sans-serif-light"
+                android:textColorHint="@color/hintColor"
+                android:textColor="@color/textColorForBlackBack"
+                android:textSize="@dimen/textSize"
+                android:inputType="text|textEmailAddress"
+                android:backgroundTint="@color/hintColor"
+                />
+
+
 
 
         </LinearLayout>
 
 
 
+
+
+
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/uploadPostButton"
+        android:layout_margin="@dimen/marginBetweenText"
+        android:text="Upload"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+
+        />
 
 
 </LinearLayout>

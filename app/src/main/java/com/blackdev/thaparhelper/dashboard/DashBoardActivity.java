@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
@@ -42,10 +43,12 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     AppDatabase database;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if(mAuth.getCurrentUser() == null) {
-            startActivity(new Intent(this, LoginActivity.class));
+    protected void onResume() {
+        super.onResume();
+        if(!Utils.checkUserLoggedIn()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
         }
     }

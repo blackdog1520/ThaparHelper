@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.blackdev.thaparhelper.allutils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -85,5 +86,23 @@ public class Utils {
         } else {
             return false;
         }
+    }
+
+    public static boolean checkUserLoggedIn() {
+        if(FirebaseAuth.getInstance() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static String getPostPath(String timestamp, String uid) {
+        String path = "Posts/posts_id_" + FirebaseAuth.getInstance().getUid() + "_time_" + timestamp;
+        return path;
+    }
+
+    public static DatabaseReference getRefForPosts(String uid) {
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Posts");
+        return mRef;
     }
 }
