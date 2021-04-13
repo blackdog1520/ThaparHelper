@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rootSignUpLayout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootSignUpLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/appBackgroundDefault"
     tools:context=".SignUpActivity">
 
     <LinearLayout
@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userNameSignUpLayout"
             android:layout_width="match_parent"
@@ -32,26 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userEmailSignUpLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Email_Id"
-            android:layout_marginTop="@dimen/marginBetweenText"
-            android:padding="@dimen/paddingInputText"
-            android:focusableInTouchMode="true"
-            app:hintTextColor="@color/hintColor"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userEmailSignUpInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/textColor"
+                android:textColor="@color/textColorForBlackBack"
+                android:hint="@string/name"
+                android:textColorHint="@color/ShadeMedium"
                 android:textSize="@dimen/textSize"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,92 +43,166 @@
             android:id="@+id/userRollSignUpLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/roll_number"
             android:layout_marginTop="@dimen/marginBetweenText"
-            android:padding="@dimen/paddingInputText"
             android:focusableInTouchMode="true"
-            app:hintTextColor="@color/hintColor"
-            >
+            android:hint="@string/roll_number"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userRollSignUpInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userBranchSignUpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginBetweenText"
+            android:focusableInTouchMode="true"
+            android:hint="@string/branch"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userBranchSignUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userDepartmentSignUpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginBetweenText"
+            android:focusableInTouchMode="true"
+            android:hint="@string/branch"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userDepartmentSignUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userDesignationSignUpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginBetweenText"
+            android:focusableInTouchMode="true"
+            android:hint="@string/branch"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userDesignationSignUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userEmailSignUpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginBetweenText"
+            android:focusableInTouchMode="true"
+            android:hint="@string/Email_Id"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userEmailSignUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userMobileSignUpLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mobile Number"
             android:layout_marginTop="@dimen/marginBetweenText"
-            android:padding="@dimen/paddingInputText"
             android:focusableInTouchMode="true"
-            app:hintTextColor="@color/hintColor"
-            >
+            android:hint="Mobile Number"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userMobileSignUpInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userPasswordSignUpLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Password"
             android:layout_marginTop="@dimen/marginBetweenText"
-            android:padding="@dimen/paddingInputText"
             android:focusableInTouchMode="true"
-            app:hintTextColor="@color/hintColor"
-            >
+            android:hint="Enter Password"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userPasswordSignUpInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userRePasswordSignUpLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Re-enter Password"
             android:layout_marginTop="@dimen/marginBetweenText"
-            android:padding="@dimen/paddingInputText"
             android:focusableInTouchMode="true"
-            app:hintTextColor="@color/hintColor"
-            >
+            android:hint="Re-enter Password"
+            android:padding="@dimen/paddingInputText"
+            app:hintTextColor="@color/hintColor">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userRePasswordSignUpInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/signUpButtonSign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/signUpButtonSign"
-            android:text="Sign Up"
-            android:clickable="true"
             android:layout_marginTop="@dimen/marginButtonText"
             android:background="@color/colorButtonBackground"
+            android:clickable="true"
+            android:text="Sign Up"
             android:textColor="#000000"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
     </LinearLayout>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

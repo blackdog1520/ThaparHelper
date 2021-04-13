@@ -30,8 +30,8 @@ import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextInputEditText emailIdInput, passwordInput, mobNumberInput, rollNumberInput, rePasswordInput, nameInput;
-    TextInputLayout emailLayout, passwordLayout, mobNumberLayout, rollNumberLayout, rePasswordLayout, nameLayout;
+    TextInputEditText emailIdInput, passwordInput, mobNumberInput, rollNumberInput, rePasswordInput, nameInput, branchInput, departmentInput, designationInput;
+    TextInputLayout emailLayout, passwordLayout, mobNumberLayout, rollNumberLayout, rePasswordLayout, nameLayout, branchLayout, departmentLayout, designationLayout;
     ConstraintLayout rootLayout;
     CredentialChecker checker;
     Button signUpButton;
@@ -56,16 +56,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         rePasswordLayout = findViewById(R.id.userRePasswordSignUpLayout);
         nameInput = findViewById(R.id.userNameSignUpInput);
         nameLayout = findViewById(R.id.userNameSignUpLayout);
+        branchInput = findViewById(R.id.userBranchSignUpInput);
+        branchLayout = findViewById(R.id.userBranchSignUpLayout);
+        departmentInput = findViewById(R.id.userDepartmentSignUpInput);
+        departmentLayout = findViewById(R.id.userDepartmentSignUpLayout);
+        designationInput = findViewById(R.id.userDesignationSignUpInput);
+        designationLayout = findViewById(R.id.userDesignationSignUpLayout);
         checker = new CredentialChecker();
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference("Users").child("BasicData").child("Students");
         mAuth = FirebaseAuth.getInstance();
-
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Intent intent = getIntent();
+        String userType = intent.getExtras().getString("userType");
         init();
         signUpButton.setOnClickListener(this);
         //tempFun();
@@ -94,6 +102,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
+
 
     private void tempFun() {
         final ArrayList<String> test = new ArrayList<>();
@@ -144,6 +154,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 final String userName = nameInput.getText().toString().trim();
                 final String mobNumber = mobNumberInput.getText().toString().trim();
                 final String rollNumber = rollNumberInput.getText().toString().trim();
+                final String department = departmentInput.getText().toString().trim();
+                final String designation = designationInput.getText().toString().trim();
+                final String branch = branchInput.getText().toString().trim();
                 String password = passwordInput.getText().toString().trim();
                 if(email.isEmpty()) {
                     flag = false;
@@ -198,16 +211,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     setError(rePasswordLayout,true,"Password didn't matched");
                 }
                 if(flag) {
-                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
-                                    Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
-                                } else {
-                                    addUserDetails(email, userName, mobNumber, rollNumber, mAuth.getCurrentUser().getUid(),"","");
-                                }
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!task.isSuccessful()){
+                                Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
+                            } else {
+                                addUserDetails(email, userName, mobNumber, rollNumber, mAuth.getCurrentUser().getUid(),"","");
                             }
-                        });
+                        }
+                    });
 
                 }
         }

@@ -4,6 +4,9 @@
     <string name="type_your_password_here">Password</string>
     <string name="name">Name</string>
     <string name="roll_number">Roll number</string>
+    <string name="branch">Branch</string>
+    <string name="department">Department</string>
+    <string name="designation">Designation</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="username">UserName</string>
