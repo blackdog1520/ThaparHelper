@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/appBackgroundDefault"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/row_post_user_profile"
+            android:src="@drawable/ic_baseline_person_24"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FFFFFF"
+            app:civ_circle_color="#000000"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
+            >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="UserName"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/textSize"
+            android:id="@+id/row_post_user_name"
+            android:textColor="@color/textColorForBlackBack"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Location"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/hintSize"
+            android:textColor="#DADADA"
+            />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ShadeMedium"
+        android:layout_marginTop="10dp"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp"
+        android:id="@+id/row_post_image_view"
+        />
+    
+
+
+
+
+</LinearLayout>
