@@ -47,8 +47,19 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(@NonNull String s) {
-        updateToke(s);
+
+        if(checkUserLoggedIn()) {
+            updateToke(s);
+        }
         super.onNewToken(s);
+    }
+
+    private boolean checkUserLoggedIn() {
+        if(FirebaseAuth.getInstance() == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void updateToke(String token) {

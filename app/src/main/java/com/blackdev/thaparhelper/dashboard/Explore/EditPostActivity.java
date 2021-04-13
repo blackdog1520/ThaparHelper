@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -62,5 +63,11 @@ public class EditPostActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_post_menu,menu);
+        return true;
     }
 }
