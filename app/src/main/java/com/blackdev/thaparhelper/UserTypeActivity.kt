@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper
+    package com.blackdev.thaparhelper
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -18,14 +18,19 @@ class UserTypeActivity : AppCompatActivity() {
             val studentUserRadioButton = findViewById<RadioButton>(R.id.studentUser)
             val facultyUserRadioButton = findViewById<RadioButton>(R.id.facultyUser)
             val administrationUserRadioButton = findViewById<RadioButton>(R.id.administrationUser)
+            val userTypeRadioButton = findViewById<RadioGroup>(R.id.userTypeRadioGroup)
             val proceedButton = findViewById<Button>(R.id.proceedButton)
-            var user : Boolean = false
-            when(user)
-            {
-                studentUserRadioButton.isChecked -> proceedButton.setOnClickListener { switchToSignUpActivity(Constants.USER_STUDENT) }
-                facultyUserRadioButton.isChecked -> proceedButton.setOnClickListener { switchToSignUpActivity(Constants.USER_FACULTY)}
-                administrationUserRadioButton.isChecked -> proceedButton.setOnClickListener { switchToSignUpActivity(Constants.USER_ADMINISTRATION) }
+            proceedButton.setOnClickListener {
+                var user = userTypeRadioButton.checkedRadioButtonId
+                when(user)
+                {
+                    studentUserRadioButton.id -> switchToSignUpActivity(Constants.USER_STUDENT)
+                    facultyUserRadioButton.id -> switchToSignUpActivity(Constants.USER_FACULTY)
+                    administrationUserRadioButton.id -> switchToSignUpActivity(Constants.USER_ADMINISTRATION)
+                }
             }
+
+
     }
 
     private fun switchToSignUpActivity(userType: Int)

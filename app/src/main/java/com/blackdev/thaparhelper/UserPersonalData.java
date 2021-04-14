@@ -4,7 +4,7 @@ public class UserPersonalData {
     public UserPersonalData() {
 
     }
-    UserPersonalData(String name, String email, String mobNumber, String rollNumber,String uid,String profileImageLink,String batch){
+    UserPersonalData(String name, String email, String mobNumber, String rollNumber,String uid,String profileImageLink,String batch,String branch){
         this.email = email;
         this.name = name;
         this.mobNumber = mobNumber;
@@ -12,6 +12,7 @@ public class UserPersonalData {
         this.profileImageLink = profileImageLink;
         this.uid = uid;
         this.batch = batch;
+        this.branch = branch;
     }
     String name;
     String uid;
@@ -80,5 +81,11 @@ public class UserPersonalData {
     }
 
     String profileImageLink;
+
+    public void setBranch(String branch) { this.branch = branch;}
+
+    public String getBranch(String branch) { return branch;}
+
+    String branch;
 
 }

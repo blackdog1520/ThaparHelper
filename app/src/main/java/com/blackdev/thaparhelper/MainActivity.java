@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(loginIntent);
                 break;
             case R.id.switchToSignUpActivity:
-                Intent signUpIntent = new Intent(MainActivity.this,SignUpActivity.class);
+                Intent signUpIntent = new Intent(MainActivity.this,UserTypeActivity.class);
                 startActivity(signUpIntent);
                 break;
         }
