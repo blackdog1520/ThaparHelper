@@ -7,20 +7,30 @@ public class UserFacultyModelClass {
     String name;
     String uid;
 
-    public String getBatch() {
-        return type;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setBatch(String type) {
-        this.type = type;
+    public void setDesignation(String type) {
+        this.designation = type;
     }
 
-    String type;
+    String designation;
+    int userType;
 
-    public UserFacultyModelClass(String name, String uid, String type, String department, String email, String mobNumber, String profileImageLink) {
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    public UserFacultyModelClass(int userType, String name, String uid, String designation, String department, String email, String mobNumber, String profileImageLink) {
+        this.userType = userType;
         this.name = name;
         this.uid = uid;
-        this.type = type;
+        this.designation = designation;
         this.department = department;
         this.email = email;
         this.mobNumber = mobNumber;

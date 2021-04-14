@@ -5,6 +5,7 @@
     <string name="name">Name</string>
     <string name="roll_number">Roll number</string>
     <string name="branch">Branch</string>
+    <string name="batch">Batch</string>
     <string name="department">Department</string>
     <string name="designation">Designation</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -5,15 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CredentialChecker;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
+import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,12 +32,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextInputEditText emailIdInput, passwordInput, mobNumberInput, rollNumberInput, rePasswordInput, nameInput, branchInput, departmentInput, designationInput;
-    TextInputLayout emailLayout, passwordLayout, mobNumberLayout, rollNumberLayout, rePasswordLayout, nameLayout, branchLayout, departmentLayout, designationLayout;
+    int userType;
+    TextInputEditText emailIdInput, passwordInput, mobNumberInput, rollNumberInput, rePasswordInput, nameInput, branchInput, batchInput, departmentInput, designationInput;
+    TextInputLayout emailLayout, passwordLayout, mobNumberLayout, rollNumberLayout, rePasswordLayout, nameLayout, branchLayout, batchLayout, departmentLayout, designationLayout;
     ConstraintLayout rootLayout;
     CredentialChecker checker;
     Button signUpButton;
@@ -58,23 +67,45 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         nameLayout = findViewById(R.id.userNameSignUpLayout);
         branchInput = findViewById(R.id.userBranchSignUpInput);
         branchLayout = findViewById(R.id.userBranchSignUpLayout);
+        batchInput = findViewById(R.id.userBatchSignUpInput);
+        batchLayout = findViewById(R.id.userBatchSignUpLayout);
         departmentInput = findViewById(R.id.userDepartmentSignUpInput);
         departmentLayout = findViewById(R.id.userDepartmentSignUpLayout);
         designationInput = findViewById(R.id.userDesignationSignUpInput);
         designationLayout = findViewById(R.id.userDesignationSignUpLayout);
         checker = new CredentialChecker();
         database = FirebaseDatabase.getInstance();
-        mRef = database.getReference("Users").child("BasicData").child("Students");
         mAuth = FirebaseAuth.getInstance();
+
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Intent intent = getIntent();
-        String userType = intent.getExtras().getString("userType");
+        userType = getIntent().getIntExtra("userType", 2);
+        Log.i("Value from User Type activity " + userType, "");
         init();
+
+        switch (userType) {
+            case Constants.USER_STUDENT : {
+                studentUserSignUp();
+                Log.i("User Type ","Student");
+            }
+                break;
+            case Constants.USER_FACULTY: {
+                facultyUserSignUp();
+                Log.i("User Type ","Faculty");
+            }
+                break;
+            case Constants.USER_ADMINISTRATION : {
+                facultyUserSignUp();
+                Log.i("User Type ","Administration");
+            }
+                break;
+        }
+
         signUpButton.setOnClickListener(this);
         //tempFun();
 
@@ -105,40 +136,40 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-    private void tempFun() {
-        final ArrayList<String> test = new ArrayList<>();
-        test.add("Associate Professor-I");
-        test.add("Professor");
-        test.add("Associate Professor-II");
-        test.add("Lecturer");
-        final ArrayList<String> test2 = new ArrayList<>();
-        test2.add("CSE");
-        test2.add("Mechanical");
-        test2.add("Chemical");
-        test2.add("Electrical");
-        for(int i=0;i<15;i++) {
-            final int finalI = i;
-
-            mAuth.createUserWithEmailAndPassword("test"+i+"_be18@thapar.edu", "Ashish1@").addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(!task.isSuccessful()){
-                        Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
-                        mAuth.signInWithEmailAndPassword("test"+finalI+"_be18@thapar.edu","Ashish1@").addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                addUserDetails("test"+finalI+"_be18@thapar.edu", "Test.SUser"+ finalI, "1234567890", "10181600"+finalI, mAuth.getCurrentUser().getUid(),"", "CS0"+(finalI%3+1));
-                                mAuth.signOut();
-                            }
-                        });
-
-                    } else {
-                        //addUserDetails("test"+finalI+"_be18@thapar.edu", "Test.SUser"+ finalI, "1234567890", "10181600"+finalI, mAuth.getCurrentUser().getUid(),"", "CS0"+(finalI%3+1));
-                    }
-                }
-            });
-        }
-    }
+//    private void tempFun() {
+//        final ArrayList<String> test = new ArrayList<>();
+//        test.add("Associate Professor-I");
+//        test.add("Professor");
+//        test.add("Associate Professor-II");
+//        test.add("Lecturer");
+//        final ArrayList<String> test2 = new ArrayList<>();
+//        test2.add("CSE");
+//        test2.add("Mechanical");
+//        test2.add("Chemical");
+//        test2.add("Electrical");
+//        for(int i=0;i<15;i++) {
+//            final int finalI = i;
+//
+//            mAuth.createUserWithEmailAndPassword("test"+i+"_be18@thapar.edu", "Ashish1@").addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if(!task.isSuccessful()){
+//                        Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
+//                        mAuth.signInWithEmailAndPassword("test"+finalI+"_be18@thapar.edu","Ashish1@").addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//                            @Override
+//                            public void onSuccess(AuthResult authResult) {
+//                                 addUserDetails("test"+finalI+"_be18@thapar.edu", "Test.SUser"+ finalI, "1234567890", "10181600"+finalI, mAuth.getCurrentUser().getUid(),"", "CS0"+(finalI%3+1),"TEMP");
+//                                mAuth.signOut();
+//                            }
+//                        });
+//
+//                    } else {
+//                        //addUserDetails("test"+finalI+"_be18@thapar.edu", "Test.SUser"+ finalI, "1234567890", "10181600"+finalI, mAuth.getCurrentUser().getUid(),"", "CS0"+(finalI%3+1));
+//                    }
+//                }
+//            });
+//        }
+//    }
 
     void setError(TextInputLayout layout, boolean val, String error){
         layout.setErrorEnabled(val);
@@ -149,91 +180,31 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signUpButtonSign:
-                boolean flag = true;
-                final String email = emailIdInput.getText().toString().trim();
-                final String userName = nameInput.getText().toString().trim();
-                final String mobNumber = mobNumberInput.getText().toString().trim();
-                final String rollNumber = rollNumberInput.getText().toString().trim();
-                final String department = departmentInput.getText().toString().trim();
-                final String designation = designationInput.getText().toString().trim();
-                final String branch = branchInput.getText().toString().trim();
-                String password = passwordInput.getText().toString().trim();
-                if(email.isEmpty()) {
-                    flag = false;
-                    setError(emailLayout,true,"This field can't be empty.");
-                } else {
-                    setError(emailLayout,false,null);
-                    int val = checker.validateEmail(email);
-                    if(val !=-1) {
-                        flag = false;
-                        setError(emailLayout,true,checker.getError(val));
-                    }
+
+                switch (userType)
+                {
+                    case Constants.USER_STUDENT : checkStudentDetail();
+                    break;
+                    case Constants.USER_FACULTY : checkFacultyDetail();
+                    break;
+                    case  Constants.USER_ADMINISTRATION : checkFacultyDetail();
+                    break;
                 }
 
-                if(mobNumber.isEmpty()) {
-                    flag = false;
-                    setError(mobNumberLayout,true,"This field can't be empty.");
-                } else {
-                    setError(mobNumberLayout,false,null);
-                    int val = checker.validateMobile(mobNumber);
-                    if(val !=-1) {
-                        flag = false;
-                        setError(mobNumberLayout,true,checker.getError(val));
-                    }
-                }
 
-                if(rollNumber.isEmpty()){
-                    setError(rollNumberLayout,true,"This field can't be empty.");
-                    flag = false;
-                }else{
-                    setError(rollNumberLayout,false,null);
-                    int val = checker.validateRollNumber(rollNumber);
-                    if(val !=-1) {
-                        flag = false;
-                        setError(rollNumberLayout,true,checker.getError(val));
-                    }
-                }
-
-                if(password.isEmpty()){
-                    setError(passwordLayout,true,"This field can't be empty.");
-                    flag = false;
-                }else{
-                    setError(passwordLayout,false,null);
-                    int val = checker.validatePassword(password);
-                    if(val !=-1) {
-                        flag = false;
-                        setError(passwordLayout,true,checker.getError(val));
-                    }
-                }
-
-                if(!matchPassFlag){
-                    flag = false;
-                    setError(rePasswordLayout,true,"Password didn't matched");
-                }
-                if(flag) {
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                addUserDetails(email, userName, mobNumber, rollNumber, mAuth.getCurrentUser().getUid(),"","");
-                            }
-                        }
-                    });
-
-                }
         }
     }
-    private void addUserDetails(String email, String userName, String mobNumber, String rollNumber,String uid,String link, String batch) {
-        UserPersonalData data = new UserPersonalData(userName,email,mobNumber,rollNumber,uid,link,batch);
+    private void addUserDetails(String email, String userName, String mobNumber, String rollNumber,String uid,String link, String batch,String branch) {
+        UserPersonalData data = new UserPersonalData(userName,email,mobNumber,rollNumber,uid,link,batch,branch);
         updateUI(data);
-        mRef.child(mAuth.getUid()).setValue(data);
+        mRef = Utils.getRefForBasicData(userType,mAuth.getUid());
+        mRef.setValue(data);
     }
-    private void addUserFacultyDetails(String email, String userName, String mobNumber, String dept,String uid,String link, String type) {
-        UserFacultyModelClass data = new UserFacultyModelClass(userName,uid,type,dept,email,mobNumber,link);
+    private void addUserFacultyDetails(String email, String userName, String mobNumber, String dept,String uid,String link, String designation) {
+        UserFacultyModelClass data = new UserFacultyModelClass(userType, userName,uid,designation,dept,email,mobNumber,link);
         //updateUI(data);
-        mRef.child(mAuth.getUid()).setValue(data);
+        mRef = Utils.getRefForBasicData(userType,mAuth.getUid());
+        mRef.setValue(data);
     }
 
     private void updateUI(UserPersonalData data) {
@@ -243,4 +214,214 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         startActivity(intent);
         finish();
     }
+
+    void studentUserSignUp()
+    {
+        departmentLayout.setVisibility(View.GONE);
+        departmentInput.setVisibility(View.GONE);
+        designationInput.setVisibility(View.GONE);
+        designationLayout.setVisibility(View.GONE);
+        Log.i("Inside Function","student USerSignUP");
+    }
+
+    void facultyUserSignUp ()
+    {
+        rollNumberInput.setVisibility(View.GONE);
+        rollNumberLayout.setVisibility(View.GONE);
+        branchLayout.setVisibility(View.GONE);
+        branchInput.setVisibility(View.GONE);
+        batchInput.setVisibility(View.GONE);
+        batchLayout.setVisibility(View.GONE);
+    }
+//    void administrationUserSignUp ()
+//    {
+//        rollNumberInput.setVisibility(View.GONE);
+//        rollNumberInput.setVisibility(View.GONE);
+//        branchInput.setVisibility(View.GONE);
+//        branchInput.setVisibility(View.GONE);
+//        batchInput.setVisibility(View.GONE);
+//        batchInput.setVisibility(View.GONE);
+//    }
+
+    void checkStudentDetail()
+    {
+        boolean flag = true;
+        final String email = emailIdInput.getText().toString().trim();
+        final String userName = nameInput.getText().toString().trim();
+        final String mobNumber = mobNumberInput.getText().toString().trim();
+        final String rollNumber = rollNumberInput.getText().toString().trim();
+//        final String department = departmentInput.getText().toString().trim();
+//        final String designation = designationInput.getText().toString().trim();
+        final String branch = branchInput.getText().toString().trim();
+        final String batch = batchInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+
+        if(userName.isEmpty()){
+            flag = false;
+            setError(nameLayout,true,"This field can't be empty.");
+        }
+
+        if(email.isEmpty()) {
+            flag = false;
+            setError(emailLayout,true,"This field can't be empty.");
+        } else {
+            setError(emailLayout,false,null);
+            int val = checker.validateEmail(email);
+            if(val !=-1) {
+                flag = false;
+                setError(emailLayout,true,checker.getError(val));
+            }
+        }
+
+        if(mobNumber.isEmpty()) {
+            flag = false;
+            setError(mobNumberLayout,true,"This field can't be empty.");
+        } else {
+            setError(mobNumberLayout,false,null);
+            int val = checker.validateMobile(mobNumber);
+            if(val !=-1) {
+                flag = false;
+                setError(mobNumberLayout,true,checker.getError(val));
+            }
+        }
+
+        if(rollNumber.isEmpty()){
+            setError(rollNumberLayout,true,"This field can't be empty.");
+            flag = false;
+        }else{
+            setError(rollNumberLayout,false,null);
+            int val = checker.validateRollNumber(rollNumber);
+            if(val !=-1) {
+                flag = false;
+                setError(rollNumberLayout,true,checker.getError(val));
+            }
+        }
+
+        if(branch.isEmpty()){
+            flag = false;
+            setError(branchLayout,true,"This field can't be empty.");
+        }
+
+        if(batch.isEmpty()){
+            flag = false;
+            setError(batchLayout,true,"This field can't be empty.");
+        }
+
+        if(password.isEmpty()){
+            setError(passwordLayout,true,"This field can't be empty.");
+            flag = false;
+        }else{
+            setError(passwordLayout,false,null);
+            int val = checker.validatePassword(password);
+            if(val !=-1) {
+                flag = false;
+                setError(passwordLayout,true,checker.getError(val));
+            }
+        }
+
+        if(!matchPassFlag){
+            flag = false;
+            setError(rePasswordLayout,true,"Password didn't matched");
+        }
+        if(flag) {
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(!task.isSuccessful()){
+                        Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        addUserDetails(email, userName, mobNumber, rollNumber, mAuth.getCurrentUser().getUid(),"",batch,branch);
+                    }
+                }
+            });
+
+        }
+    }
+
+    void checkFacultyDetail(){
+
+        boolean flag = true;
+        final String email = emailIdInput.getText().toString().trim();
+        final String userName = nameInput.getText().toString().trim();
+        final String mobNumber = mobNumberInput.getText().toString().trim();
+//        final String rollNumber = rollNumberInput.getText().toString().trim();
+        final String department = departmentInput.getText().toString().trim();
+        final String designation = designationInput.getText().toString().trim();
+//        final String branch = branchInput.getText().toString().trim();
+//        final String batch = batchInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+
+        if(userName.isEmpty()){
+            flag = false;
+            setError(nameLayout,true,"This field can't be empty.");
+        }
+
+        if(email.isEmpty()) {
+            flag = false;
+            setError(emailLayout,true,"This field can't be empty.");
+        } else {
+            setError(emailLayout,false,null);
+            int val = checker.validateEmail(email);
+            if(val !=-1) {
+                flag = false;
+                setError(emailLayout,true,checker.getError(val));
+            }
+        }
+
+        if(mobNumber.isEmpty()) {
+            flag = false;
+            setError(mobNumberLayout,true,"This field can't be empty.");
+        } else {
+            setError(mobNumberLayout,false,null);
+            int val = checker.validateMobile(mobNumber);
+            if(val !=-1) {
+                flag = false;
+                setError(mobNumberLayout,true,checker.getError(val));
+            }
+        }
+
+        if(department.isEmpty()){
+            setError(departmentLayout,true,"This field can't be empty.");
+            flag = false;
+        }
+
+
+        if(designation.isEmpty()){
+            flag = false;
+            setError(designationLayout,true,"This field can't be empty.");
+        }
+
+
+        if(password.isEmpty()){
+            setError(passwordLayout,true,"This field can't be empty.");
+            flag = false;
+        }else{
+            setError(passwordLayout,false,null);
+            int val = checker.validatePassword(password);
+            if(val !=-1) {
+                flag = false;
+                setError(passwordLayout,true,checker.getError(val));
+            }
+        }
+
+        if(!matchPassFlag){
+            flag = false;
+            setError(rePasswordLayout,true,"Password didn't matched");
+        }
+        if(flag) {
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(!task.isSuccessful()){
+                        Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        addUserFacultyDetails(email, userName, mobNumber, department, mAuth.getCurrentUser().getUid(),"",designation);
+                    }
+                }
+            });
+
+        }
+
+    }
+
 }

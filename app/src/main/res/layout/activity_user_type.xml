@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserTypeActivity">
+    tools:context=".UserTypeActivity"
+    android:background="@color/appBackgroundDefault">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
             android:layout_height="wrap_content"
             android:text="Select type of user"
             android:gravity="center"
-            android:textSize="25sp"/>
+            android:textSize="25sp"
+            android:textColor="@color/ShadeMedium"/>
 
         <RadioGroup
             android:id="@+id/userTypeRadioGroup"
@@ -33,19 +35,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Student"
-                android:checked="true"/>
+                android:textColor="@color/ShadeMedium"
+                android:checked="true"
+                android:buttonTint="@color/ShadeMedium"/>
 
             <RadioButton
                 android:id="@+id/facultyUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Faculty" />
+                android:text="Faculty"
+                android:textColor="@color/ShadeMedium"
+                android:buttonTint="@color/ShadeMedium"/>
 
             <RadioButton
                 android:id="@+id/administrationUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Administration / Staff" />
+                android:text="Administration / Staff"
+                android:textColor="@color/ShadeMedium"
+                android:buttonTint="@color/ShadeMedium"/>
         </RadioGroup>
         <Button
             android:id="@+id/proceedButton"
