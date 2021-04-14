@@ -16,4 +16,8 @@
     <color name="messageLeftDark">#fd6051</color>
     <color name="messageLeftlighter">#ff8967</color>
     <color name="messageRight">#000000</color>
+
+
+    <color name="likeButtonCenter">#ff0000</color>
+    <color name="likeButtonCorner">#990000</color>
 </resources>

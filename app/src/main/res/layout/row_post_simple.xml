@@ -4,12 +4,13 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appBackgroundDefault"
-    android:padding="15dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:elevation="2dp"
         android:orientation="horizontal">
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="50dp"
@@ -21,43 +22,121 @@
             app:civ_circle_color="#000000"
             />
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="UserName"
             android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/textSize"
+            android:textSize="15sp"
             android:id="@+id/row_post_user_name"
             android:textColor="@color/textColorForBlackBack"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/row_post_location"
             android:text="Location"
             android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/hintSize"
+            android:textSize="13sp"
             android:textColor="#DADADA"
             />
         </LinearLayout>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/row_post_additional_settings"
+            android:gravity="end|center_vertical"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/ic_outline_more_vert_24"/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/ShadeMedium"
-        android:layout_marginTop="10dp"
-        />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="300dp"
         android:id="@+id/row_post_image_view"
         />
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        >
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/row_post_like_button"
+            android:src="@drawable/ic_outline_favorite_border_24"
+            android:background="@null"
+            android:layout_gravity="center"
+            />
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/row_post_comment_button"
+            android:src="@drawable/ic_outline_comment_24"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="5dp"
+            />
+
+
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColorForBlackBack"
+        android:text="Liked by 2.3k"
+        android:id="@+id/row_post_likes"
+        />
+    <TextView
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="15sp"
+            android:textColor="@color/textColorForBlackBack"
+            android:text="This will be the description TextView"
+            android:id="@+id/row_post_description"
+            />
+
+    <TextView
+
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textSize="13sp"
+        android:textColor="@color/ShadeMedium"
+        android:text="2 weeks ago"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:id="@+id/row_post_time"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ShadeMedium"
+        android:layout_marginVertical="5dp"
+        />
 
 
 

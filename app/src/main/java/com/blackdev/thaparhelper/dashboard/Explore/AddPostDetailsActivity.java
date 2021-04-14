@@ -119,11 +119,9 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
 
 
         Uri imageUri;
-        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.N) {
-            imageUri = Uri.parse(filePath);
-        } else{
+            Log.e("ADDPOST","IMAGEUR2");
             imageUri = Uri.fromFile(new File(filePath));
-        }
+        Log.e("ADDPOST","IMAGEURI: "+imageUri.toString());
         if( imageUri.equals("noImage") ) {
             Snackbar.make(rootLayout,"Something went wrong. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
             Log.e("ErrorPostDetails","Image Uri Empty");
@@ -152,8 +150,16 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
                 .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        String uriTask = task.getResult().toString();
-                        postDataInDB(uriTask,timestamp,filePathAndName);
+                        if(task.isSuccessful()) {
+                            Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
+                            while (!uriTask.isComplete()) {
+                                if(uriTask.isComplete()) {
+                                    postDataInDB(uriTask.getResult().toString(), timestamp, filePathAndName);
+                                    break;
+                                }
+                            }
+
+                        }
                         }
                     }
                 )
@@ -181,20 +187,20 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     private void postDataInDB(String downloadUrl, String timestamp, String postID) {
         UserPersonalData data = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid()).getUser();
 
-        HashMap<Object, String> hashMap = new HashMap<>();
-
-        hashMap.put("uid", data.getUid());
-        hashMap.put("uName", data.getName());
-        hashMap.put("uEmail",data.getEmail());
-        hashMap.put("uDp",data.getProfileImageLink());
-        hashMap.put("postId",postID);
-        hashMap.put("postDesc",description);
-        hashMap.put("postImage",downloadUrl);
-        hashMap.put("postLocation",location);
-        hashMap.put("postTime",timestamp);
+//        HashMap<Object, String> hashMap = new HashMap<>();
+        ModelPost modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data.getUid(),data.getEmail(),data.getProfileImageLink(),0,data.getName());
+//        hashMap.put("uid", data.getUid());
+//        hashMap.put("uName", data.getName());
+//        hashMap.put("uEmail",data.getEmail());
+//        hashMap.put("uDp",data.getProfileImageLink());
+//        hashMap.put("postId",postID);
+//        hashMap.put("postDesc",description);
+//        hashMap.put("postImage",downloadUrl);
+//        hashMap.put("postLocation",location);
+//        hashMap.put("postTime",timestamp);
 
         DatabaseReference mRef = Utils.getRefForPosts(data.getUid());
-        mRef.child(timestamp).setValue(hashMap)
+        mRef.child(timestamp).setValue(modelPost)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

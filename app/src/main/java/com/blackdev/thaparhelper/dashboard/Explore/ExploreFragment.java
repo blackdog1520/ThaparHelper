@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.allutils.Utils;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,11 +39,15 @@ public class ExploreFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "ExploreFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    ArrayList<ModelPost> list = new ArrayList<>();
+    AdapterPosts adapterPosts;
+    RecyclerView recyclerView;
     public ExploreFragment() {
         // Required empty public constructor
     }
@@ -67,7 +84,38 @@ public class ExploreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+        recyclerView = view.findViewById(R.id.exploreRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        loadPosts();
+
+
+        return view;
+    }
+
+    private void loadPosts() {
+        DatabaseReference mRef = Utils.getRefForPosts(FirebaseAuth.getInstance().getUid());
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds: snapshot.getChildren()) {
+                    ModelPost modelPost = ds.getValue(ModelPost.class);
+                    list.add(modelPost);
+                }
+                adapterPosts = new AdapterPosts(getActivity(),list);
+                recyclerView.setAdapter(adapterPosts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Snackbar.make(getView(),"Error loading post", BaseTransientBottomBar.LENGTH_SHORT).show();
+                Log.e(TAG,"Error: "+error.getMessage());
+            }
+        });
+
     }
 
     @Override

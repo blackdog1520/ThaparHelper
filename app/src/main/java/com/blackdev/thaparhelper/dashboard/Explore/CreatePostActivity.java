@@ -29,6 +29,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class CreatePostActivity extends AppCompatActivity{
 
@@ -128,7 +129,7 @@ public class CreatePostActivity extends AppCompatActivity{
 
         Uri allImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.DISPLAY_NAME};
-        Cursor cursor = this.getContentResolver().query(allImageUri, projection, null, null, null);
+        Cursor cursor = this.getContentResolver().query(allImageUri, projection, null, null, MediaStore.Images.Media.DATE_TAKEN+" DESC");
 
         try {
             cursor.moveToFirst();
