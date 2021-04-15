@@ -105,4 +105,14 @@ public class Utils {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Posts");
         return mRef;
     }
+
+    public static String getStringPref(String uid) {
+        return "user-"+uid;
+    }
+
+    public static int getCurrentUserType(Context context, String uid) {
+        MySharedPref mySharedPref = new MySharedPref(context,getStringPref(uid),Constants.TYPE_SHARED_PREF);
+        return mySharedPref.getUserType();
+    }
+
 }

@@ -16,9 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blackdev.thaparhelper.LoginActivity;
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
+import com.blackdev.thaparhelper.allutils.Utils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -75,7 +77,7 @@ public class SettingsFragment extends Fragment {
     private void init() {
         mAuth = FirebaseAuth.getInstance();
         mDB = FirebaseDatabase.getInstance();
-        mRef = mDB.getReference().child("Users").child("BasicData").child("Administration").child(mAuth.getUid());
+        mRef = Utils.getRefForBasicData(Utils.getCurrentUserType(getContext(),mAuth.getUid()),mAuth.getUid());
         //set this ref based on the type of user signing in
         userName = getView().findViewById(R.id.userNameSettings);
         rollNumber = getView().findViewById(R.id.userRollNoSettings);
@@ -123,7 +125,7 @@ public class SettingsFragment extends Fragment {
                         emailId.setText(data.getEmail());
                         userName.setText(data.getName());
                         rollNumber.setText(data.getRollNumber());
-                    MySharedPref pref = new MySharedPref(getActivity(),"User-"+mAuth.getUid());
+                    MySharedPref pref = new MySharedPref(getActivity(),"User-"+mAuth.getUid(), Constants.DATA_SHARED_PREF);
                     pref.saveUser(data);
                         if(data.getProfileImageLink()!=null && !data.getProfileImageLink().isEmpty()) {
                             Picasso.get().load(data.getProfileImageLink()).into(profilePic);

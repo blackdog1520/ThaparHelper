@@ -74,12 +74,13 @@
             android:layout_marginEnd="5dp"/>
 
         <RadioGroup
-            android:id="@+id/userTypeRadioGroup"
+            android:id="@+id/userTypeLoginRG"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginVertical="10dp"
+            android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/studentUser"
+                android:id="@+id/studentUserRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Student"
@@ -88,7 +89,7 @@
                 android:buttonTint="@color/ShadeMedium"/>
 
             <RadioButton
-                android:id="@+id/facultyUser"
+                android:id="@+id/facultyUserRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Faculty"
@@ -96,7 +97,7 @@
                 android:buttonTint="@color/ShadeMedium"/>
 
             <RadioButton
-                android:id="@+id/administrationUser"
+                android:id="@+id/administrationUserRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Administration / Staff"

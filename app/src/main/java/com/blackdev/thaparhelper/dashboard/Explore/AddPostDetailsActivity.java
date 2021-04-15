@@ -185,7 +185,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void postDataInDB(String downloadUrl, String timestamp, String postID) {
-        UserPersonalData data = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid()).getUser();
+        UserPersonalData data = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid(),Constants.DATA_SHARED_PREF).getUser();
 
 //        HashMap<Object, String> hashMap = new HashMap<>();
         ModelPost modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data.getUid(),data.getEmail(),data.getProfileImageLink(),0,data.getName());

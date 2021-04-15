@@ -58,6 +58,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
     ImageButton sendButton;
     CircularImageView profilePic;
     String hisUID;
+    int hisType;
 
     ValueEventListener seenListener;
     DatabaseReference mRefForSeen;
@@ -106,6 +107,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         hisUID = getIntent().getStringExtra("HisUID");
         recipientName.setText(getIntent().getStringExtra("HisName"));
         recipientDept.setText(getIntent().getStringExtra("HisDept"));
+        hisType = getIntent().getIntExtra("HisType",1);
         try {
             Picasso.get().load(getIntent().getStringExtra("HisProfile"))
                     .into(profilePic);
@@ -234,9 +236,9 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
     }
 
     private void getToken(final String message) {
-        MySharedPref sharedPref = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid());
+        MySharedPref sharedPref = new MySharedPref(this, Utils.getStringPref(FirebaseAuth.getInstance().getUid()),Constants.DATA_SHARED_PREF);
         final UserPersonalData myData =  sharedPref.getUser();
-        DatabaseReference mRef = Utils.getRefForBasicData(Constants.USER_ADMINISTRATION,hisUID);
+        DatabaseReference mRef = Utils.getRefForBasicData(hisType,hisUID);
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -252,6 +254,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                     data.put("hisUID",firebaseUser.getUid());
                     data.put("hisDept",myData.getBatch());
                     data.put("hisProfile",myData.getProfileImageLink());
+                    data.put("hisType",Utils.getCurrentUserType(getApplicationContext(),myData.getUid()));
 
                     to.put("to",token);
                     to.put("data", data);

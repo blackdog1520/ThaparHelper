@@ -11,5 +11,10 @@ public interface Constants {
 
     String CHANNEL_ID = "1000";
 
+    int DATA_SHARED_PREF = 1;
+    int TYPE_SHARED_PREF = 2;
+
+
+
 
 }

@@ -55,7 +55,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
     }
 
     private boolean checkUserLoggedIn() {
-        if(FirebaseAuth.getInstance() == null) {
+        if(FirebaseAuth.getInstance().getUid() == null) {
             return false;
         } else {
             return true;

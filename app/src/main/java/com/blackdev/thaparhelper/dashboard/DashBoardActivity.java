@@ -75,13 +75,11 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     }
 
     private void updateFirebaseToken() {
-        DatabaseReference databaseReference = Utils.getRefForBasicData(Constants.USER_ADMINISTRATION,FirebaseAuth.getInstance().getUid());
+        DatabaseReference databaseReference = Utils.getRefForBasicData(Utils.getCurrentUserType(this,mAuth.getUid()),mAuth.getUid());
         // choose path based on user type ;
         Map<String, Object> map= new HashMap<>();
-
         map.put("token", FirebaseInstanceId.getInstance().getToken());
         databaseReference.updateChildren(map);
-
     }
 
     @Override

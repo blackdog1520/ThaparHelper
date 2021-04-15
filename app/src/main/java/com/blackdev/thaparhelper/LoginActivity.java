@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CredentialChecker;
+import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +25,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputLayout emailLayout,passwordLayout;
     private ConstraintLayout rootLayout;
     private FirebaseAuth mAuth;
+    RadioGroup radioGroup;
     String TAGLOGIN = "Login: ";
+    private int userType;
 
 
     void init(){
@@ -39,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordInput = findViewById(R.id.passwordLogin);
         emailLayout = findViewById(R.id.emailLayoutLogin);
         passwordLayout = findViewById(R.id.passwordLayoutLogin);
+        radioGroup = findViewById(R.id.userTypeLoginRG);
     }
 
 
@@ -77,6 +87,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(val == -1) {
                             passwordLayout.setError(null);
                             passwordLayout.setErrorEnabled(false);
+                            switch (radioGroup.getCheckedRadioButtonId()) {
+                                case R.id.studentUserRB:
+                                    userType = Constants.USER_STUDENT;
+                                case R.id.facultyUserRB:
+                                    userType = Constants.USER_FACULTY;
+                                case R.id.administrationUserRB:
+                                    userType = Constants.USER_ADMINISTRATION;
+                            }
+
                             validateUser(emailId,password);
                         } else {
                             passwordLayout.setErrorEnabled(true);
@@ -95,9 +114,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    void updateUI(FirebaseUser user){
+    void updateUI(){
         Intent loginIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
-        loginIntent.putExtra("firebaseUser", user);
+        MySharedPref mySharedPref = new MySharedPref(this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
+        mySharedPref.saveUserType(userType);
         startActivity(loginIntent);
         finish();
     }
@@ -112,7 +132,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (task.isSuccessful()) {
                         Log.d(TAGLOGIN, "SignIn: Success");
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        checkUserIsValid(userType,user);
+                            
+                       
                     } else {
                         Log.w(TAGLOGIN, "SignIn: Failure");
                         Snackbar.make(rootLayout, "Incorrect email or password.", Snackbar.LENGTH_SHORT).show();
@@ -120,6 +142,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         }
+    }
+
+    private void checkUserIsValid(int userType, final FirebaseUser user) {
+        DatabaseReference mRef = Utils.getRefForBasicData(userType,user.getUid());
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    updateUI();
+                } else {
+                    mAuth.signOut();
+                    Snackbar.make(rootLayout, "Incorrect User Type", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        
+        
     }
 
 

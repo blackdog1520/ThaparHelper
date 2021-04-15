@@ -141,7 +141,7 @@ public class AllContactsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()) {
                     UserPersonalData data = ds.getValue(UserPersonalData.class);
-                    if(!data.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                    if(data!=null && data.getUid()!=null && !data.getUid().equals(FirebaseAuth.getInstance().getUid())) {
                         list.add(data);
                     }
                 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
                 intent.putExtra("HisName",data.getName());
                 intent.putExtra("HisDept",data.getBatch());
                 intent.putExtra("HisProfile",data.getProfileImageLink());
+                intent.putExtra("HisType", Constants.USER_ADMINISTRATION);
                 context.startActivity(intent);
             }
         });

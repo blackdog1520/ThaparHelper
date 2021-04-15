@@ -202,14 +202,22 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void addUserFacultyDetails(String email, String userName, String mobNumber, String dept,String uid,String link, String designation) {
         UserFacultyModelClass data = new UserFacultyModelClass(userType, userName,uid,designation,dept,email,mobNumber,link);
-        //updateUI(data);
+        updateUI(data);
         mRef = Utils.getRefForBasicData(userType,mAuth.getUid());
         mRef.setValue(data);
     }
 
     private void updateUI(UserPersonalData data) {
         Intent intent = new Intent(this, DashBoardActivity.class);
-        MySharedPref pref = new MySharedPref(this,"User-"+mAuth.getUid());
+        MySharedPref pref = new MySharedPref(this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
+        pref.saveUser(data);
+        startActivity(intent);
+        finish();
+    }
+
+    private void updateUI(UserFacultyModelClass data) {
+        Intent intent = new Intent(this, DashBoardActivity.class);
+        MySharedPref pref = new MySharedPref(this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
         pref.saveUser(data);
         startActivity(intent);
         finish();
