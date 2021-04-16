@@ -1,7 +1,5 @@
-package com.blackdev.thaparhelper.dashboard.Explore;
+package com.blackdev.thaparhelper.dashboard.Explore.Adapters;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.dashboard.Explore.ImageClickListener;
+import com.blackdev.thaparhelper.dashboard.Explore.Models.ImageModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 

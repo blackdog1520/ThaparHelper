@@ -12,24 +12,21 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
-import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Explore.Adapters.GalleryViewAdapter;
+import com.blackdev.thaparhelper.dashboard.Explore.Models.ImageModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class CreatePostActivity extends AppCompatActivity{
 
@@ -77,7 +74,7 @@ public class CreatePostActivity extends AppCompatActivity{
             currImagePath = imageList.get(0).getImagePath();
             currImageName = imageList.get(0).getImageName();
             Glide.with(getApplicationContext())
-                    .load(imageList.get(0).imagePath)
+                    .load(imageList.get(0).getImagePath())
                     .apply(RequestOptions.centerCropTransform())
                     .apply(RequestOptions.encodeQualityOf(80))
                     .into(currImage);
@@ -135,8 +132,8 @@ public class CreatePostActivity extends AppCompatActivity{
             cursor.moveToFirst();
             while(cursor.moveToNext()) {
                 ImageModel data = new ImageModel();
-                data.imagePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
-                data.imageName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME));
+                data.setImagePath(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                data.setImageName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)));
                 imageList.add(data);
             }
         } catch (Exception e) {

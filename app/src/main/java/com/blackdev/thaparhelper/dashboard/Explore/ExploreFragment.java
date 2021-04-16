@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Explore.Adapters.AdapterPosts;
+import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;

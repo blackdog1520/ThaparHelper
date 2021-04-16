@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper.dashboard.Explore;
+package com.blackdev.thaparhelper.dashboard.Explore.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,17 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
 import com.bumptech.glide.Glide;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AdapterPosts  extends RecyclerView.Adapter<PostBaseViewHolder> {
@@ -66,7 +65,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<PostBaseViewHolder> {
             ModelPost post = list.get(position);
             try {
                 Glide.with(context)
-                        .load(post.uDp)
+                        .load(post.getuDp())
                         .into(dp);
             } catch (Exception e) {
                 e.printStackTrace();

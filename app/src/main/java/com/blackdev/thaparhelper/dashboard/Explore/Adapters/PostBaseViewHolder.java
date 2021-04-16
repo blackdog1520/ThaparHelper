@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper.dashboard.Explore;
+package com.blackdev.thaparhelper.dashboard.Explore.Adapters;
 
 import android.view.View;
 

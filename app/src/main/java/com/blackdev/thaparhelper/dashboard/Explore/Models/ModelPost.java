@@ -1,4 +1,4 @@
-package com.blackdev.thaparhelper.dashboard.Explore;
+package com.blackdev.thaparhelper.dashboard.Explore.Models;
 
 public class ModelPost {
     String postId;
