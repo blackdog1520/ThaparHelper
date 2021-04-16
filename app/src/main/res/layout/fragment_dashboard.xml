@@ -1,14 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dashboard.DashboardFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/appBackgroundDefault"
+    tools:context=".dashboard.dashboardFrag.DashboardFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="DashBoard" />
+        >
 
-</FrameLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="1"
+            android:columnOrderPreserved="false"
+            android:padding="14dp"
+            android:alignmentMode="alignMargins"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:id="@+id/timetableButtonDashBoard"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/likeButtonCorner"
+                app:rippleColor="#FFFFFF"
+
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    >
+                   <ImageView
+                       android:layout_width="100dp"
+                       android:layout_height="100dp"
+                       android:src="@drawable/ic_schedule"
+                       />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Time Table"
+                        android:textSize="15sp"
+                        android:textColor="@color/textColorForBlackBack"
+                        android:fontFamily="sans-serif-light"
+                        />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                app:cardBackgroundColor="@color/likeButtonCorner"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                app:cardCornerRadius="8dp"
+                android:id="@+id/complaintButtonDashboard"
+                app:cardElevation="5dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:rippleColor="#FFFFFF"
+
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="16dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_complain"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" android:layout_gravity="center_horizontal"
+                        android:text="Complaints"
+                        android:textSize="15sp"
+                        android:textColor="@color/textColorForBlackBack"
+                        android:fontFamily="sans-serif-light"
+                        />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+        </GridLayout>
+
+
+
+
+    </ScrollView>
+
+</LinearLayout>
