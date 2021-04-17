@@ -1,12 +1,11 @@
 package com.blackdev.thaparhelper.database;
 
 import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities =  {ChatData.class, AllUsersData.class},version = 1,exportSchema = false)
+@Database(entities =  {ChatData.class, AllUsersData.class, TimeTableData.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase database;
     private static String DATABASE_NAME = "Thapar_database";
@@ -21,5 +20,8 @@ public abstract class AppDatabase extends RoomDatabase {
         return database;
     }
     public  abstract ChatDataDao chatDataDao();
+
+    public  abstract TimeTableDao timeTableDao();
+
 
 }

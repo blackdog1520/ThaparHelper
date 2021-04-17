@@ -6,12 +6,16 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 
 import androidx.core.app.ActivityCompat;
@@ -115,4 +119,78 @@ public class Utils {
         return mySharedPref.getUserType();
     }
 
+    public static LocalDate getNextDay(int day, LocalDate ld,int subType) {
+        Log.i("GetNextDay","RECEIVED:"+day);
+        switch (day+1) {
+            case 1:
+                Log.i("GetNextDayCase","1");
+                switch (subType) {
+                    case Constants.SAME_DAY_SEARCH:
+                        LocalDate nextOrSame = ld.with( TemporalAdjusters.nextOrSame( DayOfWeek.MONDAY ) ) ;
+                        return nextOrSame;
+                     case Constants.NEXT_DAY_SEARCH:
+                         LocalDate next = ld.with( TemporalAdjusters.next( DayOfWeek.MONDAY ) ) ;
+                         return next;
+                }
+
+                break;
+            case 2:
+                Log.i("GetNextDayCase","2");
+                switch (subType) {
+                    case Constants.SAME_DAY_SEARCH:
+                        LocalDate nextOrSame = ld.with( TemporalAdjusters.nextOrSame( DayOfWeek.TUESDAY ) ) ;
+                        return nextOrSame;
+                    case Constants.NEXT_DAY_SEARCH:
+                        LocalDate next = ld.with( TemporalAdjusters.next( DayOfWeek.TUESDAY ) ) ;
+                        return next;
+                }
+                break;
+            case 3 :
+                Log.i("GetNextDayCase","3");
+                switch (subType) {
+                    case Constants.SAME_DAY_SEARCH:
+                        LocalDate nextOrSame = ld.with( TemporalAdjusters.nextOrSame( DayOfWeek.WEDNESDAY ) ) ;
+                        return nextOrSame;
+                    case Constants.NEXT_DAY_SEARCH:
+                        LocalDate next = ld.with( TemporalAdjusters.next( DayOfWeek.WEDNESDAY ) ) ;
+                        return next;
+                }
+                break;
+            case 4 :
+                Log.i("GetNextDayCase","4");
+                switch (subType) {
+                    case Constants.SAME_DAY_SEARCH:
+                        LocalDate nextOrSame = ld.with( TemporalAdjusters.nextOrSame( DayOfWeek.THURSDAY) ) ;
+                        return nextOrSame;
+                    case Constants.NEXT_DAY_SEARCH:
+                        LocalDate next = ld.with( TemporalAdjusters.next( DayOfWeek.THURSDAY ) ) ;
+                        return next;
+                }
+                break;
+            case 5 :
+                Log.i("GetNextDayCase","5");
+                switch (subType) {
+                    case Constants.SAME_DAY_SEARCH:
+                        LocalDate nextOrSame = ld.with( TemporalAdjusters.nextOrSame( DayOfWeek.FRIDAY ) ) ;
+                        return nextOrSame;
+                    case Constants.NEXT_DAY_SEARCH:
+                        LocalDate next = ld.with( TemporalAdjusters.next( DayOfWeek.FRIDAY ) ) ;
+                        return next;
+                }
+                break;
+            case 6:
+                Log.i("GetNextDayCase","6");
+                switch (subType) {
+                    case Constants.SAME_DAY_SEARCH:
+                        LocalDate nextOrSame = ld.with( TemporalAdjusters.nextOrSame( DayOfWeek.SATURDAY ) ) ;
+                        return nextOrSame;
+                    case Constants.NEXT_DAY_SEARCH:
+                        LocalDate next = ld.with( TemporalAdjusters.next( DayOfWeek.SATURDAY ) ) ;
+                        return next;
+                }
+                break;
+
+        }
+        return null;
+    }
 }

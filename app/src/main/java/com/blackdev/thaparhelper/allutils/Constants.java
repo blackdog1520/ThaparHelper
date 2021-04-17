@@ -14,6 +14,18 @@ public interface Constants {
     int DATA_SHARED_PREF = 1;
     int TYPE_SHARED_PREF = 2;
 
+    int LECTURE_TYPE = 101;
+    int TUTORIAL_TYPE = 102;
+    int LAB_TYPE = 103;
+
+    int SAME_DAY_SEARCH = 0;
+    int NEXT_DAY_SEARCH = 1;//created for checking if today there is another class
+
+    String[] SUBJECTLIST = new String[]{"UCS619-Computer Graphics", "UCS619-Quantum Computing", "UCS701-Theory of computation", "UCS654-Predictive Analysis", "UCS654-Predictive Analysis", "UCS655-AI Applications", "UHU008-Corporate Finance"};
+
+    String[] DAYLIST = new String[]{"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+
+
 
 
 

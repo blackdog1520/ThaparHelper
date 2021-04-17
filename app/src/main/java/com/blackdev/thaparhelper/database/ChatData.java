@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "chatsTable", primaryKeys = {"mFROMUID","mTOUID","TimeStamp",})
+@Entity(tableName = "chatsTable", primaryKeys = {"mFROMUID","mTOUID","TimeStamp"})
 public class ChatData implements Serializable {
     public ChatData() {
     }

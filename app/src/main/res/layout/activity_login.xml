@@ -24,6 +24,7 @@
             android:layout_marginTop="80dp"
             android:padding="@dimen/paddingInputText"
             android:textColorHint="@color/hintColor"
+            android:backgroundTint="@color/appBackgroundDefault"
             android:hint="@string/Email_Id"
             >
             <com.google.android.material.textfield.TextInputEditText
@@ -34,7 +35,8 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize"
                 android:inputType="text|textEmailAddress"
-                android:backgroundTint="@color/hintColor"
+                android:backgroundTint="@color/appBackgroundDefault"
+
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -48,6 +50,7 @@
             android:padding="@dimen/paddingInputText"
             android:focusableInTouchMode="true"
             android:textColorHint="@color/hintColor"
+            android:backgroundTint="@color/appBackgroundDefault"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -58,6 +61,7 @@
                 android:fontFamily="sans-serif-light"
                 android:inputType="textPassword"
                 android:textColor="@color/textColor"
+                android:backgroundTint="@color/appBackgroundDefault"
                 android:textSize="@dimen/textSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,7 +71,7 @@
             android:layout_height="wrap_content"
             android:text="Forgot Password?"
             android:textSize="15sp"
-            android:textColor="@color/textColor"
+            android:textColor="@color/textColorForBlackBack"
             android:clickable="true"
             android:layout_gravity="end"
             android:layout_marginTop="5dp"
@@ -115,7 +119,7 @@
             android:text="Login"
             android:layout_marginTop="@dimen/marginButtonText"
             android:textColor="@color/ShadeLight"
-            android:background="@color/colorButtonBackground"
+            android:backgroundTint="@color/colorButtonBackground"
             android:layout_marginHorizontal="15dp"
             android:clickable="true"
             />

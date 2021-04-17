@@ -7,4 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="myTimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:numbersTextColor">#ffffff</item>
+        <item name="android:numbersBackgroundColor">#FFFFFF</item>
+        <item name="android:numbersSelectorColor">#FFFFFF</item>
+        <item name="android:headerBackground">#FFFFFF</item>
+    </style>
+
 </resources>
