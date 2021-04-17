@@ -2,7 +2,7 @@ package com.blackdev.thaparhelper.allutils;
 
 public interface Constants {
 
-    public static final int USER_ADMINISTRATION = 0;
+    public static final int USER_ADMINISTRATION = 1;
     public static final int USER_STUDENT = 2;
     public static final int USER_FACULTY = 3;
 

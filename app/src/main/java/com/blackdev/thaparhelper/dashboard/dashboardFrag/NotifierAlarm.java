@@ -87,7 +87,7 @@ public class NotifierAlarm extends BroadcastReceiver {
         }
         notificationManager.notify(new Random().nextInt(85-65),builder.build());
 
-        if(intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM) {
+        if(intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM || intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM - 1 ) {
             int id = intent.getIntExtra("ChannelID",-1);
             if(id !=-1) {
                 addFutureClass(reminder, id);
@@ -133,7 +133,7 @@ public class NotifierAlarm extends BroadcastReceiver {
             intent.putExtra("AlarmNumber", i);
             intent.putExtra("ChannelID", id);
 //                intent.putExtra("id",reminders.getId());
-            PendingIntent intent1 = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent intent1 = PendingIntent.getBroadcast(context, id*Constants.MAX_ALARM+i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
             Log.i("Date", "" + newDate.getTime().toString() + "CALENDAR: " + calendar.getTime().toString());
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 1000, intent1);
