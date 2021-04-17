@@ -29,7 +29,7 @@ public interface Constants {
 
     String[] TYPE_LIST = new String[]{"Lecture","Tutorial","Lab"};
 
-    int MAX_ALARM = 1;
+    int MAX_ALARM = 7;
 
 
 
