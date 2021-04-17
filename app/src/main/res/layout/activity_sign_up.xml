@@ -37,7 +37,6 @@
                     android:id="@+id/userNameSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name"
                     android:inputType="textPersonName"
                     android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
@@ -57,9 +56,8 @@
                     android:id="@+id/userRollSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/roll_number"
                     android:inputType="number"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -77,9 +75,8 @@
                     android:id="@+id/userBranchSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/branch"
                     android:inputType="text"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -97,9 +94,8 @@
                     android:id="@+id/userBatchSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/batch"
                     android:inputType="text"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -117,9 +113,8 @@
                     android:id="@+id/userDepartmentSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/department"
                     android:inputType="text"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -137,9 +132,8 @@
                     android:id="@+id/userDesignationSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/designation"
                     android:inputType="text"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -157,9 +151,8 @@
                     android:id="@+id/userEmailSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/Email_Id"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -171,16 +164,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/marginBetweenText"
                 android:focusableInTouchMode="true"
-                android:hint="Mobile Number"
+                android:hint="@string/mobile_number"
                 app:hintTextColor="@color/hintColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userMobileSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Mobile Number"
                     android:inputType="number"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -191,16 +183,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/marginBetweenText"
                 android:focusableInTouchMode="true"
-                android:hint="Enter Password"
+                android:hint="@string/type_your_password_here"
                 app:hintTextColor="@color/hintColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userPasswordSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Password"
                     android:inputType="text"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -218,30 +209,29 @@
                     android:id="@+id/userRePasswordSignUpInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Re-enter Password"
                     android:inputType="textPassword"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColorForBlackBack"
                     android:textColorHint="@color/ShadeMedium"
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
+            <Button
+                android:id="@+id/signUpButtonSign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="Sign Up"
+                android:textColor="#000000"
+                android:textSize="@dimen/textSize"
+                android:elevation="2dp"
+                android:backgroundTint="@color/textColorForBlackBack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/signUpButtonSign"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorButtonBackground"
-        android:clickable="true"
-        android:text="Sign Up"
-        android:textColor="#000000"
-        android:textSize="@dimen/textSize"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
 
 

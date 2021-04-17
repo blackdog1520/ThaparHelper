@@ -133,7 +133,7 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
                     intent.putExtra("AlarmNumber", i);
                     intent.putExtra("ChannelID", id);
 //                intent.putExtra("id",reminders.getId());
-                    PendingIntent intent1 = PendingIntent.getBroadcast(TimeTableOptionsActivity.this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent intent1 = PendingIntent.getBroadcast(TimeTableOptionsActivity.this, id*(Constants.MAX_ALARM)+i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     Log.i("Date", "" + newDate.getTime().toString() + "CALENDAR: " + calendar.getTime().toString());
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 1000, intent1);

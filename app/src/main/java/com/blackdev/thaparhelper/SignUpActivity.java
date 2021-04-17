@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_up);
 
         userType = getIntent().getIntExtra("userType", 2);
-        Log.i("Value from User Type activity " + userType, "");
+        Log.i("Value", ""+userType);
         init();
 
         switch (userType) {
@@ -176,6 +176,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         layout.setError(error);
         layout.setFocusable(val);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -185,8 +186,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 {
                     case Constants.USER_STUDENT : checkStudentDetail();
                     break;
-                    case Constants.USER_FACULTY : checkFacultyDetail();
-                    break;
+                    case Constants.USER_FACULTY :
                     case  Constants.USER_ADMINISTRATION : checkFacultyDetail();
                     break;
                 }
@@ -196,29 +196,46 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void addUserDetails(String email, String userName, String mobNumber, String rollNumber,String uid,String link, String batch,String branch) {
         UserPersonalData data = new UserPersonalData(userName,email,mobNumber,rollNumber,uid,link,batch,branch);
-        updateUI(data);
+        MySharedPref mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
+
+        mySharedPref.saveUserType(userType);
+
+        mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
+        mySharedPref.saveUser(data);
         mRef = Utils.getRefForBasicData(userType,mAuth.getUid());
-        mRef.setValue(data);
+        mRef.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                updateUI();
+            }
+        });
+
     }
+
+
     private void addUserFacultyDetails(String email, String userName, String mobNumber, String dept,String uid,String link, String designation) {
         UserFacultyModelClass data = new UserFacultyModelClass(userType, userName,uid,designation,dept,email,mobNumber,link);
-        updateUI(data);
+        MySharedPref mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
+
+        mySharedPref.saveUserType(userType);
+
+        mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
+        mySharedPref.saveUser(data);
+
+
         mRef = Utils.getRefForBasicData(userType,mAuth.getUid());
-        mRef.setValue(data);
+        mRef.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                updateUI();
+            }
+        });;
     }
 
-    private void updateUI(UserPersonalData data) {
-        Intent intent = new Intent(this, DashBoardActivity.class);
-        MySharedPref pref = new MySharedPref(this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
-        pref.saveUser(data);
-        startActivity(intent);
-        finish();
-    }
 
-    private void updateUI(UserFacultyModelClass data) {
+
+    private void updateUI() {
         Intent intent = new Intent(this, DashBoardActivity.class);
-        MySharedPref pref = new MySharedPref(this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
-        pref.saveUser(data);
         startActivity(intent);
         finish();
     }

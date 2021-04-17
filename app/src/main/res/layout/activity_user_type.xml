@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Select type of user"
             android:gravity="center"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textColor="@color/ShadeMedium"/>
 
         <RadioGroup
@@ -59,7 +59,10 @@
             android:id="@+id/proceedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Proceed"
+            android:text="Continue"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="sans-serif-light"
             android:layout_gravity="center"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
