@@ -30,5 +30,8 @@ public interface TimeTableDao {
     @Query("SELECT * FROM timeTable where mDay = :mDay")
     List<TimeTableData> getDaysTimeTable( String mDay);
 
+    @Query("Select * from timeTable")
+    public List<TimeTableData> getAll();
+
 
 }

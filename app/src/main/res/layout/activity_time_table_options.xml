@@ -55,7 +55,6 @@
            android:padding="6dp"
            android:orientation="vertical">
            <RelativeLayout
-               android:id="@+id/lyGiftList"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginLeft="5dp"
@@ -80,12 +79,13 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginLeft="10dp"
+                   android:layout_marginStart="10dp"
                    android:layout_marginTop="-5dp"
                    android:background="@color/appBackgroundDefault"
                    android:paddingLeft="3dp"
                    android:paddingRight="3dp"
-                   android:text="Subject"
+                   android:text="@string/subject"
+                   android:textSize="13sp"
                    android:textColor="@color/likeButtonCenter" />
 
            </RelativeLayout>
@@ -115,12 +115,12 @@
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:layout_marginLeft="10dp"
+                       android:layout_marginStart="10dp"
                        android:layout_marginTop="-5dp"
                        android:background="@color/appBackgroundDefault"
                        android:paddingLeft="3dp"
                        android:paddingRight="3dp"
-                       android:text="Day"
+                       android:text="@string/day"
                        android:textColor="@color/likeButtonCenter" />
 
                </RelativeLayout>
@@ -134,13 +134,48 @@
                     android:timePickerMode="spinner"
                     />
 
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="5dp"
+               android:layout_marginTop="5dp"
+               android:layout_marginRight="5dp">
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/spinner_bg"
+                   android:layout_margin="4dp"
+                   >
+                   <Spinner
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/typeListDropDown"
+                       android:textColor="@color/textColorForBlackBack"
+                       android:spinnerMode="dropdown"
+                       android:layout_marginVertical="10dp"
+                       />
+               </LinearLayout>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="10dp"
+                   android:layout_marginTop="-5dp"
+                   android:background="@color/appBackgroundDefault"
+                   android:paddingLeft="3dp"
+                   android:paddingRight="3dp"
+                   android:text="@string/type"
+                   android:textColor="@color/likeButtonCenter" />
+
+           </RelativeLayout>
+
            <com.google.android.material.button.MaterialButton
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:textColor="#000000"
                android:id="@+id/addButtonTimeTableOptions"
                android:layout_margin="9dp"
-               android:text="Add"
+               android:text="@string/add"
                app:backgroundTint="@color/textColorForBlackBack"/>
 
            </LinearLayout>

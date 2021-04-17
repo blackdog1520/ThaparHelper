@@ -6,6 +6,8 @@ public interface Constants {
     public static final int USER_STUDENT = 2;
     public static final int USER_FACULTY = 3;
 
+    String APP_NAME = "Thapar Helper";
+
     String NOTIFICATION_URL = "https://fcm.googleapis.com/fcm/send";
     String CLOUD_SERVER_KEY = "AAAA5bF30vg:APA91bF4idUovFK_LPVc_gXXeYDO1zpnGSzdMcjkj2x6HPFibCMKalELVHrvFr6e41i4NF1Rpr4OhiNYDL0tJlzeTLpq6x0IMaNc83RnE-z15lrX84-xF07RSF22LL1V0v9IPEdPyR10";
 
@@ -25,6 +27,9 @@ public interface Constants {
 
     String[] DAYLIST = new String[]{"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 
+    String[] TYPE_LIST = new String[]{"Lecture","Tutorial","Lab"};
+
+    int MAX_ALARM = 1;
 
 
 

@@ -5,9 +5,23 @@ import java.io.Serializable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "timeTable", primaryKeys = {"mSubjectName","mDay","mHr","mMin"})
+@Entity(tableName = "timeTable")
 public class TimeTableData implements Serializable {
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "mID")
+    private int id;
+
     @NonNull
     @ColumnInfo(name = "mSubjectName")
     String mSubjectName;
