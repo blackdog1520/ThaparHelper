@@ -34,6 +34,7 @@ import java.util.TimeZone;
 import androidx.core.app.NotificationCompat;
 
 import static android.content.Context.ALARM_SERVICE;
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class NotifierAlarm extends BroadcastReceiver {
 
@@ -72,8 +73,7 @@ public class NotifierAlarm extends BroadcastReceiver {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             channel = new NotificationChannel("my_channel_01",Constants.APP_NAME, NotificationManager.IMPORTANCE_HIGH);
         }
-
-        Notification notification = builder.setContentTitle(Constants.APP_NAME)
+        Notification notification = builder.setContentTitle("Reminder")
                 .setContentText(Constants.TYPE_LIST[intent.getIntExtra("ClassType",0)]+" now of "+intent.getStringExtra("Subject")).setAutoCancel(true)
                 .setSound(alarmsound).setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentIntent(intent2)
@@ -85,7 +85,7 @@ public class NotifierAlarm extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(channel);
         }
-        notificationManager.notify(new Random().nextInt(85-65),builder.build());
+        notificationManager.notify(new Random().nextInt(85-65),notification);
 
         if(intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM || intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM - 1 ) {
             int id = intent.getIntExtra("ChannelID",-1);

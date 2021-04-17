@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dashboard.dashboardFrag.TimeTableOptionsActivity"/>
+        <activity android:name=".dashboard.dashboardFrag.EditTimeTableActivity"></activity>
+        <activity android:name=".dashboard.dashboardFrag.TimeTableOptionsActivity" />
         <activity android:name=".dashboard.Explore.AddPostDetailsActivity" />
         <activity android:name=".dashboard.Explore.EditPostActivity" />
         <activity android:name=".dashboard.Explore.CreatePostActivity" />
@@ -27,20 +28,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserTypeActivity" />
-        <receiver android:process=":remote" android:name=".dashboard.dashboardFrag.NotifierAlarm"></receiver>
+
+        <receiver
+            android:name=".dashboard.dashboardFrag.NotifierAlarm"
+            android:process=":remote" />
+
         <service android:name=".notification.FirebaseNotificationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
 </manifest>

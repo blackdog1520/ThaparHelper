@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void checkUserIsValid(int userType, final FirebaseUser user) {
         DatabaseReference mRef = Utils.getRefForBasicData(userType,user.getUid());
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {

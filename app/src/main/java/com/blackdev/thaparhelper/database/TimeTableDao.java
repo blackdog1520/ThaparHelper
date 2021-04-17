@@ -28,7 +28,7 @@ public interface TimeTableDao {
     List<TimeTableData> getDaySubjectTimeTable(String subject, int mDay);
 
     @Query("SELECT * FROM timeTable where mDay = :mDay")
-    List<TimeTableData> getDaysTimeTable( String mDay);
+    List<TimeTableData> getDaysTimeTable( int mDay);
 
     @Query("Select * from timeTable")
     public List<TimeTableData> getAll();

@@ -35,7 +35,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private String mParam1;
     private String mParam2;
 
-    MaterialCardView timetable,complaint;
+    MaterialCardView timetable,complaint,editTimeTable;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -76,8 +76,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
         timetable = view.findViewById(R.id.timetableButtonDashBoard);
         complaint = view.findViewById(R.id.complaintButtonDashboard);
+        editTimeTable = view.findViewById(R.id.timetableViewButtonDashBoard);
         timetable.setOnClickListener(this);
         complaint.setOnClickListener(this);
+        editTimeTable.setOnClickListener(this);
 
         return view;
     }
@@ -99,6 +101,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.complaintButtonDashboard:
                 Toast.makeText(getContext(),"Currently in development phase",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.timetableViewButtonDashBoard:
+                Intent intent1 = new Intent(getActivity(),EditTimeTableActivity.class);
+                startActivity(intent1);
                 break;
         }
 

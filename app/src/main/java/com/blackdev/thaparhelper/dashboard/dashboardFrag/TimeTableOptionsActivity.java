@@ -91,7 +91,7 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
                 int min = timePicker.getMinute();
                 data.setmHH(hr);
                 data.setmMM(min);
-                data.setClassType(Constants.LECTURE_TYPE);
+                data.setClassType(typeSpinner.getSelectedItemPosition());
                 data.setmDay(daySpinner.getSelectedItemPosition());
                 data.setmSubjectName(subjectList[subjectSpinner.getSelectedItemPosition()]);
                 timeTableDao.insert(data);
@@ -132,7 +132,6 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
                     intent.putExtra("ClassType", typeSpinner.getSelectedItemPosition());
                     intent.putExtra("AlarmNumber", i);
                     intent.putExtra("ChannelID", id);
-//                intent.putExtra("id",reminders.getId());
                     PendingIntent intent1 = PendingIntent.getBroadcast(TimeTableOptionsActivity.this, id*(Constants.MAX_ALARM)+i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     Log.i("Date", "" + newDate.getTime().toString() + "CALENDAR: " + calendar.getTime().toString());
