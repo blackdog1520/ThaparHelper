@@ -102,18 +102,17 @@ public class EditTimeTableActivity extends AppCompatActivity {
 
                             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                             Intent myIntent = new Intent(getApplicationContext(), NotifierAlarm.class);
-                            for (int t = 0; t < 7; t++) {
                                 PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                                        getApplicationContext(), item.getId() * Constants.MAX_ALARM + t, myIntent,
+                                        getApplicationContext(), item.getId() , myIntent,
                                         PendingIntent.FLAG_UPDATE_CURRENT);
 
                                 alarmManager.cancel(pendingIntent);
-                            }
+
                         } else {
                             delete = true;
                         }
                     }
-                },snackbar.getDuration()+1000);
+                },snackbar.getDuration()+1500);
 
 
 

@@ -99,17 +99,12 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
                 int id = dataList.get(dataList.size()-1).getId();
                 LocalDate prev = null;
                 LocalDate nextDate = null;
+                Calendar calendar = null;
 
-                for(int i=1;i<=Constants.MAX_ALARM;i++) {
 
-                    if(i == 1) {
                         Date cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30")).getTime();
                         ld = LocalDate.of(2021, cal.getMonth() + 1, cal.getDate());
                         nextDate = Utils.getNextDay(data.getmDay(), ld, Constants.SAME_DAY_SEARCH);
-                    } else {
-                        ld = prev;
-                        nextDate = Utils.getNextDay(data.getmDay(), ld, Constants.NEXT_DAY_SEARCH);
-                    }
 
                     prev = nextDate;
                     Log.i("INDEX", "SELECTED" + nextDate);
@@ -122,21 +117,24 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
 
 
                     Date finalDate = newDate.getTime();
-                    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
+                   
+
+                        calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
                     calendar.setTime(newDate.getTime());
+
                     //calendar.set(Calendar.SECOND,0);
 
                     Intent intent = new Intent(TimeTableOptionsActivity.this, NotifierAlarm.class);
                     intent.putExtra("Subject", data.getmSubjectName());
                     intent.putExtra("RemindDate", finalDate.toString());
                     intent.putExtra("ClassType", typeSpinner.getSelectedItemPosition());
-                    intent.putExtra("AlarmNumber", i);
                     intent.putExtra("ChannelID", id);
-                    PendingIntent intent1 = PendingIntent.getBroadcast(TimeTableOptionsActivity.this, id*(Constants.MAX_ALARM)+i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent intent1 = PendingIntent.getBroadcast(TimeTableOptionsActivity.this, id*(Constants.MAX_ALARM), intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     Log.i("Date", "" + newDate.getTime().toString() + "CALENDAR: " + calendar.getTime().toString());
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 1000, intent1);
-                }
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7,intent1);
+                    //alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + i*10*1000, intent1);
+
                 Toast.makeText(TimeTableOptionsActivity.this,"Inserted Successfully",Toast.LENGTH_SHORT).show();
 
 

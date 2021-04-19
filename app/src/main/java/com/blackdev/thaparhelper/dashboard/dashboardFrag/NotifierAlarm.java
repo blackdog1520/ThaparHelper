@@ -87,12 +87,12 @@ public class NotifierAlarm extends BroadcastReceiver {
         }
         notificationManager.notify(new Random().nextInt(85-65),notification);
 
-        if(intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM || intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM - 1 ) {
-            int id = intent.getIntExtra("ChannelID",-1);
-            if(id !=-1) {
-                addFutureClass(reminder, id);
-            }
-        }
+//        if(intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM || intent.getIntExtra("AlarmNumber",Constants.MAX_ALARM) == Constants.MAX_ALARM - 1 ) {
+//            int id = intent.getIntExtra("ChannelID",-1);
+//            if(id !=-1) {
+//                addFutureClass(reminder, id);
+//            }
+//        }
     }
 
     private void addFutureClass(TimeTableData data, int id) {
