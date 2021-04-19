@@ -125,5 +125,19 @@ public class TimeTableAdapter  extends RecyclerView.Adapter<TimeTableBaseViewHol
         }
     }
 
+    public void removeItem(int position) {
+        list.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(TimeTableData item, int position) {
+        list.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public List<TimeTableData> getData() {
+        return list;
+    }
+
 
 }

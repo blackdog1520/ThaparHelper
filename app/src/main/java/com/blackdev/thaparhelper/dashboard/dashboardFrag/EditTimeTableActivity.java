@@ -1,15 +1,27 @@
 package com.blackdev.thaparhelper.dashboard.dashboardFrag;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.TimeTableDao;
 import com.blackdev.thaparhelper.database.TimeTableData;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -21,11 +33,14 @@ public class EditTimeTableActivity extends AppCompatActivity {
     List<TimeTableData> list;
     TimeTableAdapter adapter;
     TimeTableDao timeTableDao;
+    LinearLayout rootLayout;
+    boolean delete = true;
 
     private void init() {
         recyclerView = findViewById(R.id.timeTableRecyclerView);
         timeTableDao = AppDatabase.getInstance(this).timeTableDao();
         list = new ArrayList<>();
+        rootLayout = findViewById(R.id.rootLayoutEditTT);
     }
 
     @Override
@@ -49,9 +64,63 @@ public class EditTimeTableActivity extends AppCompatActivity {
         }
         adapter = new TimeTableAdapter(this,list);
         recyclerView.setAdapter(adapter);
+        enableSwipeToDeleteAndUndo();
         //adapter.notifyDataSetChanged();
 
     }
 
+    private void enableSwipeToDeleteAndUndo() {
 
+        SwipeToDeleteCallBack swipeToDeleteCallback = new SwipeToDeleteCallBack(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+
+                final int position = viewHolder.getAdapterPosition();
+                final TimeTableData item = adapter.getData().get(position);
+
+                adapter.removeItem(position);
+
+
+                Snackbar snackbar = Snackbar
+                        .make(rootLayout, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        delete = false;
+                        adapter.restoreItem(item, position);
+                        recyclerView.scrollToPosition(position);
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(delete) {
+                            timeTableDao.deleteEntry(item);
+
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                            Intent myIntent = new Intent(getApplicationContext(), NotifierAlarm.class);
+                            for (int t = 0; t < 7; t++) {
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                                        getApplicationContext(), item.getId() * Constants.MAX_ALARM + t, myIntent,
+                                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                alarmManager.cancel(pendingIntent);
+                            }
+                        } else {
+                            delete = true;
+                        }
+                    }
+                },snackbar.getDuration()+1000);
+
+
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
 }
