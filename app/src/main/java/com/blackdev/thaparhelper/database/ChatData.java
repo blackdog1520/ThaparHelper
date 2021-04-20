@@ -35,6 +35,19 @@ public class ChatData implements Serializable {
     @ColumnInfo(name = "MediaUrl")
     private String MediaUrl;
 
+    @ColumnInfo(name = "mDPUrl")
+    private String DpUrl;
+
+    @ColumnInfo(name = "mTouName")
+    private String ToUName;
+
+    @ColumnInfo(name = "hisUserType")
+    private int ToUType;
+
+
+
+
+
     public String getMediaUrl() {
         return MediaUrl;
     }
@@ -46,13 +59,40 @@ public class ChatData implements Serializable {
     @ColumnInfo(name = "Seen")
     private boolean isSeen;
 
-    public ChatData(String fromUID, boolean sentByMe, String toUID, String message, boolean isMediaFile, String mediaUrl, boolean isSeen, String timeStamp) {
+    public String getDpUrl() {
+        return DpUrl;
+    }
+
+    public void setDpUrl(String dpUrl) {
+        DpUrl = dpUrl;
+    }
+
+    public String getToUName() {
+        return ToUName;
+    }
+
+    public void setToUName(String toUName) {
+        ToUName = toUName;
+    }
+
+    public int getToUType() {
+        return ToUType;
+    }
+
+    public void setToUType(int toUType) {
+        ToUType = toUType;
+    }
+
+    public ChatData(@NonNull String fromUID, boolean sentByMe, @NonNull String toUID, String message, boolean isMediaFile, String mediaUrl, String dpUrl, String toUName, int toUType, boolean isSeen, @NonNull String timeStamp) {
         FromUID = fromUID;
         SentByMe = sentByMe;
         ToUID = toUID;
         Message = message;
         this.isMediaFile = isMediaFile;
         MediaUrl = mediaUrl;
+        DpUrl = dpUrl;
+        ToUName = toUName;
+        ToUType = toUType;
         this.isSeen = isSeen;
         TimeStamp = timeStamp;
     }

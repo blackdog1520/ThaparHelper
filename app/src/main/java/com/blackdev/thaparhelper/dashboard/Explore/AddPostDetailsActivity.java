@@ -19,6 +19,7 @@ import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Constants;
+import com.blackdev.thaparhelper.allutils.CustomButtonWithPD;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
@@ -55,7 +56,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     LinearLayout rootLayout;
     CircularImageView imageView;
     EditText descET, locationET;
-    Button upload;
+    CustomButtonWithPD upload;
     String filePath = "";
     String fileName = "";
     String description = "";
@@ -108,9 +109,13 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View view) {
+        upload.showLoading();
+        upload.hideLoading();
         if( filePath.isEmpty() ) {
             Snackbar.make(rootLayout,"Something went wrong. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
             Log.e("ErrorPostDetails","filePath is empty");
+            upload.hideLoading();
+            upload.setClickable(true);
             return;
         }
 
@@ -122,6 +127,8 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
         if( imageUri.equals("noImage") ) {
             Snackbar.make(rootLayout,"Something went wrong. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
             Log.e("ErrorPostDetails","Image Uri Empty");
+            upload.hideLoading();
+            upload.setClickable(true);
             return;
         }
 
@@ -174,8 +181,12 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
                 });
 
         } catch (FileNotFoundException e) {
+            upload.hideLoading();
+            upload.setClickable(true);
             e.printStackTrace();
         } catch (IOException e) {
+            upload.hideLoading();
+            upload.setClickable(true);
             e.printStackTrace();
         }
 
@@ -202,6 +213,8 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i("PostStatus:","Success");
+                        upload.hideLoading();
+                        //upload.setClickable(true);
                         Intent intent = new Intent(AddPostDetailsActivity.this, DashBoardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
@@ -211,6 +224,8 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        upload.hideLoading();
+                        upload.setClickable(true);
                         Log.i("PostStatus:","Failure: "+e.getMessage());
                     }
                 });

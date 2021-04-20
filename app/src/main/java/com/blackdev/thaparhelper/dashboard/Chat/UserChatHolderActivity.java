@@ -57,7 +57,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
     EditText messageET;
     ImageButton sendButton;
     CircularImageView profilePic;
-    String hisUID;
+    String hisUID,hisUrl,hisName;
     int hisType;
 
     ValueEventListener seenListener;
@@ -84,7 +84,6 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         toolbar = findViewById(R.id.chatToolbar);
         recyclerView = findViewById(R.id.messagesRecyclerView);
         recipientName = findViewById(R.id.recipientName);
-        recipientDept = findViewById(R.id.recipientDept);
         messageET = findViewById(R.id.messageEditText);
         sendButton = findViewById(R.id.sendMessageButton);
         profilePic = findViewById(R.id.profilePicRecipient);
@@ -105,11 +104,12 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
 
         toolbar.setTitle("");
         hisUID = getIntent().getStringExtra("HisUID");
-        recipientName.setText(getIntent().getStringExtra("HisName"));
-        recipientDept.setText(getIntent().getStringExtra("HisDept"));
+        hisUrl = getIntent().getStringExtra("HisProfile");
+        hisName = getIntent().getStringExtra("HisName");
+        recipientName.setText(hisName);
         hisType = getIntent().getIntExtra("HisType",1);
         try {
-            Picasso.get().load(getIntent().getStringExtra("HisProfile"))
+            Picasso.get().load(hisUrl)
                     .into(profilePic);
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,13 +165,15 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()) {
                     ChatData chatData = ds.getValue(ChatData.class);
-                    chatData.setSentByMe(false);
-                    database.chatDataDao().insert(chatData);
-                    if(chatData.isSeen()) {
-                       // database.chatDataDao().updateMessage(true,hisUID,);
+                    if(chatData !=null && chatData.getToUID() != null && chatData.getFromUID()!=null) {
+                        chatData.setSentByMe(false);
+                        database.chatDataDao().insert(chatData);
+                        if (chatData.isSeen()) {
+                            database.chatDataDao().updateMessage(true, hisUID, chatData.getTimeStamp());
+                        }
+                        updateMessages();
+                        seenMessages();
                     }
-                    updateMessages();
-                    seenMessages();
                 }
             }
 
@@ -207,7 +209,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         Long ts = System.currentTimeMillis()/1000;
         String time = ts.toString();
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Messages").child(hisUID).child("ReceivedMessages").child(firebaseUser.getUid());
-        ChatData data = new ChatData(firebaseUser.getUid(),true,hisUID,message,false,"",false,time);
+        ChatData data = new ChatData(firebaseUser.getUid(),true,hisUID,message,false,"",hisUrl,hisName,hisType,false,time);
         database.chatDataDao().insert(data);
         dbRef.push().setValue(data);
 
