@@ -32,7 +32,7 @@
                 android:id="@+id/emailLogin"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-light"
-                android:textColor="@color/textColor"
+                android:textColor="@color/textColorForBlackBack"
                 android:textSize="@dimen/textSize"
                 android:inputType="text|textEmailAddress"
                 android:backgroundTint="@color/appBackgroundDefault"
@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-light"
                 android:inputType="textPassword"
-                android:textColor="@color/textColor"
+                android:textColor="@color/textColorForBlackBack"
                 android:backgroundTint="@color/appBackgroundDefault"
                 android:textSize="@dimen/textSize" />
 
@@ -109,7 +109,7 @@
                 android:buttonTint="@color/ShadeMedium"/>
         </RadioGroup>
 
-        <Button
+        <com.blackdev.thaparhelper.allutils.CustomButtonWithPD
             android:id="@+id/loginUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,6 +122,11 @@
             android:backgroundTint="@color/colorButtonBackground"
             android:layout_marginHorizontal="15dp"
             android:clickable="true"
+            app:lb_buttonColor="@color/colorPrimary"
+            app:lb_isShadowEnable="true"
+            app:lb_isCircular="true"
+            app:lb_shadowColor="@color/colorPrimaryDark"
+            app:lb_shadowHeight="5dp"
             />
     </LinearLayout>
 

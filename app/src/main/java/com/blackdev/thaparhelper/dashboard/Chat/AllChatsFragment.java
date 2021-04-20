@@ -3,12 +3,21 @@ package com.blackdev.thaparhelper.dashboard.Chat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.database.AppDatabase;
+import com.blackdev.thaparhelper.database.ChatData;
+import com.blackdev.thaparhelper.database.ChatDataDao;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,10 @@ public class AllChatsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView recyclerView;
+    List<ChatData> chatData = new ArrayList<>();
+    AllUserAdapter adapter;
+
 
 
 
@@ -63,6 +76,20 @@ public class AllChatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_chats, container, false);
+        View view  = inflater.inflate(R.layout.fragment_all_chats, container, false);
+        recyclerView = view.findViewById(R.id.userRecentChatsRV);
+        chatData = AppDatabase.getInstance(getContext()).chatDataDao().getChatHistory();
+        Log.i("RecentChats","SIZE: "+chatData.size());
+        showUserChat(view);
+
+        return view;
+    }
+
+    private void showUserChat(View view) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setSmoothScrollbarEnabled(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new AllUserAdapter(getContext(),chatData);
+        recyclerView.setAdapter(adapter);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -14,7 +15,10 @@ import android.view.ViewGroup;
 
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.dashboard.Chat.adapter.ViewPagerChatsAdapter;
+import com.blackdev.thaparhelper.database.ChatData;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +38,7 @@ public class ChatFragment extends Fragment {
     private View view;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+
 
     public ChatFragment() {
         // Required empty public constructor
