@@ -1,9 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appBackgroundDefault"
     tools:context=".ShowUserProfile">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/ShadeMedium">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            android:id="@+id/showUserTypeLottie"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/userProfileImageSettings"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:elevation="5dp"
+                android:src="@drawable/ic_baseline_person_24"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="1dp"
+                app:civ_circle_color="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userNameSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/marginBetweenText"
+                android:gravity="start"
+                android:text="username"
+                android:textAllCaps="true"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/textColorForBlackBack"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/userRollNoSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/marginBetweenText"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_thin"
+                android:text="xxxxxxxx"
+                android:textColor="@color/textColorForBlackBack" />
+
+                <TextView
+                    android:id="@+id/userEmailIdSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/marginBetweenText"
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="@font/roboto_thin"
+                    android:gravity="center"
+                    android:text="abcd3_beXX@thapar.edu"
+                    android:textColor="@color/textColorForBlackBack" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>
