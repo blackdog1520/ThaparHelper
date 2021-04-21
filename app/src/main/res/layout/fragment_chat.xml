@@ -15,18 +15,20 @@
         android:id="@+id/tabLayoutChats"
         app:tabIndicatorColor="@color/ShadeLight"
         app:tabBackground="@color/appBackgroundDefault"
-
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/textColorForBlackBack"
         app:tabTextColor="@color/ShadeLight"
         >
 
+
+
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/viewPagerChats"
-        />
+        >
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

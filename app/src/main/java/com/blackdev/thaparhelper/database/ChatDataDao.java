@@ -25,5 +25,8 @@ public interface ChatDataDao {
     @Query("UPDATE chatsTable SET Seen = :flag where mTOUID = :hisUID and TimeStamp = :timeStamp")
     void updateMessage(boolean flag, String hisUID, String timeStamp);
 
+    @Query("SELECT * FROM chatsTable group by mTOUID and mFROMUID")
+    List<ChatData> getChatHistory();
+
 
 }

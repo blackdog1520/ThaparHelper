@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class TimeTableOptionsActivity extends AppCompatActivity implements  View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class TimeTableOptionsActivity extends AppCompatActivity implements  View.OnClickListener{
 
     Button addButton;
     Spinner subjectSpinner,daySpinner,typeSpinner;
@@ -66,17 +66,15 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
         ArrayAdapter<String> adapterSubject = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,subjectList);
         adapterSubject.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         subjectSpinner.setAdapter(adapterSubject);
-        subjectSpinner.setOnItemSelectedListener(this);
 
         ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,dayList);
         adapterSubject.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         daySpinner.setAdapter(adapterDays);
-        daySpinner.setOnItemSelectedListener(this);
 
         ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,Constants.TYPE_LIST);
         adapterSubject.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         typeSpinner.setAdapter(adapterType);
-        typeSpinner.setOnItemSelectedListener(this);
+
 
 
         data = new TimeTableData();
@@ -114,15 +112,10 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
                     int date = Integer.parseInt(nextDate.toString().split("-", 3)[2]);
                     newDate.set(nextDate.getYear(), nextDate.getMonth().getValue() - 1, date, hr, min, 0);
                     Log.i("Today", " " + ld.toString() + "*NEXTDAY*:" + newDate.getTime().toString());
-
-
                     Date finalDate = newDate.getTime();
-                   
-
-                        calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
+                    calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
                     calendar.setTime(newDate.getTime());
-
-                    //calendar.set(Calendar.SECOND,0);
+                    calendar.set(Calendar.SECOND,0);
 
                     Intent intent = new Intent(TimeTableOptionsActivity.this, NotifierAlarm.class);
                     intent.putExtra("Subject", data.getmSubjectName());
@@ -132,7 +125,7 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
                     PendingIntent intent1 = PendingIntent.getBroadcast(TimeTableOptionsActivity.this, id*(Constants.MAX_ALARM), intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     Log.i("Date", "" + newDate.getTime().toString() + "CALENDAR: " + calendar.getTime().toString());
-                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7,intent1);
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),((long)7)*(AlarmManager.INTERVAL_DAY),intent1);
                     //alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + i*10*1000, intent1);
 
                 Toast.makeText(TimeTableOptionsActivity.this,"Inserted Successfully",Toast.LENGTH_SHORT).show();
@@ -142,20 +135,5 @@ public class TimeTableOptionsActivity extends AppCompatActivity implements  View
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (view.getId()) {
-            case R.id.subjectListDropDown:
-                data.setmSubjectName(subjectList[i]);
-                break;
-            case R.id.dayListDropDown:
-                data.setmDay(i);
-                break;
-        }
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

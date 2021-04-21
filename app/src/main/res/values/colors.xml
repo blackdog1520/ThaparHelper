@@ -20,4 +20,9 @@
 
     <color name="likeButtonCenter">#ff0000</color>
     <color name="likeButtonCorner">#990000</color>
+    <color name="fbutton_default_color">#FFFFFF</color>
+    <color name="fbutton_default_shadow_color">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="unpressed_color">#FDFDFD</color>
+    <color name="pressed_color">#FFFFFF</color>
 </resources>

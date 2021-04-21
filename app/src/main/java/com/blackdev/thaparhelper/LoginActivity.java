@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CredentialChecker;
+import com.blackdev.thaparhelper.allutils.CustomButtonWithPD;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
@@ -36,6 +37,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputLayout emailLayout,passwordLayout;
     private ConstraintLayout rootLayout;
     private FirebaseAuth mAuth;
+    private final int studentRI = R.id.studentUserRB;
+    private final int facultyRI = R.id.facultyUserRB;
+    private final int adminRI = R.id.administrationUserRB;
+    CustomButtonWithPD loginUser;
     RadioGroup radioGroup;
     String TAGLOGIN = "Login: ";
     private int userType;
@@ -57,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        Button loginUser = findViewById(R.id.loginUser);
+        loginUser = findViewById(R.id.loginUser);
         TextView forgotPassword = findViewById(R.id.forgotPasswordLogin);
         loginUser.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
@@ -69,6 +74,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.loginUser:
+                loginUser.showLoading();
+                loginUser.setClickable(false);
                 emailLayout.setErrorEnabled(false);
                 passwordLayout.setErrorEnabled(false);
                 String emailId = emailInput.getText().toString().trim();
@@ -87,17 +94,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(val == -1) {
                             passwordLayout.setError(null);
                             passwordLayout.setErrorEnabled(false);
-                            switch (radioGroup.getCheckedRadioButtonId()) {
-                                case R.id.studentUserRB:
-                                    userType = Constants.USER_STUDENT;
-                                case R.id.facultyUserRB:
-                                    userType = Constants.USER_FACULTY;
-                                case R.id.administrationUserRB:
-                                    userType = Constants.USER_ADMINISTRATION;
-                            }
-
                             validateUser(emailId,password);
                         } else {
+                            loginUser.hideLoading();
                             passwordLayout.setErrorEnabled(true);
                             passwordLayout.requestFocus();
                             passwordLayout.setError(checker.getError(val));
@@ -123,6 +122,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void validateUser(String email, String pass) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case studentRI:
+                userType = Constants.USER_STUDENT;
+                break;
+            case facultyRI:
+                userType = Constants.USER_FACULTY;
+                break;
+            case adminRI:
+                userType = Constants.USER_ADMINISTRATION;
+                break;
+        }
+
         if(!Utils.isNetworkAvailable(this)){
             Snackbar.make(rootLayout, "No Internet connection.", Snackbar.LENGTH_SHORT).show();
         } else {
@@ -133,8 +144,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d(TAGLOGIN, "SignIn: Success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         checkUserIsValid(userType,user);
-                            
-                       
                     } else {
                         Log.w(TAGLOGIN, "SignIn: Failure");
                         Snackbar.make(rootLayout, "Incorrect email or password.", Snackbar.LENGTH_SHORT).show();
@@ -144,14 +153,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void checkUserIsValid(int userType, final FirebaseUser user) {
+    private void checkUserIsValid(final int userType, final FirebaseUser user) {
         DatabaseReference mRef = Utils.getRefForBasicData(userType,user.getUid());
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
+                if(snapshot.hasChildren()) {
+                    Log.i("INFO","UT:" +userType +" checked "+ radioGroup.getCheckedRadioButtonId() +  " snap "+snapshot.getChildren().toString());
+                    loginUser.hideLoading();
+                    loginUser.setClickable(true);
                     updateUI();
                 } else {
+                    loginUser.hideLoading();
+                    loginUser.setClickable(true);
                     mAuth.signOut();
                     Snackbar.make(rootLayout, "Incorrect User Type", Snackbar.LENGTH_SHORT).show();
                 }
