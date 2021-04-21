@@ -12,25 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/optionsButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_menu_button" />
-            </RelativeLayout>
-
-        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -41,14 +23,20 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
-                android:id="@+id/coverPhoto"
+                android:id="@+id/optionsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_menu_button" />
+
+            <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@color/ShadeMedium"
-                android:scaleType="fitXY"
-                android:src="@drawable/tiet_logo" />
+                android:id="@+id/showUserTypeLottieSettings"
+                />
+
 
 
             <LinearLayout
@@ -105,12 +93,20 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linearLayout"
+                android:layout_marginHorizontal="5dp"
+                android:id="@+id/lineSettings"
+                android:layout_marginVertical="5dp"
+                android:background="#FFFFFF" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/postsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linearLayout"
-                android:layout_marginTop="15dp"
+                android:layout_below="@id/lineSettings"
                 tools:listitem="@layout/profile_posts_display_layout" />
 
         </RelativeLayout>

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 
 import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.UserFacultyModelClass;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CustomButtonWithPD;
@@ -62,6 +63,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     String fileName = "";
     String description = "";
     String location = "";
+    int userType;
 
     void init() {
         imageView = findViewById(R.id.finalPostImageView);
@@ -71,6 +73,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
         filePath = getIntent().getStringExtra("filePath");
         fileName = getIntent().getStringExtra("fileName");
         rootLayout = findViewById(R.id.rootLayoutAddPostDetails);
+        userType = Utils.getCurrentUserType(AddPostDetailsActivity.this,FirebaseAuth.getInstance().getUid());
     }
 
     @Override
@@ -93,6 +96,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setTitle("Post");
         init();
 
+
         try {
             Glide.with(this)
                     .load(filePath)
@@ -111,7 +115,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         upload.showLoading();
-        upload.hideLoading();
+        upload.setClickable(false);
         if( filePath.isEmpty() ) {
             Snackbar.make(rootLayout,"Something went wrong. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
             Log.e("ErrorPostDetails","filePath is empty");
@@ -157,11 +161,16 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if(task.isSuccessful()) {
                             Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
+                            boolean done  =false;
                             while (!uriTask.isComplete()) {
                                 if(uriTask.isComplete()) {
+                                    done = true;
                                     postDataInDB(uriTask.getResult().toString(), timestamp, filePathAndName);
                                     break;
                                 }
+                            }
+                            if(!done) {
+                                postDataInDB(uriTask.getResult().toString(), timestamp, filePathAndName);
                             }
 
                         }
@@ -194,31 +203,35 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void postDataInDB(final String downloadUrl, final String timestamp, String postID) {
-        UserPersonalData data = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid(),Constants.DATA_SHARED_PREF).getUser();
+        ModelPost modelPost = null;
+        DatabaseReference mRef;
+        switch(userType) {
+            case Constants.USER_ADMINISTRATION:
+                UserPersonalData data = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid(),Constants.DATA_SHARED_PREF).getUser();
+                modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data.getUid(),data.getEmail(),data.getProfileImageLink(),0,userType,data.getName());
+                mRef = Utils.getRefForPosts(data.getUid());
+                break;
+            case Constants.USER_FACULTY:
+            case Constants.USER_STUDENT:
+                UserFacultyModelClass data2 = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid(),Constants.DATA_SHARED_PREF).getUserF();
+                modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data2.getUid(),data2.getEmail(),data2.getProfileImageLink(),0,userType,data2.getName());
+                mRef = Utils.getRefForPosts(data2.getUid());
+                break;
 
-//        HashMap<Object, String> hashMap = new HashMap<>();
-        final ModelPost modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data.getUid(),data.getEmail(),data.getProfileImageLink(),0,data.getName());
-//        hashMap.put("uid", data.getUid());
-//        hashMap.put("uName", data.getName());
-//        hashMap.put("uEmail",data.getEmail());
-//        hashMap.put("uDp",data.getProfileImageLink());
-//        hashMap.put("postId",postID);
-//        hashMap.put("postDesc",description);
-//        hashMap.put("postImage",downloadUrl);
-//        hashMap.put("postLocation",location);
-//        hashMap.put("postTime",timestamp);
+            default:
+                mRef = null;
+        }
 
-        DatabaseReference mRef = Utils.getRefForPosts(data.getUid());
+
+        final ModelPost finalModelPost = modelPost;
         mRef.child(timestamp+FirebaseAuth.getInstance().getUid()).setValue(modelPost)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i("PostStatus:","Success");
-                        addUserBasicData(timestamp, modelPost);
-
+                        addUserBasicData(timestamp, finalModelPost);
                         upload.hideLoading();
                         //upload.setClickable(true);
-
                         Intent intent = new Intent(AddPostDetailsActivity.this, DashBoardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
@@ -237,7 +250,7 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void addUserBasicData(String s, ModelPost modelPost) {
-        DatabaseReference dbRef = Utils.getRefForBasicData(Utils.getCurrentUserType(AddPostDetailsActivity.this,FirebaseAuth.getInstance().getUid()),FirebaseAuth.getInstance().getUid());
+        DatabaseReference dbRef = Utils.getRefForBasicData(userType,FirebaseAuth.getInstance().getUid());
         dbRef.child("UserPost").child(s).setValue(modelPost);
     }
 

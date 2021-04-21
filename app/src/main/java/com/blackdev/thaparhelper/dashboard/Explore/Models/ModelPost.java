@@ -10,6 +10,29 @@ public class ModelPost {
     String uEmail;
     String uDp;
     long likes;
+    int uType;
+
+    public int getuType() {
+        return uType;
+    }
+
+    public void setuType(int uType) {
+        this.uType = uType;
+    }
+
+    public ModelPost(String postId, String postImage, String postDesc, String postLocation, String postTime, String uid, String uEmail, String uDp, long likes, int uType, String uName) {
+        this.postId = postId;
+        this.postImage = postImage;
+        this.postDesc = postDesc;
+        this.postLocation = postLocation;
+        this.postTime = postTime;
+        this.uid = uid;
+        this.uEmail = uEmail;
+        this.uDp = uDp;
+        this.likes = likes;
+        this.uType = uType;
+        this.uName = uName;
+    }
 
     public ModelPost() {
 
@@ -96,18 +119,6 @@ public class ModelPost {
         this.likes = likes;
     }
 
-    public ModelPost(String postId, String postImage, String postDesc, String postLocation, String postTime, String uid, String uEmail, String uDp, long likes, String uName) {
-        this.postId = postId;
-        this.postImage = postImage;
-        this.postDesc = postDesc;
-        this.postLocation = postLocation;
-        this.postTime = postTime;
-        this.uid = uid;
-        this.uEmail = uEmail;
-        this.uDp = uDp;
-        this.likes = likes;
-        this.uName = uName;
-    }
 
     String uName;
 }

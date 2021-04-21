@@ -1,6 +1,7 @@
 package com.blackdev.thaparhelper.dashboard.Explore.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.ShowUserProfile;
 import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
 import com.bumptech.glide.Glide;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -60,9 +62,9 @@ public class AdapterPosts  extends RecyclerView.Adapter<PostBaseViewHolder> {
         }
 
         @Override
-        public void onBind(int position) {
+        public void onBind(final int position) {
             super.onBind(position);
-            ModelPost post = list.get(position);
+            final ModelPost post = list.get(position);
             try {
                 Glide.with(context)
                         .load(post.getuDp())
@@ -90,6 +92,16 @@ public class AdapterPosts  extends RecyclerView.Adapter<PostBaseViewHolder> {
             likeButton.setOnClickListener(this);
             commentButton.setOnClickListener(this);
             additionalSettings.setOnClickListener(this);
+            userNameTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ShowUserProfile.class);
+                    intent.putExtra("userType",post.getuType());
+                    intent.putExtra("hisUid",post.getUid());
+                    context.startActivity(intent);
+                }
+            });
+
         }
 
         @Override
@@ -101,6 +113,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<PostBaseViewHolder> {
                     } else {
                         likeButton.setImageDrawable(context.getDrawable(R.drawable.ic_outline_favorite_border_24));
                     }
+                    break;
+
             }
         }
     }

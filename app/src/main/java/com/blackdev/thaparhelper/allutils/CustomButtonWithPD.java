@@ -14,9 +14,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieDrawable;
-import com.airbnb.lottie.utils.LottieValueAnimator;
 import com.blackdev.thaparhelper.R;
 
 import androidx.annotation.NonNull;

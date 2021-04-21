@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
@@ -68,7 +69,8 @@ public class SettingsFragment extends Fragment {
     private View view;
 
     private TextView userName, userSpecificDetail, emailId;
-    private ImageView coverPic, menuButton;
+    private ImageView menuButton;
+    private LottieAnimationView coverPic;
     private CircularImageView profilePic;
 
     private MySharedPref sharedPref;
@@ -112,12 +114,23 @@ public class SettingsFragment extends Fragment {
         userSpecificDetail = getView().findViewById(R.id.userSpecificDetailSettings);
         emailId = getView().findViewById(R.id.userEmailIdSettings);
         profilePic = getView().findViewById(R.id.userProfileImageSettings);
-        coverPic = getView().findViewById(R.id.coverPhoto);
+        coverPic = getView().findViewById(R.id.showUserTypeLottieSettings);
         menuButton = getView().findViewById(R.id.optionsButton);
         sharedPref = new MySharedPref(getContext(), Utils.getStringPref(mAuth.getUid()), Constants.TYPE_SHARED_PREF);
         userType = sharedPref.getUserType();
         pd = new ProgressDialog(getActivity());
-
+        switch (userType) {
+            case Constants.USER_ADMINISTRATION:
+                coverPic.setAnimation(R.raw.administration);
+                break;
+            case Constants.USER_STUDENT:
+                coverPic.setAnimation(R.raw.student);
+                break;
+            case Constants.USER_FACULTY:
+                coverPic.setAnimation(R.raw.faculty);
+                break;
+        }
+        coverPic.playAnimation();
         recyclerView = view.findViewById(R.id.postsRecyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(),3);
@@ -173,10 +186,11 @@ public class SettingsFragment extends Fragment {
                     if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
                         Picasso.get().load(data.getProfileImageLink()).into(profilePic);
                     }
+                    fetchPostData();
                     // set it to offline database;
                     //}
                 }
-                fetchPostData();
+
             }
 
             @Override
@@ -200,7 +214,7 @@ public class SettingsFragment extends Fragment {
                 showEditOptions();
             }
         });
-        fetchPostData();
+        //fetchPostData();
 
         return view;
 

@@ -77,7 +77,13 @@
         android:layout_margin="@dimen/marginBetweenText"
         android:text="Upload"
         android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
+        android:backgroundTint="@color/colorButtonBackground"
+        android:textColor="@color/textColorForBlackBack"
+        app:lb_buttonColor="@color/colorPrimary"
+        app:lb_isShadowEnable="true"
+        app:lb_isCircular="false"
+        app:lb_shadowColor="@color/colorPrimaryDark"
+        app:lb_shadowHeight="5dp"
 
         />
 

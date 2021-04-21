@@ -124,7 +124,7 @@
             android:clickable="true"
             app:lb_buttonColor="@color/colorPrimary"
             app:lb_isShadowEnable="true"
-            app:lb_isCircular="true"
+            app:lb_isCircular="false"
             app:lb_shadowColor="@color/colorPrimaryDark"
             app:lb_shadowHeight="5dp"
             />
