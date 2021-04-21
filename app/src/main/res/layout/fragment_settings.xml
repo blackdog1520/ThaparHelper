@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/appBackgroundDefault"
-    tools:context=".dashboard.SettingsFragment">
+    tools:context=".dashboard.Settings.SettingsFragment">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/optionsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_menu_button" />
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appBar">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/ShadeMedium">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="fill_parent"
+                android:id="@+id/coverPhoto"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:background="@color/ShadeMedium"
                 android:scaleType="fitXY"
                 android:src="@drawable/tiet_logo" />
 
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="150dp"
-                android:gravity="center"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="10dp">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
@@ -47,85 +69,50 @@
                     app:civ_border_width="1dp"
                     app:civ_circle_color="#000000" />
 
-                <TextView
-                    android:id="@+id/userNameSettings"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/marginBetweenText"
-                    android:gravity="center"
-                    android:text="username"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorForBlackBack"
-                    android:textSize="@dimen/textSize" />
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/userRollNoSettings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/marginBetweenText"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="xxxxxxxx"
-                    android:textColor="@color/textColorForBlackBack" />
+                    <TextView
+                        android:id="@+id/userNameSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="username"
+                        android:textAllCaps="true"
+                        android:textColor="@color/textColorForBlackBack"
+                        android:textSize="@dimen/textSize" />
 
-                <TextView
-                    android:id="@+id/userEmailIdSettings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/marginBetweenText"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="abcd3_beXX@thapar.edu"
-                    android:textColor="@color/textColorForBlackBack" />
+                    <TextView
+                        android:id="@+id/userEmailIdSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="abcd3_beXX@thapar.edu"
+                        android:textColor="@color/textColorForBlackBack" />
 
+                    <TextView
+                        android:id="@+id/userSpecificDetailSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="xxxxxxxx"
+                        android:textColor="@color/textColorForBlackBack" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/postsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                tools:listitem="@+id/profilePostsDisplayLayout" />
+                android:layout_below="@id/linearLayout"
+                android:layout_marginTop="15dp"
+                tools:listitem="@layout/profile_posts_display_layout" />
 
-            <LinearLayout
-                android:id="@+id/profilePostsDisplayLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:src="@drawable/ic_add_image" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:src="@drawable/ic_add_image" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:src="@drawable/ic_add_image" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </RelativeLayout>
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Thapar Helper"-->
-    <!--        />-->
-
-
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
