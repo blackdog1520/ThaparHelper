@@ -43,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 public class AddPostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -192,11 +193,11 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
 
     }
 
-    private void postDataInDB(String downloadUrl, String timestamp, String postID) {
+    private void postDataInDB(final String downloadUrl, final String timestamp, String postID) {
         UserPersonalData data = new MySharedPref(this, "User-"+FirebaseAuth.getInstance().getUid(),Constants.DATA_SHARED_PREF).getUser();
 
 //        HashMap<Object, String> hashMap = new HashMap<>();
-        ModelPost modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data.getUid(),data.getEmail(),data.getProfileImageLink(),0,data.getName());
+        final ModelPost modelPost = new ModelPost(postID,downloadUrl,description,location,timestamp,data.getUid(),data.getEmail(),data.getProfileImageLink(),0,data.getName());
 //        hashMap.put("uid", data.getUid());
 //        hashMap.put("uName", data.getName());
 //        hashMap.put("uEmail",data.getEmail());
@@ -208,13 +209,16 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
 //        hashMap.put("postTime",timestamp);
 
         DatabaseReference mRef = Utils.getRefForPosts(data.getUid());
-        mRef.child(timestamp).setValue(modelPost)
+        mRef.child(timestamp+FirebaseAuth.getInstance().getUid()).setValue(modelPost)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i("PostStatus:","Success");
+                        addUserBasicData(timestamp, modelPost);
+
                         upload.hideLoading();
                         //upload.setClickable(true);
+
                         Intent intent = new Intent(AddPostDetailsActivity.this, DashBoardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
@@ -230,6 +234,11 @@ public class AddPostDetailsActivity extends AppCompatActivity implements View.On
                     }
                 });
 
+    }
+
+    private void addUserBasicData(String s, ModelPost modelPost) {
+        DatabaseReference dbRef = Utils.getRefForBasicData(Utils.getCurrentUserType(AddPostDetailsActivity.this,FirebaseAuth.getInstance().getUid()),FirebaseAuth.getInstance().getUid());
+        dbRef.child("UserPost").child(s).setValue(modelPost);
     }
 
 
