@@ -2,6 +2,7 @@ package com.blackdev.thaparhelper.dashboard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -9,13 +10,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Chat.ChatFragment;
 import com.blackdev.thaparhelper.dashboard.Explore.CreatePostActivity;
+import com.blackdev.thaparhelper.dashboard.Explore.ExploreFragment;
+import com.blackdev.thaparhelper.dashboard.Settings.SettingsFragment;
+import com.blackdev.thaparhelper.dashboard.dashboardFrag.DashboardFragment;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,7 +38,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DashBoardActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+public class DashBoardActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final int action_dashboard = R.id.action_dashboard;
     private static final int action_explore = R.id.action_explore;
@@ -39,7 +46,7 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     private static final int action_chat = R.id.action_chat;
     private static final int action_settings = R.id.action_settings;
     BottomNavigationView bottomNavigationView;
-    ViewPager viewPager;
+    FrameLayout layout;
     FirebaseAuth mAuth;
     AppDatabase database;
 
@@ -56,7 +63,7 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
 
     void init() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_dash);
-        viewPager = findViewById(R.id.dashboard_view_pager_view);
+        layout = findViewById(R.id.dashboard_layout);
         mAuth = FirebaseAuth.getInstance();
         database = AppDatabase.getInstance(this);
         //readMessages();
@@ -69,9 +76,10 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         init();
         bottomNavigationView.inflateMenu(R.menu.dashboard_menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        viewPager.setAdapter(new ViewPagerDashBoardAdapter(getSupportFragmentManager()));
-        viewPager.addOnPageChangeListener(this);
 
+//        viewPager.setAdapter(new ViewPagerDashBoardAdapter(getSupportFragmentManager()));
+//        viewPager.addOnPageChangeListener(this);
+        loadFragment(new DashboardFragment());
         updateFirebaseToken();
     }
 
@@ -105,62 +113,65 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean loadFragment(Fragment fragment) {
+        if( fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.dashboard_layout,fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
         switch (item.getItemId()) {
             case action_dashboard:
-                viewPager.setCurrentItem(0,true);
+                fragment = new DashboardFragment();
                 break;
-
             case action_explore:
-                viewPager.setCurrentItem(1,true);
+                fragment = new ExploreFragment();
                 break;
             case action_map:
-                viewPager.setCurrentItem(2,true);
+                fragment = new MapsFragment();
                 break;
             case action_chat:
-                viewPager.setCurrentItem(3,true);
+                fragment = new ChatFragment();
                 break;
             case action_settings:
-                viewPager.setCurrentItem(4,true);
+                fragment = new SettingsFragment();
                 break;
         }
-        return true;
+        return loadFragment(fragment);
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-       // Log.e("POSITION: ",""+position);
-    }
+//    @Override
+//    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//       // Log.e("POSITION: ",""+position);
+//    }
 
-    @Override
-    public void onPageSelected(int position) {
-        switch (position) {
-            case 0:
-                bottomNavigationView.setSelectedItemId(action_dashboard);
-                break;
-            case 1:
-                bottomNavigationView.setSelectedItemId(action_explore);
-                break;
-            case 2:
-                bottomNavigationView.setSelectedItemId(action_map);
-                break;
-            case 3:
-                bottomNavigationView.setSelectedItemId(action_chat);
-                break;
-            case 4:
-                bottomNavigationView.setSelectedItemId(action_settings);
-                break;
-            default:
-                bottomNavigationView.setSelectedItemId(action_dashboard);
-                break;
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
+//    @Override
+//    public void onPageSelected(int position) {
+//        switch (position) {
+//            case 0:
+//                bottomNavigationView.setSelectedItemId(action_dashboard);
+//                break;
+//            case 1:
+//                bottomNavigationView.setSelectedItemId(action_explore);
+//                break;
+//            case 2:
+//                bottomNavigationView.setSelectedItemId(action_map);
+//                break;
+//            case 3:
+//                bottomNavigationView.setSelectedItemId(action_chat);
+//                break;
+//            case 4:
+//                bottomNavigationView.setSelectedItemId(action_settings);
+//                break;
+//        }
+//    }
 
     private void readMessages() {
 

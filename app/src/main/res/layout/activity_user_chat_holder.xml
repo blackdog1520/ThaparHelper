@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="3"
+        android:weightSum="1"
         android:paddingHorizontal="8dp"
         android:paddingBottom="4dp"
         >
@@ -41,21 +41,21 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/recipientName"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:text="His Name"
         android:textSize="@dimen/textSize"
         android:textColor="@color/textColorForBlackBack"
         android:gravity="center_vertical"
         />
-        <TextView
-            android:id="@+id/recipientDept"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:textColor="@color/hintColor"
-            android:layout_weight="1"
-            android:textSize="@dimen/subtextSize"
-            android:text="Administration | CITM"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/recipientDept"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:textColor="@color/hintColor"-->
+<!--            android:layout_weight="1"-->
+<!--            android:textSize="@dimen/subtextSize"-->
+<!--            android:text="Administration | CITM"-->
+<!--            />-->
     </LinearLayout>
 
 </androidx.appcompat.widget.Toolbar>
@@ -93,14 +93,27 @@
             android:layout_weight="1"
             />
         <ImageButton
-            android:id="@+id/sendMessageButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@null"
-            android:layout_margin="5dp"
-            android:theme="@style/TextAppearance.MaterialComponents.Button"
+            android:id="@+id/showBottomSheet"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginHorizontal="1dp"
             android:clickable="true"
-            android:src="@drawable/ic_baseline_send_24"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_chat"/>
+        <ImageButton
+            android:id="@+id/sendMessageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginHorizontal="1dp"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:src="@drawable/ic_send"/>
 
     </LinearLayout>
 </RelativeLayout>

@@ -2,11 +2,14 @@ package com.blackdev.thaparhelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.blackdev.thaparhelper.allutils.BootCompleteReciever;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +41,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button signUpButton = findViewById(R.id.switchToSignUpActivity);
         loginInButton.setOnClickListener(this);
         signUpButton.setOnClickListener(this);
+        ComponentName receiver = new ComponentName(getApplicationContext(),BootCompleteReciever.class);
+
+        getApplicationContext().getPackageManager().setComponentEnabledSetting(
+                receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+        );
     }
 
     @Override

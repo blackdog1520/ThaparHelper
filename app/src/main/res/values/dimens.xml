@@ -19,4 +19,6 @@
 
     </declare-styleable>
 
+    <dimen name="bottom_sheet_corner_radius">15dp</dimen>
+
 </resources>

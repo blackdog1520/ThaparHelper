@@ -6,9 +6,8 @@
     app:cardElevation="2dp"
     app:cardCornerRadius="3dp"
     app:cardBackgroundColor="@color/colorPrimaryDark"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="1dp"
-
     >
     <LinearLayout
         android:layout_width="match_parent"

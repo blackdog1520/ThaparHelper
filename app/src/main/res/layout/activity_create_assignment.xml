@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dashboard.Chat.CreateAssignmentActivity"
+    android:background="@color/appBackgroundDefault"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post an Assignment"
+        android:textColor="@color/textColorForBlackBack"
+        android:fontFamily="@font/roboto_thin"
+        android:gravity="center"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_marginTop="16dp"
+        />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/subjectAssignmentTLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="@dimen/paddingInputText"
+        android:textColorHint="@color/hintColor"
+        app:hintTextColor="@color/hintColor"
+        android:backgroundTint="@color/appBackgroundDefault"
+        android:hint="Subject name"
+        >
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:id="@+id/subjectAssignmentET"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/textColorForBlackBack"
+        android:textSize="@dimen/textSize"
+        android:inputType="text|textCapSentences"
+        android:backgroundTint="@color/appBackgroundDefault"
+
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/topicAssignmentTLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingInputText"
+        android:textColorHint="@color/hintColor"
+        app:hintTextColor="@color/hintColor"
+        android:backgroundTint="@color/appBackgroundDefault"
+        android:hint="Topic"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/topicAssignmentET"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/textColorForBlackBack"
+            android:textSize="@dimen/textSize"
+            android:inputType="text|textCapSentences"
+            android:backgroundTint="@color/appBackgroundDefault"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/descAssignmentTLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingInputText"
+        android:textColorHint="@color/hintColor"
+        app:hintTextColor="@color/hintColor"
+        android:backgroundTint="@color/appBackgroundDefault"
+        android:hint="Description"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/descAssignmentET"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/textColorForBlackBack"
+            android:textSize="@dimen/textSize"
+            android:inputType="text|textMultiLine|textCapSentences"
+            android:backgroundTint="@color/appBackgroundDefault"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/submissionAssignmentTLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingInputText"
+        android:textColorHint="@color/hintColor"
+        app:hintTextColor="@color/hintColor"
+        android:backgroundTint="@color/appBackgroundDefault"
+        android:hint="Submission link"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/submissionAssignmentET"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/textColorForBlackBack"
+            android:textSize="@dimen/textSize"
+            android:inputType="textUri"
+            android:backgroundTint="@color/appBackgroundDefault"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginEnd="8dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/pickDateTextView"
+            android:textSize="@dimen/textSize"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:hint="Select deadline"
+            android:textColorHint="@color/hintColor"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/textColorForBlackBack"
+            />
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_calendar_second"
+            android:layout_gravity="center_vertical|end"
+            android:id="@+id/pickDateButton"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+
+    </LinearLayout>
+
+    <com.blackdev.thaparhelper.allutils.CustomButtonWithPD
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:layout_marginHorizontal="16dp"
+        android:text="Send Assignment"
+        android:textColor="#000000"
+        android:id="@+id/sendAssignment"
+        android:fontFamily="sans-serif-light"
+        android:theme="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+        />
+
+
+
+
+</LinearLayout>

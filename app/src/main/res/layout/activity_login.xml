@@ -24,6 +24,7 @@
             android:layout_marginTop="80dp"
             android:padding="@dimen/paddingInputText"
             android:textColorHint="@color/hintColor"
+            app:hintTextColor="@color/hintColor"
             android:backgroundTint="@color/appBackgroundDefault"
             android:hint="@string/Email_Id"
             >
@@ -50,6 +51,7 @@
             android:padding="@dimen/paddingInputText"
             android:focusableInTouchMode="true"
             android:textColorHint="@color/hintColor"
+            app:hintTextColor="@color/hintColor"
             android:backgroundTint="@color/appBackgroundDefault"
             >
 

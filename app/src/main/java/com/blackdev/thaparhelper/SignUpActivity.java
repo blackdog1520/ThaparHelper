@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CredentialChecker;
+import com.blackdev.thaparhelper.allutils.CustomButtonWithPD;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
@@ -43,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     TextInputLayout emailLayout, passwordLayout, mobNumberLayout, rollNumberLayout, rePasswordLayout, nameLayout, branchLayout, batchLayout, departmentLayout, designationLayout;
     ConstraintLayout rootLayout;
     CredentialChecker checker;
-    Button signUpButton;
+    CustomButtonWithPD signUpButton;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference mRef;
@@ -181,6 +182,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signUpButtonSign:
+                signUpButton.showLoading();
+                signUpButton.setClickable(false);
 
                 switch (userType)
                 {
@@ -197,9 +200,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void addUserDetails(String email, String userName, String mobNumber, String rollNumber,String uid,String link, String batch,String branch) {
         UserPersonalData data = new UserPersonalData(userName,email,mobNumber,rollNumber,uid,link,batch,branch);
         MySharedPref mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
-
         mySharedPref.saveUserType(userType);
-
         mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
         mySharedPref.saveUser(data);
         mRef = Utils.getRefForBasicData(userType,mAuth.getUid());
@@ -235,6 +236,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void updateUI() {
+        signUpButton.hideLoading();
+        signUpButton.setClickable(true);
         Intent intent = new Intent(this, DashBoardActivity.class);
         startActivity(intent);
         finish();
@@ -353,6 +356,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
+                        signUpButton.hideLoading();
+                        signUpButton.setClickable(true);
                         Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
                     } else {
                         addUserDetails(email, userName, mobNumber, rollNumber, mAuth.getCurrentUser().getUid(),"",batch,branch);
@@ -360,6 +365,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
 
+        } else {
+            signUpButton.hideLoading();
+            signUpButton.setClickable(true);
         }
     }
 
@@ -438,6 +446,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
+                        signUpButton.hideLoading();
+                        signUpButton.setClickable(true);
                         Snackbar.make(rootLayout,"Email Already Registered",Snackbar.LENGTH_SHORT).show();
                     } else {
                         addUserFacultyDetails(email, userName, mobNumber, department, mAuth.getCurrentUser().getUid(),"",designation);
@@ -445,6 +455,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
 
+        } else {
+            signUpButton.hideLoading();
+            signUpButton.setClickable(true);
         }
 
     }

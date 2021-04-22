@@ -10,17 +10,16 @@
     android:background="@color/appBackgroundDefault"
     tools:context=".dashboard.DashBoardActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/dashboard_view_pager_view"
+    <FrameLayout
+        android:id="@+id/dashboard_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-    </androidx.viewpager.widget.ViewPager>
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
+    </FrameLayout>
 
 
     <View
@@ -29,7 +28,7 @@
         android:background="@color/ShadeMedium"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dash"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashboard_view_pager_view"
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_layout"
         android:layout_marginHorizontal="5dp"
         />
 

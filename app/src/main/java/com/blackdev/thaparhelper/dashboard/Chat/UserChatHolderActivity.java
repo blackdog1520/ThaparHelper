@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -30,6 +32,7 @@ import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.Chat.adapter.OneToOneChatAdapter;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,10 +58,13 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
     RecyclerView recyclerView;
     TextView recipientName, recipientDept;
     EditText messageET;
-    ImageButton sendButton;
+    ImageButton sendButton,bottomSheetView;
     CircularImageView profilePic;
+    BottomSheetDialog bottomSheetDialog;
     String hisUID,hisUrl,hisName;
     int hisType;
+    private static final int sendButtonID = R.id.sendMessageButton;
+    private static final int showBottomSheetID = R.id.showBottomSheet;
 
     ValueEventListener seenListener;
     DatabaseReference mRefForSeen;
@@ -86,6 +92,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         recipientName = findViewById(R.id.recipientName);
         messageET = findViewById(R.id.messageEditText);
         sendButton = findViewById(R.id.sendMessageButton);
+        bottomSheetView = findViewById(R.id.showBottomSheet);
         profilePic = findViewById(R.id.profilePicRecipient);
         database = AppDatabase.getInstance(getApplicationContext());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -115,6 +122,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
             e.printStackTrace();
         }
         sendButton.setOnClickListener(this);
+        bottomSheetView.setOnClickListener(this);
         updateMessages();
 
 
@@ -196,12 +204,40 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.sendMessageButton:
+            case sendButtonID:
                 if(!messageET.getText().toString().trim().isEmpty()) {
                     String message = messageET.getText().toString().trim();
                     sendMessage(message);
                     getToken(message);
                 }
+                break;
+            case showBottomSheetID:
+                bottomSheetDialog = new BottomSheetDialog(UserChatHolderActivity.this,R.style.BottomSheetTheme);
+                View sheetView = LayoutInflater.from(UserChatHolderActivity.this).inflate(R.layout.chat_bottom_sheet,null);
+                sheetView.findViewById(R.id.send_image_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(),"Image",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                sheetView.findViewById(R.id.send_assignment_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(),"Assignment",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                sheetView.findViewById(R.id.send_document_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(),"Doc",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                bottomSheetDialog.setContentView(sheetView);
+                bottomSheetDialog.show();
+
         }
     }
 

@@ -25,4 +25,8 @@
     <color name="white">#FFFFFF</color>
     <color name="unpressed_color">#FDFDFD</color>
     <color name="pressed_color">#FFFFFF</color>
+
+    <color name="bottom_sheet_background_color">#FFFFFF</color>
+
+
 </resources>

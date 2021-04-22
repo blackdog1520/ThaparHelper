@@ -215,7 +215,7 @@
                     android:textSize="@dimen/textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.blackdev.thaparhelper.allutils.CustomButtonWithPD
                 android:id="@+id/signUpButtonSign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -224,10 +224,17 @@
                 android:textColor="#000000"
                 android:textSize="@dimen/textSize"
                 android:elevation="2dp"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/textColorForBlackBack"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:lb_buttonColor="@color/colorPrimary"
+                app:lb_isShadowEnable="true"
+                app:lb_isCircular="false"
+                app:lb_shadowColor="@color/colorPrimaryDark"
+                app:lb_shadowHeight="5dp"
+                />
         </LinearLayout>
     </ScrollView>
 

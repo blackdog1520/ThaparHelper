@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.Light"
+    app:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@color/bottom_sheet_background_color"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#F95700"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Create"
+            android:textSize="@dimen/textSize"
+            android:textColor="#FFFFFFFF"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="2dp"
+        android:layout_marginBottom="16dp"
+        >
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_image_button"
+            android:elevation="1dp"
+            android:layout_marginVertical="1dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="3dp"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:cardBackgroundColor="#FFFFFF"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+            <ImageButton
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_image"
+                android:background="@null"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Share an Image"
+                android:gravity="center_vertical|start"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#F95700"
+                android:textSize="13sp"
+
+                />
+
+
+
+
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_document_button"
+            android:elevation="1dp"
+            android:layout_marginVertical="1dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="3dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                >
+                <ImageButton
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_document"
+                    android:background="@null"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Share a Document"
+                    android:gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#F95700"
+                    android:textSize="13sp"
+                    />
+
+
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_assignment_button"
+            android:elevation="1dp"
+            android:layout_marginVertical="1dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="3dp"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:cardBackgroundColor="#FFFFFF"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                >
+                <ImageButton
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_assignment"
+                    android:background="@null"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Share an Assignment"
+                    android:gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#F95700"
+                    android:textSize="13sp"
+                    />
+
+
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
