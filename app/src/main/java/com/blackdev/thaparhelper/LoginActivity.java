@@ -30,6 +30,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -160,6 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChildren()) {
                     Log.i("INFO","UT:" +userType +" checked "+ radioGroup.getCheckedRadioButtonId() +  " snap "+snapshot.getChildren().toString());
+                    updateFirebaseToken();
                     loginUser.hideLoading();
                     loginUser.setClickable(true);
                     updateUI();
@@ -180,5 +185,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         
     }
 
+    private void updateFirebaseToken() {
+        int userType = Utils.getCurrentUserType(this,mAuth.getUid());
+        DatabaseReference databaseReference = Utils.getRefForBasicData(userType, mAuth.getUid());
+        // choose path based on user type ;
+        Map<String, Object> map= new HashMap<>();
+        map.put("token", FirebaseMessaging.getInstance().getToken().toString());
+        databaseReference.updateChildren(map);
+    }
 
 }

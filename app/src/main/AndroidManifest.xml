@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dashboard.Chat.CreateAssignmentActivity"></activity>
+        <activity android:name=".dashboard.Chat.CreateGroupActivity"></activity>
+        <activity android:name=".dashboard.Chat.CreateAssignmentActivity" />
         <activity android:name=".ShowUserProfile" />
         <activity android:name=".dashboard.dashboardFrag.EditTimeTableActivity" />
         <activity android:name=".dashboard.dashboardFrag.TimeTableOptionsActivity" />
@@ -35,18 +36,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <receiver
             android:name=".dashboard.dashboardFrag.NotifierAlarm"
-            android:process=":remote"></receiver>
-
+            android:process=":remote" />
         <receiver
             android:name=".allutils.BootCompleteReciever"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
                 <!-- For HTC devices -->
@@ -60,14 +59,14 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

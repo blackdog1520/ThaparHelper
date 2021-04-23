@@ -1,12 +1,14 @@
 package com.blackdev.thaparhelper.dashboard.Chat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -224,6 +226,8 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                 sheetView.findViewById(R.id.send_assignment_button).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(UserChatHolderActivity.this, CreateAssignmentActivity.class);
+                        startActivityForResult(intent,Constants.ASSIGNMENT_REQUEST_CODE);
                         Toast.makeText(getApplicationContext(),"Assignment",Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -239,6 +243,23 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                 bottomSheetDialog.show();
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Constants.ASSIGNMENT_REQUEST_CODE:
+                if(data!=null) {
+                    sendAssignment(data);
+                }
+
+                break;
+            case Constants.IMAGE_REQUEST_CODE:
+        }
+    }
+
+    private void sendAssignment(Intent data) {
     }
 
     private void sendMessage(String message) {

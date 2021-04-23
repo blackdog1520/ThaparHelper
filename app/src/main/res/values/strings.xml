@@ -18,6 +18,10 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="mobile_number">Mobile Number</string>
+    <string name="batch">Batch</string>
+    <string name="course_code">Course Code</string>
+    <string name="group_name">Group Name</string>
+    <string name="create">Create</string>
 
 
 </resources>

@@ -4,19 +4,27 @@ public class UserPersonalData {
     public UserPersonalData() {
 
     }
-    UserPersonalData(String name, String email, String mobNumber, String rollNumber,String uid,String profileImageLink,String batch,String branch){
-        this.email = email;
+
+
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public UserPersonalData(String name, String uid, String batch, String email, String mobNumber, String rollNumber, String profileImageLink, String branch) {
         this.name = name;
+        this.uid = uid;
+        this.batch = batch;
+        this.email = email;
         this.mobNumber = mobNumber;
         this.rollNumber = rollNumber;
         this.profileImageLink = profileImageLink;
-        this.uid = uid;
-        this.batch = batch;
         this.branch = branch;
     }
+
     String name;
     String uid;
-
+    String token;
     public String getBatch() {
         return batch;
     }

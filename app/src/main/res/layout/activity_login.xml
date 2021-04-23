@@ -122,7 +122,7 @@
             android:layout_marginTop="@dimen/marginButtonText"
             android:textColor="@color/ShadeLight"
             android:backgroundTint="@color/colorButtonBackground"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="16dp"
             android:clickable="true"
             app:lb_buttonColor="@color/colorPrimary"
             app:lb_isShadowEnable="true"

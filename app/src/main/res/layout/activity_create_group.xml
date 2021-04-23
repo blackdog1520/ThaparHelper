@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackgroundDefault"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".dashboard.Chat.CreateGroupActivity">
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="32dp"
+        android:id="@+id/groupIconCreate"
+        android:src="@drawable/ic_baseline_person_24"
+        android:background="@color/appBackgroundDefault"
+        app:civ_circle_color="@color/appBackgroundDefault"
+        app:civ_border_width="1dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/groupNameCreateTextLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/appBackgroundDefault"
+        app:hintTextColor="@color/likeButtonCorner"
+        android:textColorHint="@color/hintColor"
+        android:hint="@string/group_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorForBlackBack"
+            android:id="@+id/groupNameCreateEditText"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/courseIdCreateTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="@color/appBackgroundDefault"
+        app:hintTextColor="@color/likeButtonCorner"
+        android:textColorHint="@color/hintColor"
+        android:hint="@string/course_code">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorForBlackBack"
+            android:id="@+id/groupCourseCreateIdEditText"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/batchCreateTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="@color/appBackgroundDefault"
+        app:hintTextColor="@color/likeButtonCorner"
+        android:textColorHint="@color/hintColor"
+        android:hint="@string/batch">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorForBlackBack"
+            android:id="@+id/batchCreateEditText"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.blackdev.thaparhelper.allutils.CustomButtonWithPD
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createGroupButton"
+        android:elevation="3dp"
+        android:text="@string/create"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"
+        app:lb_buttonColor="@color/white"
+        app:lb_isShadowEnable="true"
+        app:lb_isCircular="false"
+        app:lb_shadowColor="@color/colorPrimaryDark"
+        app:lb_shadowHeight="5dp"
+        />
+
+
+
+
+
+
+</LinearLayout>

@@ -32,10 +32,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -236,6 +239,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void updateUI() {
+        updateFirebaseToken();
         signUpButton.hideLoading();
         signUpButton.setClickable(true);
         Intent intent = new Intent(this, DashBoardActivity.class);
@@ -460,6 +464,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             signUpButton.setClickable(true);
         }
 
+    }
+
+    private void updateFirebaseToken() {
+        int userType = Utils.getCurrentUserType(this,mAuth.getUid());
+        DatabaseReference databaseReference = Utils.getRefForBasicData(userType, mAuth.getUid());
+        // choose path based on user type ;
+        Map<String, Object> map= new HashMap<>();
+        map.put("token", FirebaseMessaging.getInstance().getToken().toString());
+        databaseReference.updateChildren(map);
     }
 
 }

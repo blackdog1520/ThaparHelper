@@ -44,10 +44,6 @@ public class ChatData implements Serializable {
     @ColumnInfo(name = "hisUserType")
     private int ToUType;
 
-
-
-
-
     public String getMediaUrl() {
         return MediaUrl;
     }

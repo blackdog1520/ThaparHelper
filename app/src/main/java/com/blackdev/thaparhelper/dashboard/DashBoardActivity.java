@@ -14,9 +14,11 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.blackdev.thaparhelper.MainActivity;
+import com.blackdev.thaparhelper.UserFacultyModelClass;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
+import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.Chat.ChatFragment;
 import com.blackdev.thaparhelper.dashboard.Explore.CreatePostActivity;
@@ -66,7 +68,6 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         layout = findViewById(R.id.dashboard_layout);
         mAuth = FirebaseAuth.getInstance();
         database = AppDatabase.getInstance(this);
-        //readMessages();
     }
 
     @Override
@@ -76,20 +77,10 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         init();
         bottomNavigationView.inflateMenu(R.menu.dashboard_menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-
-//        viewPager.setAdapter(new ViewPagerDashBoardAdapter(getSupportFragmentManager()));
-//        viewPager.addOnPageChangeListener(this);
         loadFragment(new DashboardFragment());
-        updateFirebaseToken();
     }
 
-    private void updateFirebaseToken() {
-        DatabaseReference databaseReference = Utils.getRefForBasicData(Utils.getCurrentUserType(this,mAuth.getUid()),mAuth.getUid());
-        // choose path based on user type ;
-        Map<String, Object> map= new HashMap<>();
-        map.put("token", FirebaseMessaging.getInstance().getToken().toString());
-        databaseReference.updateChildren(map);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,65 +138,4 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         return loadFragment(fragment);
     }
 
-//    @Override
-//    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//       // Log.e("POSITION: ",""+position);
-//    }
-
-//    @Override
-//    public void onPageSelected(int position) {
-//        switch (position) {
-//            case 0:
-//                bottomNavigationView.setSelectedItemId(action_dashboard);
-//                break;
-//            case 1:
-//                bottomNavigationView.setSelectedItemId(action_explore);
-//                break;
-//            case 2:
-//                bottomNavigationView.setSelectedItemId(action_map);
-//                break;
-//            case 3:
-//                bottomNavigationView.setSelectedItemId(action_chat);
-//                break;
-//            case 4:
-//                bottomNavigationView.setSelectedItemId(action_settings);
-//                break;
-//        }
-//    }
-
-    private void readMessages() {
-
-        final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Messages").child(FirebaseAuth.getInstance().getUid()).child("ReceivedMessages");
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds: snapshot.getChildren()) {
-                    for(DataSnapshot dd: ds.getChildren()) {
-                        Log.e(dd.getRef().getKey()+" :t", (String) dd.child("fromUID").getValue());
-                    }
-                    Log.e("DASHBOARD",ds.getValue().toString());
-
-//                    String fromUID = (String) ds.child("Sender").getValue();
-//                    String ToUID = FirebaseAuth.getInstance().getUid();
-//                    String Message = (String) ds.child("Message").getValue();
-//                    boolean isMediaFile = (boolean) ds.child("ediaFile").getValue();
-//                    String MediaUrl  ="";
-//                    if(isMediaFile) {
-//                        MediaUrl = (String) ds.child("MediaUrl").getValue();
-//                    }
-//                    boolean isSeen = (boolean) ds.child("IsSeen").getValue();
-//                    String timeStamp = (String) ds.child("TimeStamp").getValue();
-//                    ChatData chatData = new ChatData(fromUID,false,ToUID,Message,isMediaFile,MediaUrl,isSeen,timeStamp);
-                    ChatData chatData = ds.getValue(ChatData.class);
-
-                    database.chatDataDao().insert(chatData);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }

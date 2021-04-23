@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.blackdev.thaparhelper.UserFacultyModelClass;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -194,4 +195,10 @@ public class Utils {
         }
         return null;
     }
+
+    public static DatabaseReference getRefForGroup(String groupId) {
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
+        return mRef;
+    }
+
 }

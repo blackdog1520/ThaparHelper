@@ -1,5 +1,6 @@
 package com.blackdev.thaparhelper.dashboard.Chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.blackdev.thaparhelper.database.ChatDataDao;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
  * Use the {@link AllChatsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllChatsFragment extends Fragment {
+public class AllChatsFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +39,7 @@ public class AllChatsFragment extends Fragment {
     private RecyclerView recyclerView;
     List<ChatData> chatData = new ArrayList<>();
     AllUserAdapter adapter;
+    FloatingActionButton createGroup;
 
 
 
@@ -78,6 +81,8 @@ public class AllChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view  = inflater.inflate(R.layout.fragment_all_chats, container, false);
         recyclerView = view.findViewById(R.id.userRecentChatsRV);
+        createGroup = view.findViewById(R.id.createGroupFloatingButton);
+        createGroup.setOnClickListener(this);
         chatData = AppDatabase.getInstance(getContext()).chatDataDao().getChatHistory();
         Log.i("RecentChats","SIZE: "+chatData.size());
         showUserChat(view);
@@ -91,5 +96,13 @@ public class AllChatsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new AllUserAdapter(getContext(),chatData);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.createGroupFloatingButton) {
+            Intent intent = new Intent(getActivity(),CreateGroupActivity.class);
+            startActivity(intent);
+        }
     }
 }

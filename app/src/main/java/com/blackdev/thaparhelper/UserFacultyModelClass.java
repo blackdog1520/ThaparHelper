@@ -18,6 +18,19 @@ public class UserFacultyModelClass {
     String designation;
     int userType;
 
+    public UserFacultyModelClass(int userType,String name, String uid, String designation, String department, String email, String mobNumber, String profileImageLink) {
+        this.name = name;
+        this.uid = uid;
+        this.designation = designation;
+        this.userType = userType;
+        this.department = department;
+        this.email = email;
+        this.mobNumber = mobNumber;
+        this.profileImageLink = profileImageLink;
+    }
+
+
+
     public int getUserType() {
         return userType;
     }
@@ -26,16 +39,7 @@ public class UserFacultyModelClass {
         this.userType = userType;
     }
 
-    public UserFacultyModelClass(int userType, String name, String uid, String designation, String department, String email, String mobNumber, String profileImageLink) {
-        this.userType = userType;
-        this.name = name;
-        this.uid = uid;
-        this.designation = designation;
-        this.department = department;
-        this.email = email;
-        this.mobNumber = mobNumber;
-        this.profileImageLink = profileImageLink;
-    }
+
 
     public String getDepartment() {
         return department;
