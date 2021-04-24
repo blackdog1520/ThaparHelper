@@ -1,5 +1,7 @@
 package com.blackdev.thaparhelper.dashboard.Chat.Models;
 
+import java.util.List;
+
 public class ModelGroupDetails {
 
     String groupId;
@@ -8,13 +10,13 @@ public class ModelGroupDetails {
 
     String groupIconLink;
     String groupNotificationKey;
-    String[] participants;
+    List<String> participants;
 
-    public String[] getParticipants() {
+    public List<String> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(String[] participants) {
+    public void setParticipants(List<String> participants) {
         this.participants = participants;
     }
 
@@ -59,7 +61,7 @@ public class ModelGroupDetails {
         this.groupNotificationKey = groupNotificationKey;
     }
 
-    public ModelGroupDetails(String groupId, String groupName, String groupCourseName, String groupIconLink, String groupNotificationKey, String[] participants) {
+    public ModelGroupDetails(String groupId, String groupName, String groupCourseName, String groupIconLink, String groupNotificationKey, List<String> participants) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupCourseName = groupCourseName;

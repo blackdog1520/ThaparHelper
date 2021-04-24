@@ -5,10 +5,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities =  {ChatData.class, AllUsersData.class, TimeTableData.class},version = 1,exportSchema = false)
+@Database(entities =  {ChatData.class, AllUsersData.class, TimeTableData.class, RecentChatData.class},version = 2,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase database;
-    private static String DATABASE_NAME = "Thapar_database";
+    private static final String DATABASE_NAME = "Thapar_database";
 
     public synchronized static AppDatabase getInstance(Context context) {
         if(database == null) {
@@ -22,6 +22,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public  abstract ChatDataDao chatDataDao();
 
     public  abstract TimeTableDao timeTableDao();
+
+    public abstract RecentChatDao recentChatDao();
 
 
 }

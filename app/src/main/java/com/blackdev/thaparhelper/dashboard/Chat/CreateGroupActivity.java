@@ -19,8 +19,12 @@ import com.android.volley.toolbox.Volley;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CustomButtonWithPD;
+import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.Chat.Models.ModelGroupDetails;
+import com.blackdev.thaparhelper.database.AppDatabase;
+import com.blackdev.thaparhelper.database.RecentChatDao;
+import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,6 +38,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +77,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                 batchName = batchL.getEditText().getText().toString().trim();
                 String timestamp = Long.toString(System.currentTimeMillis());
                 groupId = FirebaseAuth.getInstance().getUid() + "zG" + timestamp + "Id";
-                getNotificationKey();
+                //getNotificationKey();
+                createGroup();
 
             }
         }
@@ -83,7 +89,9 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         try {
             to.put("operation", "create");
             to.put("notification_key_name",groupId);
-            to.put("registration_ids", new String[]{FirebaseMessaging.getInstance().getToken().toString()});
+            ArrayList<String> list = new ArrayList<>();
+            list.add(new MySharedPref(this,Utils.getStringPref(FirebaseAuth.getInstance().getUid()),Constants.TOKEN_SHARED_PREF).getToken());
+            to.put("registration_ids", list);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,7 +101,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
             public void onResponse(JSONObject response) {
                 try {
                     key = response.get("notification_key").toString();
-                    createGroup();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -102,14 +110,16 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("notification","sendNotification: "+error);
+                createButton.hideLoading();
+                createButton.setClickable(true);
+                Log.e("notificationE","sendNotification: "+error.getMessage()+error.getLocalizedMessage());
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("Authorization","Key="+Constants.CLOUD_SERVER_KEY);
                 map.put("Content-Type","application/json");
+                map.put("Authorization","Key="+Constants.CLOUD_SERVER_KEY);
                 map.put("project_id",Constants.SENDER_ID);
                 return map;
             }
@@ -130,8 +140,13 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     private void createGroup() {
 
         DatabaseReference mRef = Utils.getRefForGroup(groupId);
-        ModelGroupDetails details = new ModelGroupDetails(groupId,groupName,courseName,"",key,new String[]{FirebaseAuth.getInstance().getUid()});
+        ArrayList<String> list = new ArrayList<>();
+        list.add(FirebaseAuth.getInstance().getUid());
+        ModelGroupDetails details = new ModelGroupDetails(groupId,groupName,courseName,"",key,list);
         // save groupKeys in room;
+        RecentChatDao chatDao = AppDatabase.getInstance(this).recentChatDao();
+        RecentChatData data = new RecentChatData(Constants.GROUP_TYPE,groupName,"","",groupId,"",1);
+        chatDao.insert(data);
         mRef.setValue(details).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

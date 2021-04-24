@@ -16,6 +16,7 @@ import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.blackdev.thaparhelper.database.ChatDataDao;
+import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class AllChatsFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
-    List<ChatData> chatData = new ArrayList<>();
+    List<RecentChatData> chatData = new ArrayList<>();
     AllUserAdapter adapter;
     FloatingActionButton createGroup;
 
@@ -83,7 +84,7 @@ public class AllChatsFragment extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.userRecentChatsRV);
         createGroup = view.findViewById(R.id.createGroupFloatingButton);
         createGroup.setOnClickListener(this);
-        chatData = AppDatabase.getInstance(getContext()).chatDataDao().getChatHistory();
+        chatData = AppDatabase.getInstance(getContext()).recentChatDao().getAll();
         Log.i("RecentChats","SIZE: "+chatData.size());
         showUserChat(view);
 

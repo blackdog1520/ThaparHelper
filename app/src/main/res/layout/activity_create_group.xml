@@ -85,10 +85,11 @@
         android:text="@string/create"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_thin"
-        android:textColor="#000000"
-        app:lb_buttonColor="@color/white"
+        android:textColor="@color/white"
+        app:lb_buttonColor="@color/colorButtonBackground"
         app:lb_isShadowEnable="true"
         app:lb_isCircular="false"
+
         app:lb_shadowColor="@color/colorPrimaryDark"
         app:lb_shadowHeight="5dp"
         />

@@ -12,6 +12,7 @@ import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.database.ChatData;
+import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder> {
     Context context;
     ArrayList<UserPersonalData> list;
-    List<ChatData> list2;
+    List<RecentChatData> list2;
     int type;
     public AllUserAdapter(Context context,ArrayList<UserPersonalData> list){
         this.context = context;
@@ -32,7 +33,7 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
         type = 1;
     }
 
-    public AllUserAdapter(Context context,List<ChatData> list){
+    public AllUserAdapter(Context context,List<RecentChatData> list){
         this.context = context;
         this.list2 =  list;
         type = 2;
@@ -80,28 +81,34 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
                 }
             });
         } else {
-            final ChatData data = list2.get(position);
-            if (!data.getDpUrl().isEmpty()) {
-                Picasso.get().load(list2.get(position).getDpUrl()).into(holder.profile);
+            final RecentChatData data = list2.get(position);
+            if (!data.getImageLink().isEmpty()) {
+                Picasso.get().load(list2.get(position).getImageLink()).into(holder.profile);
             }
-            holder.username.setText(data.getToUName());
+            holder.username.setText(data.getName());
             holder.batch.setVisibility(View.GONE);
-            String hisUid = data.getFromUID();
-            if(hisUid == FirebaseAuth.getInstance().getUid()) {
-                hisUid = data.getToUID();
-            }
-            final String finalHisUid = hisUid;
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, UserChatHolderActivity.class);
-                    intent.putExtra("HisUID", finalHisUid);
-                    intent.putExtra("HisName", data.getToUName());
-                    intent.putExtra("HisProfile", data.getDpUrl());
-                    intent.putExtra("HisType", data.getToUType());
-                    context.startActivity(intent);
-                }
-            });
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (data.getType() == Constants.GROUP_TYPE) {
+                            Intent intent = new Intent(context, UserChatHolderActivity.class);
+                            intent.putExtra("GroupUid", data.getGroupId());
+                            intent.putExtra("GroupName", data.getName());
+                            intent.putExtra("GroupProfile", data.getImageLink());
+                            context.startActivity(intent);
+
+                        } else {
+
+                            Intent intent = new Intent(context, UserChatHolderActivity.class);
+                            intent.putExtra("HisUID", data.getUid());
+                            intent.putExtra("HisName", data.getName());
+                            intent.putExtra("HisProfile", data.getImageLink());
+                            intent.putExtra("HisType", data.getUserType());
+                            context.startActivity(intent);
+                        }
+                    }
+                });
         }
     }
     void assignList(ArrayList<UserPersonalData> newList) {

@@ -7,6 +7,7 @@ public interface Constants {
     int USER_FACULTY = 3;
     int DATA_SHARED_PREF = 1;
     int TYPE_SHARED_PREF = 2;
+    int TOKEN_SHARED_PREF = 3;
     int LECTURE_TYPE = 101;
     int TUTORIAL_TYPE = 102;
     int LAB_TYPE = 103;
@@ -15,6 +16,8 @@ public interface Constants {
     int MAX_ALARM = 7;
     int ASSIGNMENT_REQUEST_CODE = 121;
     int IMAGE_REQUEST_CODE = 122;
+    int GROUP_TYPE = 1;
+    int ONE_TO_ONE_TYPE = 2;
 
     String APP_NAME = "Thapar Helper";
     String NOTIFICATION_URL = "https://fcm.googleapis.com/fcm/send";

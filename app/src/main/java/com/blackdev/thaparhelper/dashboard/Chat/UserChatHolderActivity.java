@@ -34,6 +34,7 @@ import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.Chat.adapter.OneToOneChatAdapter;
 import com.blackdev.thaparhelper.database.AppDatabase;
 import com.blackdev.thaparhelper.database.ChatData;
+import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -177,6 +178,8 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                     ChatData chatData = ds.getValue(ChatData.class);
                     if(chatData !=null && chatData.getToUID() != null && chatData.getFromUID()!=null) {
                         chatData.setSentByMe(false);
+                        RecentChatData data = new RecentChatData(Constants.ONE_TO_ONE_TYPE,chatData.getToUName(),chatData.getDpUrl(),"","",chatData.getFromUID(),chatData.getToUType());
+                        AppDatabase.getInstance(UserChatHolderActivity.this).recentChatDao().insert(data);
                         database.chatDataDao().insert(chatData);
                         if (chatData.isSeen()) {
                             database.chatDataDao().updateMessage(true, hisUID, chatData.getTimeStamp());
@@ -266,10 +269,11 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
         Long ts = System.currentTimeMillis()/1000;
         String time = ts.toString();
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Messages").child(hisUID).child("ReceivedMessages").child(firebaseUser.getUid());
-        ChatData data = new ChatData(firebaseUser.getUid(),true,hisUID,message,false,"",hisUrl,hisName,hisType,false,time);
-        database.chatDataDao().insert(data);
-        dbRef.push().setValue(data);
-
+        ChatData chatData = new ChatData(firebaseUser.getUid(),true,hisUID,message,false,"",hisUrl,hisName,hisType,false,time);
+        database.chatDataDao().insert(chatData);
+        dbRef.push().setValue(chatData);
+        RecentChatData data = new RecentChatData(Constants.ONE_TO_ONE_TYPE,chatData.getToUName(),chatData.getDpUrl(),"","",chatData.getFromUID(),chatData.getToUType());
+        AppDatabase.getInstance(UserChatHolderActivity.this).recentChatDao().insert(data);
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -279,6 +283,7 @@ public class UserChatHolderActivity extends AppCompatActivity implements View.On
                     if (chatData.isSeen()) {
                         Log.i("Seen","message seen now"+chatData.getMessage());
                         ds.getRef().removeValue();
+                        database.chatDataDao().insert(chatData);
                         database.chatDataDao().updateMessage(true, hisUID, chatData.getTimeStamp());
                         adapter.notifyDataSetChanged();
                     }

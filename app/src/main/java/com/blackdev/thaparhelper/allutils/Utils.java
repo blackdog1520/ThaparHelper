@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.blackdev.thaparhelper.UserFacultyModelClass;
 import com.blackdev.thaparhelper.allutils.Constants;
+import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -200,5 +201,6 @@ public class Utils {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
         return mRef;
     }
+
 
 }

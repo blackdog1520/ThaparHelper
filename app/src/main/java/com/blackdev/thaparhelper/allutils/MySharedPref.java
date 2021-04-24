@@ -76,11 +76,24 @@ public class MySharedPref {
         switch (type) {
             case Constants.DATA_SHARED_PREF:
                 myPref = context.getSharedPreferences(PREFERENCES,Context.MODE_PRIVATE);
+                break;
             case Constants.TYPE_SHARED_PREF:
                 myPref = context.getSharedPreferences(PREFERENCES+"_type",Context.MODE_PRIVATE);
                 break;
+            case Constants.TOKEN_SHARED_PREF:
+                myPref = context.getSharedPreferences(PREFERENCES+"_token",Context.MODE_PRIVATE);
+                break;
         }
+    }
 
+    public void saveToken(String token) {
+        SharedPreferences.Editor editor = myPref.edit();
+        editor.putString("Token",token);
+        editor.apply();
+    }
+
+    public String getToken() {
+       return myPref.getString("Token","");
     }
 
 }

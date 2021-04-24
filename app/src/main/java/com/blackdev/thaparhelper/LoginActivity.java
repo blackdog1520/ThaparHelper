@@ -187,11 +187,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateFirebaseToken() {
         int userType = Utils.getCurrentUserType(this,mAuth.getUid());
-        DatabaseReference databaseReference = Utils.getRefForBasicData(userType, mAuth.getUid());
+        final DatabaseReference databaseReference = Utils.getRefForBasicData(userType, mAuth.getUid());
         // choose path based on user type ;
-        Map<String, Object> map= new HashMap<>();
-        map.put("token", FirebaseMessaging.getInstance().getToken().toString());
-        databaseReference.updateChildren(map);
+        final Map<String, Object> map= new HashMap<>();
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                map.put("token",task.getResult());
+                new MySharedPref(LoginActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TOKEN_SHARED_PREF).saveToken(task.getResult());
+                databaseReference.updateChildren(map);
+            }
+        });
+
     }
 
 }
