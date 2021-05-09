@@ -64,7 +64,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_create_group);
         init();
         createButton.setOnClickListener(this);
-
     }
 
     @Override

@@ -18,6 +18,10 @@ public interface Constants {
     int IMAGE_REQUEST_CODE = 122;
     int GROUP_TYPE = 1;
     int ONE_TO_ONE_TYPE = 2;
+    int NORMAL_MESSAGE = 1;
+    int IMAGE_MESSAGE = 2;
+    int DOC_MESSAGE = 3;
+    int ASSIGNMENT_MESSAGE = 4;
 
     String APP_NAME = "Thapar Helper";
     String NOTIFICATION_URL = "https://fcm.googleapis.com/fcm/send";
@@ -31,4 +35,6 @@ public interface Constants {
 
 
     String SENDER_ID = "986524930808";
+
+
 }

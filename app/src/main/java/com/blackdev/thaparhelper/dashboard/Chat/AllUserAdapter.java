@@ -93,10 +93,10 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
                     public void onClick(View view) {
                         if (data.getType() == Constants.GROUP_TYPE) {
                             Intent intent = new Intent(context, UserChatHolderActivity.class);
-                            intent.putExtra("GroupUid", data.getGroupId());
+                            intent.putExtra("GroupId", data.getGroupId());
                             intent.putExtra("GroupName", data.getName());
                             intent.putExtra("GroupProfile", data.getImageLink());
-                            context.startActivity(intent);
+                            //context.startActivity(intent);
 
                         } else {
 

@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.blackdev.thaparhelper.UserFacultyModelClass;
+import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.firebase.auth.FirebaseAuth;
@@ -120,6 +121,16 @@ public class Utils {
     public static int getCurrentUserType(Context context, String uid) {
         MySharedPref mySharedPref = new MySharedPref(context,getStringPref(uid),Constants.TYPE_SHARED_PREF);
         return mySharedPref.getUserType();
+    }
+
+    public static UserPersonalData getCurrentUserData(Context context, String uid) {
+        MySharedPref mySharedPref = new MySharedPref(context,getStringPref(uid),Constants.DATA_SHARED_PREF);
+        return mySharedPref.getUser();
+    }
+
+    public static UserFacultyModelClass getCurrentUserDataF(Context context, String uid) {
+        MySharedPref mySharedPref = new MySharedPref(context,getStringPref(uid),Constants.DATA_SHARED_PREF);
+        return mySharedPref.getUserF();
     }
 
     public static LocalDate getNextDay(int day, LocalDate ld,int subType) {

@@ -86,12 +86,12 @@ public class AllChatsFragment extends Fragment implements View.OnClickListener {
         createGroup.setOnClickListener(this);
         chatData = AppDatabase.getInstance(getContext()).recentChatDao().getAll();
         Log.i("RecentChats","SIZE: "+chatData.size());
-        showUserChat(view);
+        showUserChat();
 
         return view;
     }
 
-    private void showUserChat(View view) {
+    private void showUserChat() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setSmoothScrollbarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);

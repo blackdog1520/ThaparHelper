@@ -13,6 +13,7 @@ import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.ShowUserProfile;
 import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.text.SimpleDateFormat;
@@ -85,6 +86,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<PostBaseViewHolder> {
             try {
                 Glide.with(context)
                         .load(post.getPostImage())
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                         .into(postImageView);
             } catch (Exception e) {
                 e.printStackTrace();

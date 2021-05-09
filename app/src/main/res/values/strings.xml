@@ -21,6 +21,13 @@
     <string name="course_code">Course Code</string>
     <string name="group_name">Group Name</string>
     <string name="create">Create</string>
+    <string name="new_messages">New Messages</string>
+    <string name="MessageType">MessageType</string>
+    <string name="SenderUid">SenderUid</string>
+    <string name="sender_name">Sender Name</string>
+    <string name="Data">Data</string>
+    <string name="messageId">messageId</string>
+    <string name="groupCount">groupCount</string>
 
 
 </resources>

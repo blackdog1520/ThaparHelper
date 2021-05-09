@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:layout_marginTop="1dp"
     android:layout_marginBottom="1dp"
     android:maxWidth="@dimen/maxMessageWidth"
-    android:orientation="horizontal">
-    <LinearLayout
-        android:layout_width="wrap_content"
+    android:background="@drawable/message_left_bg"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/message_left_bg">
+        android:id="@+id/nameChatLeftTV"
+        android:text="@string/sender_name"
+        android:background="@drawable/message_left_bg"
+        android:backgroundTint="@color/messageLeftDark"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:maxLines="1"
+        android:textColor="#000000"
+        android:paddingVertical="3dp"
+        android:alpha="0.7"
+        android:elevation="4dp"
+        android:fontFamily="@font/roboto_thin"
+        android:visibility="gone"
+        />
     <TextView
         android:id="@+id/messageLeftTV"
         android:layout_width="wrap_content"
@@ -20,12 +33,12 @@
         android:maxWidth="@dimen/maxMessageWidth"
         android:textSize="@dimen/subtextSize"
         android:textColor="#FFFFFF"
-        android:text="Sample Message I have recieved"
+        android:text="@string/new_messages"
         android:textIsSelectable="true"
         android:fontFamily="sans-serif-light"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp"
+        android:paddingHorizontal="8dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="4dp"
         />
-    </LinearLayout>
 
 </LinearLayout>

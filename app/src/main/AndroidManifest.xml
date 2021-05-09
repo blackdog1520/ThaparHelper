@@ -10,11 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="firebase_performance_logcat_enabled"
-            android:value="true" />
+        <activity android:name=".dashboard.Chat.GroupChatHolderActivity"></activity>
 
-        <activity android:name=".dashboard.Chat.CreateGroupActivity"></activity>
+        <activity android:name=".dashboard.Chat.CreateGroupActivity" />
+
         <activity android:name=".dashboard.Chat.CreateAssignmentActivity" />
         <activity android:name=".ShowUserProfile" />
         <activity android:name=".dashboard.dashboardFrag.EditTimeTableActivity" />
@@ -36,6 +35,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserTypeActivity" />
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -63,14 +65,14 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
