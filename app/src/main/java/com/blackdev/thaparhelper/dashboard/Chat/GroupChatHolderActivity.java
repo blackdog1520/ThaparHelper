@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -16,23 +17,31 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserFacultyModelClass;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Chat.CreateAssignmentActivity;
 import com.blackdev.thaparhelper.dashboard.Chat.Models.ModelGroupChat;
+import com.blackdev.thaparhelper.dashboard.Chat.adapter.GroupChatAdapter;
 import com.blackdev.thaparhelper.dashboard.Chat.adapter.OneToOneChatAdapter;
 import com.blackdev.thaparhelper.database.AppDatabase;
+import com.blackdev.thaparhelper.database.ChatData;
+import com.blackdev.thaparhelper.database.ChatDataDao;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GroupChatHolderActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,7 +54,13 @@ public class GroupChatHolderActivity extends AppCompatActivity implements View.O
     CircularImageView profilePic;
     BottomSheetDialog bottomSheetDialog;
     String groupId,groupUrl,groupName;
+    ChatDataDao chatDataDao;
     DatabaseReference mRef;
+    final String senderUid = FirebaseAuth.getInstance().getUid();
+    String senderName;
+
+    GroupChatAdapter adapter;
+    ArrayList<HashMap<String, Object>> list = new ArrayList<>();
     private static final int sendButtonID = R.id.sendGroupMessageButton;
     private static final int showBottomSheetID = R.id.showGroupBottomSheet;
 
@@ -63,12 +78,36 @@ public class GroupChatHolderActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat_holder);
+        chatDataDao = AppDatabase.getInstance(this).chatDataDao();
         init();
         setSupportActionBar(toolbar);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new GroupChatAdapter(list,this, groupId);
+        recyclerView.setAdapter(adapter);
+        int userType;
+        switch (Utils.getCurrentUserType(GroupChatHolderActivity.this,senderUid)) {
+            case Constants.USER_ADMINISTRATION:
+                senderName = Utils.getCurrentUserDataF(GroupChatHolderActivity.this, senderUid).getName();
+                if(senderName.equals("")) {
+                    fetchNameFromDatabase(Constants.USER_ADMINISTRATION);
+                }
+                break;
+            case Constants.USER_FACULTY:
+                senderName = Utils.getCurrentUserDataF(GroupChatHolderActivity.this, senderUid).getName();
+                if(senderName.equals("")) {
+                    fetchNameFromDatabase(Constants.USER_FACULTY);
+                }
+                break;
+            case Constants.USER_STUDENT:
+                senderName = Utils.getCurrentUserData(GroupChatHolderActivity.this, senderUid).getName();
+                if(senderName.equals("")) {
+                    fetchNameFromDatabase(Constants.USER_STUDENT);
+                }
+                break;
+        }
 
         toolbar.setTitle("");
         groupId = getIntent().getStringExtra("GroupId");
@@ -87,8 +126,82 @@ public class GroupChatHolderActivity extends AppCompatActivity implements View.O
         updateMessages();
     }
 
+    private void fetchNameFromDatabase(int type) {
+        final DatabaseReference ref = Utils.getRefForBasicData(type,senderUid);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    senderName = snapshot.child("name").getValue(String.class);
+                } else {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(GroupChatHolderActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void updateMessages() {
         //mRef
+        mRef.child(getString(R.string.new_messages)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    list.clear();
+                    for(DataSnapshot dataSnap: snapshot.getChildren()) {
+                        Log.i("Chat",dataSnap.child(getString(R.string.MessageType)).getValue()+"");
+                        switch(dataSnap.child(getString(R.string.MessageType)).getValue(Integer.class)) {
+                            case Constants.NORMAL_MESSAGE:
+                                final HashMap<String, Object> hm = new HashMap<>();
+                                hm.put(getString(R.string.SenderUid),dataSnap.child(getString(R.string.SenderUid)).getValue(String.class));
+                                hm.put(getString(R.string.MessageType),Constants.NORMAL_MESSAGE);
+                                hm.put(getString(R.string.Data),dataSnap.child(getString(R.string.Data)).getValue(ModelGroupChat.class));
+                                list.add(hm);
+                                break;
+                            case Constants.ASSIGNMENT_MESSAGE:
+                                //ModelGroupChat modelGroupChat = dataSnap.child(getString(R.string.Data)).getValue(ModelGroupChat.class);
+                                final HashMap<String, Object> hm2 = new HashMap<>();
+                                hm2.put(getString(R.string.SenderUid),dataSnap.child(getString(R.string.SenderUid)).getValue(String.class));
+                                hm2.put(getString(R.string.MessageType),Constants.ASSIGNMENT_MESSAGE);
+                                hm2.put(getString(R.string.Data),dataSnap.child(getString(R.string.Data)).getValue());
+                                list.add(hm2);
+                                break;
+//                            case Constants.IMAGE_MESSAGE:
+//                                ModelGroupChat modelGroupChat = dataSnap.child(getString(R.string.Data)).getValue(ModelGroupChat.class);
+//                                final HashMap<String, Object> hm = new HashMap<>();
+//                                hm.put(getString(R.string.SenderUid),dataSnap.child(getString(R.string.SenderUid)));
+//                                hm.put(getString(R.string.MessageType),Constants.NORMAL_MESSAGE);
+//                                hm.put(getString(R.string.Data),modelGroupChat);
+//                                list.add(hm);
+//                                break;
+//                            case Constants.DOC_MESSAGE:
+//                                ModelGroupChat modelGroupChat = dataSnap.child(getString(R.string.Data)).getValue(ModelGroupChat.class);
+//                                final HashMap<String, Object> hm = new HashMap<>();
+//                                hm.put(getString(R.string.SenderUid),dataSnap.child(getString(R.string.SenderUid)));
+//                                hm.put(getString(R.string.MessageType),Constants.NORMAL_MESSAGE);
+//                                hm.put(getString(R.string.Data),modelGroupChat);
+//                                list.add(hm);
+//                                break;
+                        }
+
+
+//                      Currently we can't store the data in offline database. Need better mechanism to do so.   So group chat will be stored on server
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -140,7 +253,7 @@ public class GroupChatHolderActivity extends AppCompatActivity implements View.O
         switch (requestCode) {
             case Constants.ASSIGNMENT_REQUEST_CODE:
                 if(data!=null) {
-                    //sendAssignment(data);
+                    sendAssignment(data);
                 }
 
                 break;
@@ -148,28 +261,36 @@ public class GroupChatHolderActivity extends AppCompatActivity implements View.O
         }
     }
 
+    private void sendAssignment(Intent data) {
+        HashMap<String, Object> data1 = new HashMap<>();
+        data1.put(getString(R.string.subjectName),data.getStringExtra(getString(R.string.subjectName)));
+        data1.put(getString(R.string.assignmentTopic),data.getStringExtra(getString(R.string.assignmentTopic)));
+        data1.put(getString(R.string.assignmentDesc),data.getStringExtra(getString(R.string.assignmentDesc)));
+        data1.put(getString(R.string.assignmentDeadline),data.getStringExtra(getString(R.string.assignmentDeadline)));
+        data1.put(getString(R.string.submissionLink),data.getStringExtra(getString(R.string.submissionLink)));
+        data1.put(getString(R.string.fileLink),data.getStringExtra(getString(R.string.fileLink)));
+        data1.put(getString(R.string.senderName),senderName);
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put(getString(R.string.MessageType),Constants.ASSIGNMENT_MESSAGE);
+        hm.put(getString(R.string.SenderUid),senderUid);
+        hm.put(getString(R.string.Data),data1);
+        mRef.child(getString(R.string.new_messages)).child(System.currentTimeMillis() + senderUid).setValue(hm);
+        messageET.setText("");
+    }
+
     private void sendMessage(String message) {
-        final String senderUid = FirebaseAuth.getInstance().getUid();
         ModelGroupChat data = new ModelGroupChat();
         data.setSenderUid(senderUid);
         data.setTimeStamp(""+System.currentTimeMillis());
         data.setMessage(message);
         data.setSeenCount(1);
         data.setMessageType(Constants.NORMAL_MESSAGE);
-        switch (Utils.getCurrentUserType(GroupChatHolderActivity.this,senderUid)) {
-            case Constants.USER_ADMINISTRATION:
-            case Constants.USER_FACULTY:
-                data.setSenderName(Utils.getCurrentUserDataF(GroupChatHolderActivity.this, senderUid).getName());
-                break;
-            case Constants.USER_STUDENT:
-                data.setSenderName(Utils.getCurrentUserData(GroupChatHolderActivity.this, senderUid).getName());
-                break;
-        }
+        data.setSenderName(senderName);
         HashMap<String, Object> hm = new HashMap<>();
         hm.put(getString(R.string.MessageType),Constants.NORMAL_MESSAGE);
         hm.put(getString(R.string.SenderUid),senderUid);
         hm.put(getString(R.string.Data),data);
-        mRef.child(getString(R.string.new_messages)).setValue(hm);
+        mRef.child(getString(R.string.new_messages)).child(System.currentTimeMillis() + senderUid).setValue(hm);
         messageET.setText("");
         //updateMessages();
 

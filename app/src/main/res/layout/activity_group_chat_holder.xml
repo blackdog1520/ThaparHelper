@@ -74,11 +74,13 @@ tools:context=".dashboard.Chat.GroupChatHolderActivity">
         android:background="@color/ShadeMedium"
         android:layout_above="@id/bottom_layout"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="2dp"/>
+        android:layout_marginTop="8dp"/>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentStart="true"
     android:background="#000000"
     android:id="@+id/bottom_layout"
     android:elevation="3dp"

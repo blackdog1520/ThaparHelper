@@ -10,12 +10,31 @@
     android:padding="8dp"
     android:layout_gravity="start"
     app:cardBackgroundColor="@color/messageLeftlighter">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/message_left_bg"
         >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameChatLeftTV"
+            android:text="@string/sender_name"
+            android:background="@drawable/message_left_bg"
+            android:backgroundTint="@color/messageLeftDark"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:maxLines="1"
+            android:textColor="#000000"
+            android:paddingVertical="3dp"
+            android:alpha="0.8"
+            android:elevation="1dp"
+            android:fontFamily="sans-serif-light"
+            android:visibility="visible"
+            />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="72dp"
@@ -35,30 +54,31 @@
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     />
-                    
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|start"
-                    android:textSize="@dimen/textSize"
-                    android:layout_marginStart="16dp"
-                    android:text="Assignment1.pdf"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/roboto_thin"
-                    android:layout_weight="1"
-                    />
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/downloadStatusBar"
-                    android:progress="75"
-                    android:progressBackgroundTint="@color/white"
-                    android:progressTint="@color/white"
-                    android:secondaryProgress="8"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:theme="@style/Widget.MaterialComponents.CircularProgressIndicator"/>
+                    android:layout_marginEnd="8dp"
+                    android:id="@+id/row_message_topic_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|start"
+                    android:layout_height="match_parent"
+                    android:text="Ellipse Line drawing algorithm"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="@dimen/textSize"
+                    android:textColor="@color/textColorForBlackBack"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cloud"
+                    android:id="@+id/row_message_pdf_button"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:elevation="2dp"
+                    android:backgroundTint="@null"
+                    android:padding="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         
@@ -85,33 +105,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Computer Graphics - UCS608"
-                android:fontFamily="sans-serif-light"
-                android:textSize="@dimen/textSize"
-                android:textColor="@color/textColorForBlackBack"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Topic:"
-                android:textSize="@dimen/textSize"
-                android:textColor="#000000"
-                />
-            <TextView
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:id="@+id/row_message_topic_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Ellipse Line drawing algorithm"
                 android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/textSize"
                 android:textColor="@color/textColorForBlackBack"/>
@@ -173,17 +166,17 @@
                 android:textColor="@color/textColorForBlackBack"/>
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:id="@+id/row_message_submit"
+            android:layout_height="wrap_content"
             android:textColor="@color/messageLeftlighter"
+            android:id="@+id/row_message_submit"
+            android:layout_margin="9dp"
             android:text="Submit"
-            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:foreground="?attr/selectableItemBackground"
             />
+
         
         
 

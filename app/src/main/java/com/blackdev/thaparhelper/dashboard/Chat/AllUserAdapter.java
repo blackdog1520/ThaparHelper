@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Constants;
+import com.blackdev.thaparhelper.dashboard.Chat.adapter.GroupChatAdapter;
 import com.blackdev.thaparhelper.database.ChatData;
 import com.blackdev.thaparhelper.database.RecentChatData;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,11 +93,11 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.MyHolder
                     @Override
                     public void onClick(View view) {
                         if (data.getType() == Constants.GROUP_TYPE) {
-                            Intent intent = new Intent(context, UserChatHolderActivity.class);
+                            Intent intent = new Intent(context, GroupChatHolderActivity.class);
                             intent.putExtra("GroupId", data.getGroupId());
                             intent.putExtra("GroupName", data.getName());
                             intent.putExtra("GroupProfile", data.getImageLink());
-                            //context.startActivity(intent);
+                            context.startActivity(intent);
 
                         } else {
 

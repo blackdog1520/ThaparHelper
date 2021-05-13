@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="end"
+    android:gravity="end"
+    android:paddingEnd="8dp"
+    android:layout_marginVertical="4dp"
+    >
+<androidx.cardview.widget.CardView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/CardView.Dark"
     app:cardCornerRadius="@dimen/messageRoundCorners"
     android:minWidth="300dp"
-    android:maxWidth="330dp"
+    android:maxWidth="230dp"
     android:layout_gravity="end"
     android:elevation="0dp"
     app:cardBackgroundColor="@color/messageRight">
@@ -32,7 +41,7 @@
                 android:orientation="horizontal"
                 >
                 <View
-                    android:layout_width="8dp"
+                    android:layout_width="4dp"
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     />
@@ -40,26 +49,27 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/row_message_topic_name"
                     android:gravity="center_vertical|start"
                     android:textSize="@dimen/textSize"
                     android:layout_marginStart="16dp"
-                    android:text="Assignment1.pdf"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/roboto_thin"
+                    android:text="Ellipse Line Drawing algorithm"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif-light"
                     android:layout_weight="1"
                     />
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cloud"
+                    android:id="@+id/row_message_pdf_button"
                     android:layout_gravity="center"
-                    android:id="@+id/downloadStatusBar"
-                    android:progress="75"
-                    android:progressBackgroundTint="@color/white"
-                    android:progressTint="@color/white"
-                    android:secondaryProgress="8"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:theme="@style/Widget.MaterialComponents.CircularProgressIndicator"/>
+                    android:layout_marginEnd="8dp"
+                    android:elevation="2dp"
+                    android:backgroundTint="@null"
+                    android:padding="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -91,32 +101,7 @@
                 android:textColor="@color/textColorForBlackBack"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Topic:"
-                android:textSize="@dimen/textSize"
-                android:textColor="@color/messageLeftlighter"
-                />
-            <TextView
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:id="@+id/row_message_topic_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Ellipse Line drawing algorithm"
-                android:fontFamily="sans-serif-light"
-                android:textSize="@dimen/textSize"
-                android:textColor="@color/textColorForBlackBack"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -172,6 +157,34 @@
                 android:textSize="@dimen/textSize"
                 android:textColor="@color/textColorForBlackBack"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="8dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/row_message_submission_link"
+                android:text="www.form.gle/0s0ssfd52fdd33"
+                android:textColor="#0645AD"
+                android:autoLink="web"
+                android:maxLines="1"
+                android:lines="1"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copy"
+                android:id="@+id/row_message_copy_link"
+                android:elevation="2dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:foreground="?attr/selectableItemBackground"
+                />
+
+        </LinearLayout>
         <ImageView
             android:id="@+id/row_assignment_status"
             android:layout_width="15dp"
@@ -182,3 +195,4 @@
             android:layout_marginEnd="8dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
+</LinearLayout>

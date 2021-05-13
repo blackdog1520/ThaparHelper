@@ -28,6 +28,13 @@
     <string name="Data">Data</string>
     <string name="messageId">messageId</string>
     <string name="groupCount">groupCount</string>
+    <string name="subjectName">subjectName</string>
+    <string name="assignmentTopic">assignmentTopic</string>
+    <string name="assignmentDesc">desc</string>
+    <string name="assignmentDeadline">deadline</string>
+    <string name="submissionLink">submissionLink</string>
+    <string name="fileLink">fileLink</string>
+    <string name="senderName">senderName</string>
 
 
 </resources>

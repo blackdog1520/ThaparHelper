@@ -1,11 +1,16 @@
 package com.blackdev.thaparhelper.dashboard.Chat.adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Constants;
@@ -114,38 +119,19 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
-            final String messageId = (String) list.get(position).get(context.getString(R.string.messageId));
+            //final String messageId = (String) list.get(position).get(context.getString(R.string.messageId));
             final ModelGroupChat data = (ModelGroupChat) list.get(position).get(context.getString(R.string.Data));
-            final int groupSize = (int) list.get(position).get(context.getString(R.string.groupCount));
+            //final int groupSize = (int) list.get(position).get(context.getString(R.string.groupCount));
             senderNameTextView.setText(data.getSenderName());
             messageTextView.setText(data.getMessage());
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Groups").child(groupId).child(context.getString(R.string.new_messages)).child(messageId);
-                    mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()) {
-                                //final int seenCount = new
-                                        //TODO: update seenCount or delete the message
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            });
         }
     }
 
     public class  normalChatRight  extends ChatBaseViewHolder {
-
+        final TextView messageTextView;
         public normalChatRight(@NonNull View itemView) {
             super(itemView);
+            messageTextView = itemView.findViewById(R.id.messageRightTV);
         }
 
         @Override
@@ -156,13 +142,25 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+            final ModelGroupChat data = (ModelGroupChat) list.get(position).get(context.getString(R.string.Data));
+            messageTextView.setText(data.getMessage());
         }
     }
 
     public class AssignmentChatLeft extends ChatBaseViewHolder {
+        TextView subjectTV,topicTV,descriptionTV,deadlineTV, senderNameTV;
+        ImageButton assignmentPDFButton;
+        Button submissionLinkButton;
 
         public AssignmentChatLeft(@NonNull View itemView) {
             super(itemView);
+            senderNameTV = itemView.findViewById(R.id.nameChatLeftTV);
+            topicTV = itemView.findViewById(R.id.row_message_topic_name);
+            subjectTV = itemView.findViewById(R.id.row_message_subject_name);
+            descriptionTV = itemView.findViewById(R.id.row_message_desc);
+            deadlineTV = itemView.findViewById(R.id.row_message_deadline);
+            submissionLinkButton = itemView.findViewById(R.id.row_message_submit);
+            assignmentPDFButton = itemView.findViewById(R.id.row_message_pdf_button);
         }
 
         @Override
@@ -173,14 +171,47 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+            final HashMap<String, Object> data = (HashMap<String, Object>) list.get(position).get(context.getString(R.string.Data));
+            subjectTV.setText((String)data.get(context.getString(R.string.subjectName)));
+            senderNameTV.setText((String) data.get(context.getString(R.string.senderName)));
+            topicTV.setText((String)data.get(context.getString(R.string.assignmentTopic)));
+            descriptionTV.setText((String)data.get(context.getString(R.string.assignmentDesc)));
+            deadlineTV.setText((String)data.get(context.getString(R.string.assignmentDeadline)));
+            submissionLinkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // show webview to submit
+                }
+            });
+            final String fileLink = (String)data.get(context.getString(R.string.fileLink));
+            assignmentPDFButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
         }
     }
 
     public class AssignmentChatRight extends ChatBaseViewHolder {
 
+        TextView subjectTV,topicTV,descriptionTV,deadlineTV,submissionLinkTV;
+        ImageButton assignmentPDFButton;
+        Button copyLinkButton;
+
+
         public AssignmentChatRight(@NonNull View itemView) {
             super(itemView);
+            topicTV = itemView.findViewById(R.id.row_message_topic_name);
+            subjectTV = itemView.findViewById(R.id.row_message_subject_name);
+            descriptionTV = itemView.findViewById(R.id.row_message_desc);
+            deadlineTV = itemView.findViewById(R.id.row_message_deadline);
+            submissionLinkTV = itemView.findViewById(R.id.row_message_submission_link);
+            assignmentPDFButton = itemView.findViewById(R.id.row_message_pdf_button);
+            copyLinkButton = itemView.findViewById(R.id.row_message_copy_link);
         }
+
 
         @Override
         protected void clear() {
@@ -190,6 +221,31 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+            final HashMap<String, Object> data = (HashMap<String, Object>) list.get(position).get(context.getString(R.string.Data));
+            subjectTV.setText((String)data.get(context.getString(R.string.subjectName)));
+            topicTV.setText((String)data.get(context.getString(R.string.assignmentTopic)));
+            descriptionTV.setText((String)data.get(context.getString(R.string.assignmentDesc)));
+            deadlineTV.setText((String)data.get(context.getString(R.string.assignmentDeadline)));
+            submissionLinkTV.setText((String)data.get(context.getString(R.string.submissionLink)));
+            final String fileLink = (String)data.get(context.getString(R.string.fileLink));
+
+            assignmentPDFButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // show web view
+                }
+            });
+            copyLinkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText(context.getString(R.string.submissionLink), submissionLinkTV.getText().toString());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
+
 }

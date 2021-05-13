@@ -3,22 +3,16 @@ package com.blackdev.thaparhelper.dashboard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.blackdev.thaparhelper.MainActivity;
-import com.blackdev.thaparhelper.UserFacultyModelClass;
-import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.LoginActivity;
 import com.blackdev.thaparhelper.R;
-import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.allutils.Utils;
 import com.blackdev.thaparhelper.dashboard.Chat.ChatFragment;
 import com.blackdev.thaparhelper.dashboard.Explore.CreatePostActivity;
@@ -26,19 +20,9 @@ import com.blackdev.thaparhelper.dashboard.Explore.ExploreFragment;
 import com.blackdev.thaparhelper.dashboard.Settings.SettingsFragment;
 import com.blackdev.thaparhelper.dashboard.dashboardFrag.DashboardFragment;
 import com.blackdev.thaparhelper.database.AppDatabase;
-import com.blackdev.thaparhelper.database.ChatData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class DashBoardActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -47,6 +31,12 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     private static final int action_map = R.id.action_map;
     private static final int action_chat = R.id.action_chat;
     private static final int action_settings = R.id.action_settings;
+
+    final ExploreFragment exploreFragment = new ExploreFragment();
+    final DashboardFragment dashboardFragment = new DashboardFragment();
+    final SettingsFragment settingsFragment = new SettingsFragment();
+    final MapsFragment mapsFragment = new MapsFragment();
+    final ChatFragment chatFragment = new ChatFragment();
     BottomNavigationView bottomNavigationView;
     FrameLayout layout;
     FirebaseAuth mAuth;
@@ -120,19 +110,19 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         Fragment fragment = null;
         switch (item.getItemId()) {
             case action_dashboard:
-                fragment = new DashboardFragment();
+                fragment = dashboardFragment;
                 break;
             case action_explore:
-                fragment = new ExploreFragment();
+                fragment = exploreFragment;
                 break;
             case action_map:
-                fragment = new MapsFragment();
+                fragment = mapsFragment;
                 break;
             case action_chat:
-                fragment = new ChatFragment();
+                fragment = chatFragment;
                 break;
             case action_settings:
-                fragment = new SettingsFragment();
+                fragment = settingsFragment;
                 break;
         }
         return loadFragment(fragment);

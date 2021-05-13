@@ -15,8 +15,7 @@ import com.blackdev.thaparhelper.allutils.BootCompleteReciever;
 import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.perf.FirebasePerformance;
-import com.google.firebase.perf.metrics.Trace;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loginInButton.setOnClickListener(this);
         signUpButton.setOnClickListener(this);
         ComponentName receiver = new ComponentName(getApplicationContext(),BootCompleteReciever.class);
-        FirebasePerformance.getInstance().setPerformanceCollectionEnabled(true);
+//        FirebasePerformance.getInstance().setPerformanceCollectionEnabled(true);
 //        Trace trace = FirebasePerformance.getInstance().newTrace(Trace.STARTUP_TRACE_NAME);
 //        Log.d("TAG", "Starting trace");
 //        trace.start();

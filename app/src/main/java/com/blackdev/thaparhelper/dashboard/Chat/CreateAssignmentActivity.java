@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.CustomButtonWithPD;
+import com.blackdev.thaparhelper.dashboard.Chat.Models.ModelChatOneToOne;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,7 +23,7 @@ import java.util.Calendar;
 public class CreateAssignmentActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     ImageButton datePickerButton;
-    TextInputEditText subject,desc,topic,link;
+    TextInputEditText subjectET,descET,topicET,linkET,assignmentLinkET;
     TextView datePickedTextView;
     CustomButtonWithPD submitButton;
     private static final int SUBMIT_BUTTON = R.id.sendAssignment;
@@ -40,11 +41,12 @@ public class CreateAssignmentActivity extends AppCompatActivity implements View.
     private void init() {
         datePickerButton = findViewById(R.id.pickDateButton);
         datePickedTextView = findViewById(R.id.pickDateTextView);
-        subject = findViewById(R.id.subjectAssignmentET);
-        desc = findViewById(R.id.descAssignmentET);
-        topic = findViewById(R.id.topicAssignmentET);
-        link = findViewById(R.id.submissionAssignmentET);
+        subjectET = findViewById(R.id.subjectAssignmentET);
+        descET = findViewById(R.id.descAssignmentET);
+        topicET = findViewById(R.id.topicAssignmentET);
+        linkET = findViewById(R.id.submissionAssignmentET);
         submitButton = findViewById(R.id.sendAssignment);
+        assignmentLinkET = findViewById(R.id.driveLinkAssignmentET);
 
     }
 
@@ -53,10 +55,12 @@ public class CreateAssignmentActivity extends AppCompatActivity implements View.
         switch (view.getId()) {
             case SUBMIT_BUTTON:
                 Intent intent =  new Intent();
-                intent.putExtra("subjectName",subject.getText().toString().trim());
-                intent.putExtra("topic",topic.getText().toString().trim());
-                intent.putExtra("desc",desc.getText().toString());
-                intent.putExtra("deadline",link.getText().toString().trim());
+                intent.putExtra(getString(R.string.subjectName),subjectET.getText().toString().trim());
+                intent.putExtra(getString(R.string.assignmentTopic),topicET.getText().toString().trim());
+                intent.putExtra(getString(R.string.assignmentDesc),descET.getText().toString());
+                intent.putExtra(getString(R.string.assignmentDeadline),datePickedTextView.getText().toString().trim());
+                intent.putExtra(getString(R.string.submissionLink),linkET.getText().toString().trim());
+                intent.putExtra(getString(R.string.fileLink),assignmentLinkET.getText().toString().trim());
                 setResult(Constants.ASSIGNMENT_REQUEST_CODE,intent);
                 finish();
                 break;

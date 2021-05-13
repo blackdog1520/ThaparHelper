@@ -30,7 +30,6 @@
         android:padding="@dimen/paddingInputText"
         android:textColorHint="@color/hintColor"
         app:hintTextColor="@color/hintColor"
-        android:backgroundTint="@color/appBackgroundDefault"
         android:hint="Subject name"
         >
     <com.google.android.material.textfield.TextInputEditText
@@ -112,6 +111,28 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/driveLinkAssignmentTLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingInputText"
+        android:textColorHint="@color/hintColor"
+        app:hintTextColor="@color/hintColor"
+        android:backgroundTint="@color/appBackgroundDefault"
+        android:hint="Assignment File link (Drive or Dropbox)"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/driveLinkAssignmentET"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/textColorForBlackBack"
+            android:textSize="@dimen/textSize"
+            android:inputType="textUri"
+            android:backgroundTint="@color/appBackgroundDefault"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -153,7 +174,6 @@
         android:textColor="#000000"
         android:id="@+id/sendAssignment"
         android:fontFamily="sans-serif-light"
-        android:theme="@style/TextAppearance.AppCompat.Widget.Button.Colored"
         />
 
 
