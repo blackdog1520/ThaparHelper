@@ -45,7 +45,7 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     @Override
     protected void onResume() {
         super.onResume();
-        if(!Utils.checkUserLoggedIn()) {
+        if(mAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -67,7 +67,7 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         init();
         bottomNavigationView.inflateMenu(R.menu.dashboard_menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        loadFragment(new DashboardFragment());
+        loadFragment(dashboardFragment);
     }
 
 

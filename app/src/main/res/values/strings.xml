@@ -35,6 +35,7 @@
     <string name="submissionLink">submissionLink</string>
     <string name="fileLink">fileLink</string>
     <string name="senderName">senderName</string>
+    <string name="circle">circle</string>
 
 
 </resources>

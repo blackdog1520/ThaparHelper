@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.blackdev.thaparhelper.LoginActivity;
+import com.blackdev.thaparhelper.UserFacultyModelClass;
 import com.blackdev.thaparhelper.allutils.Constants;
 import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.R;
@@ -64,7 +65,6 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mDB;
     private DatabaseReference mRef;
     private View view;
 
@@ -107,7 +107,6 @@ public class SettingsFragment extends Fragment {
 
     private void init() {
         mAuth = FirebaseAuth.getInstance();
-        mDB = FirebaseDatabase.getInstance();
         mRef = Utils.getRefForBasicData(Utils.getCurrentUserType(getContext(), mAuth.getUid()), mAuth.getUid());
         //set this ref based on the type of user signing in
         userName = getView().findViewById(R.id.userNameSettings);
@@ -119,14 +118,18 @@ public class SettingsFragment extends Fragment {
         sharedPref = new MySharedPref(getContext(), Utils.getStringPref(mAuth.getUid()), Constants.TYPE_SHARED_PREF);
         userType = sharedPref.getUserType();
         pd = new ProgressDialog(getActivity());
+        MySharedPref pref = new MySharedPref(getContext(), Utils.getStringPref(mAuth.getUid()), Constants.DATA_SHARED_PREF);
         switch (userType) {
             case Constants.USER_ADMINISTRATION:
+                setOthers(pref.getUserF());
                 coverPic.setAnimation(R.raw.administration);
                 break;
             case Constants.USER_STUDENT:
+                setStudent(pref.getUser());
                 coverPic.setAnimation(R.raw.student);
                 break;
             case Constants.USER_FACULTY:
+                setOthers(pref.getUserF());
                 coverPic.setAnimation(R.raw.faculty);
                 break;
         }
@@ -136,9 +139,24 @@ public class SettingsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(),3);
         recyclerView.setLayoutManager(linearLayoutManager);
         postList = new ArrayList<>();
+    }
 
+    void setStudent(UserPersonalData data) {
+        emailId.setText(data.getEmail());
+        userName.setText(data.getName());
+        userSpecificDetail.setText(data.getRollNumber());
+        if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
+            Picasso.get().load(data.getProfileImageLink()).into(profilePic);
+        }
+    }
 
-
+    void setOthers(UserFacultyModelClass data) {
+        emailId.setText(data.getEmail());
+        userName.setText(data.getName());
+        userSpecificDetail.setText(data.getDesignation());
+        if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
+            Picasso.get().load(data.getProfileImageLink()).into(profilePic);
+        }
     }
 
     public View getView() {
@@ -160,53 +178,12 @@ public class SettingsFragment extends Fragment {
 
     }
 
-    private void fetchAndSetData() {
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot == null) {
-                    Log.e("Settings", mAuth.getCurrentUser().getEmail());
-                    Snackbar.make(getView(), "Login again!", Snackbar.LENGTH_SHORT).show();
-                    // logout user
-                    mAuth.signOut();
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                } else {
-                    Log.e("SETTINGSVal", "" + snapshot.getChildrenCount());
-                    //for(DataSnapshot dp: snapshot.getChildren()) {
-                    UserPersonalData data = snapshot.getValue(UserPersonalData.class);
-                    Log.e("SETTINGSVal", snapshot.child("email").getValue().toString());
-                    emailId.setText(data.getEmail());
-                    userName.setText(data.getName());
-                    userSpecificDetail.setText(data.getRollNumber());
-
-                    MySharedPref pref = new MySharedPref(getContext(), "User-" + mAuth.getUid(), Constants.DATA_SHARED_PREF);
-                    pref.saveUser(data);
-                    if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
-                        Picasso.get().load(data.getProfileImageLink()).into(profilePic);
-                    }
-                    fetchPostData();
-                    // set it to offline database;
-                    //}
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Snackbar.make(getView(), "Error fetching info! Please try again.", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         init();
-        fetchAndSetData();
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +191,7 @@ public class SettingsFragment extends Fragment {
                 showEditOptions();
             }
         });
-        //fetchPostData();
+        fetchPostData();
 
         return view;
 

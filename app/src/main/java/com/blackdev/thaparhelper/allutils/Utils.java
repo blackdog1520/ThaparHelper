@@ -97,7 +97,7 @@ public class Utils {
     }
 
     public static boolean checkUserLoggedIn() {
-        if(FirebaseAuth.getInstance() == null) {
+        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             return false;
         } else {
             return true;

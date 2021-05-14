@@ -18,20 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    @Override
-    protected void onStart() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
-            updateUI();
-        }
-        super.onStart();
-    }
 
-    private void updateUI() {
-        Intent intent = new Intent(this, DashBoardActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     FirebaseAuth mAuth;
 

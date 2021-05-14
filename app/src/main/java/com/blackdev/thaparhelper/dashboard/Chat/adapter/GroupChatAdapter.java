@@ -3,6 +3,8 @@ package com.blackdev.thaparhelper.dashboard.Chat.adapter;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
     final Context context;
     final String uid = FirebaseAuth.getInstance().getUid();
     final String groupId;
+    private static final String HTTPS = "https://";
+    private static final String HTTP = "http://";
 
     public GroupChatAdapter(ArrayList<HashMap<String, Object>> list, Context context, String groupId) {
         this.list = list;
@@ -180,14 +184,25 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
             submissionLinkButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // show webview to submit
+                        String url = (String)data.get(context.getString(R.string.submissionLink));
+                        if (!url.startsWith(HTTP) && !url.startsWith(HTTPS)) {
+                            url = HTTP + url;
+                        }
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        context.startActivity(Intent.createChooser(intent, "Choose browser"));// Choose browser is arbitrary :)
+                    // show web view
                 }
             });
             final String fileLink = (String)data.get(context.getString(R.string.fileLink));
             assignmentPDFButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    String url = fileLink;
+                    if (!url.startsWith(HTTP) && !url.startsWith(HTTPS)) {
+                        url = HTTP + url;
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    context.startActivity(Intent.createChooser(intent, "Choose browser"));// Choose browser is arbitrary :)
                 }
             });
 
@@ -232,6 +247,12 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
             assignmentPDFButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String url = fileLink;
+                    if (!url.startsWith(HTTP) && !url.startsWith(HTTPS)) {
+                        url = HTTP + url;
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    context.startActivity(Intent.createChooser(intent, "Choose browser"));// Choose browser is arbitrary :)
                     // show web view
                 }
             });
@@ -247,5 +268,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter<ChatBaseViewHolder> {
 
         }
     }
+
 
 }

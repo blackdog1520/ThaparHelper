@@ -14,14 +14,17 @@ public class ViewPagerChatsAdapter extends FragmentPagerAdapter {
         super(fm,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
+    final AllChatsFragment chatsFragment = new AllChatsFragment();
+    final AllContactsFragment contactsFragment = new AllContactsFragment();
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                return new AllChatsFragment();
+                return contactsFragment;
             case 1:
-                return new AllContactsFragment();
+                return chatsFragment;
             default:
                 return null;
         }
