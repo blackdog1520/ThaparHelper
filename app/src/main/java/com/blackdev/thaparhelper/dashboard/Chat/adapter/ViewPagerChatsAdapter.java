@@ -22,9 +22,9 @@ public class ViewPagerChatsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                return contactsFragment;
-            case 1:
                 return chatsFragment;
+            case 1:
+                return contactsFragment;
             default:
                 return null;
         }

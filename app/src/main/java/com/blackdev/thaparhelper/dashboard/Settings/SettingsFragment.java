@@ -172,7 +172,6 @@ public class SettingsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         //init();
-        setHasOptionsMenu(true);
         // check Data offline
 
 
@@ -244,11 +243,5 @@ public class SettingsFragment extends Fragment {
         builder.create().show();
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null) {
-            menu.findItem(R.id.action_add_post).setVisible(false);
-        }
-    }
+
 }

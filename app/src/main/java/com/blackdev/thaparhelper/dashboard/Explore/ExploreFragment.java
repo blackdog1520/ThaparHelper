@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.allutils.Utils;
@@ -42,6 +43,8 @@ public class ExploreFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "ExploreFragment";
+
+    ImageButton addPost;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -79,7 +82,6 @@ public class ExploreFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -92,6 +94,14 @@ public class ExploreFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        addPost = view.findViewById(R.id.action_add_post);
+        addPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreatePostActivity.class);
+                startActivity(intent);
+            }
+        });
         loadPosts();
 
 
@@ -120,25 +130,7 @@ public class ExploreFragment extends Fragment {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.action_add_post:
-                Intent intent = new Intent(getActivity(), CreatePostActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
 
-        }
-    }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if(menu != null) {
-            menu.findItem(R.id.action_add_post).setVisible(true);
-        }
-    }
 }

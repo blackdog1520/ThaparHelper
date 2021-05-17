@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.blackdev.thaparhelper.MainActivity;
 import com.blackdev.thaparhelper.LoginActivity;
@@ -41,6 +42,7 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
     FrameLayout layout;
     FirebaseAuth mAuth;
     AppDatabase database;
+
 
     @Override
     protected void onResume() {
@@ -78,21 +80,6 @@ public class DashBoardActivity extends AppCompatActivity implements BottomNaviga
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                mAuth.signOut();
-                startActivity(new Intent(this,LoginActivity.class));
-                finish();
-                return true;
-            case R.id.action_add_post:
-                Intent intent = new Intent(this, CreatePostActivity.class);
-                startActivity(intent);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private boolean loadFragment(Fragment fragment) {
         if( fragment != null) {

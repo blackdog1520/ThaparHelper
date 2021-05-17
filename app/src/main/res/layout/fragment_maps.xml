@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/appBackgroundDefault"
     tools:context=".dashboard.MapsFragment">
+       <!-- <com.mapbox.mapboxsdk.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/map_toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/appBackgroundDefault"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Navigation"
+            android:textColor="@color/white"
+            android:alpha="0.9"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"
+            android:layout_marginStart="18sp"
+            />
+    </LinearLayout>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="maps" />
+        android:layout_below="@id/map_toolbar"
+        >
 
-</FrameLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/cardview_dark_background"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="8dp"
+
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello Ashish,"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-light"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thapar Helper provides navigation solution inside the campus for the freshers and visitors. This can help to navigate outdoor as well as inside the building."
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto_thin"
+                android:textSize="@dimen/textSize"
+                android:lineSpacingExtra="4dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Destination"
+                android:textColorHint="@color/ShadeLight"
+                android:id="@+id/map_fragment_destination"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                />
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+    <com.scwang.wave.MultiWaveHeader
+        android:layout_width="1000dp"
+        android:layout_height="200dp"
+        android:translationX="120dp"
+        android:translationY="50dp"
+        app:mwhGradientAngle="45"
+        app:mwhProgress="1"
+        android:rotation="-220"
+        app:mwhVelocity="1"
+        app:mwhIsRunning="true"
+        android:layout_gravity="bottom"
+        android:id="@+id/ref_code_header_wave"
+        app:mwhCloseColor="@color/colorAccent"
+        app:mwhStartColor="@color/colorBackground"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        />
+
+
+
+</RelativeLayout>

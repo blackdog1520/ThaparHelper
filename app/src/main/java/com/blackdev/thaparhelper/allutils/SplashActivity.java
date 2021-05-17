@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mapbox.mapboxsdk.MapmyIndia;
+import com.mmi.services.account.MapmyIndiaAccountManager;
+import com.mmi.services.api.autosuggest.model.AtlasExplaination;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -95,7 +98,33 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         start = System.currentTimeMillis();
+        MapmyIndiaAccountManager.getInstance().setRestAPIKey(getRestAPIKey());
+        MapmyIndiaAccountManager.getInstance().setMapSDKKey(getMapSDKKey());
+        //MapmyIndiaAccountManager.getInstance().setAtlasGrantType(getAtlasGrantType());
+        MapmyIndiaAccountManager.getInstance().setAtlasClientId(getAtlasClientId());
+        MapmyIndiaAccountManager.getInstance().setAtlasClientSecret(getAtlasClientSecret());
+        MapmyIndia.getInstance(getApplicationContext());
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+    }
+
+    private String getAtlasClientSecret() {
+        return "lrFxI-iSEg_CHFjA9bzXGmutIV_-s_b3B8CbLeuZW-WXMg3VoEzmBEHRWAZNzUYkODKE_LruDI20cfezU7Q5Ngjq2aT5Ti2xS3QmWULSx_AXYxDFNxEbtXpPXOtb63_v";
+    }
+
+    private String getAtlasClientId() {
+        return "33OkryzDZsK9Uh8dl7cFc4iGvG7BUB1B5XZGxmK0k5fybvIwvoSB9tpqjdTK2ygAjISHQnEfk0EnZn8voYPT-eyirJd1ZjbDVx8PUaTaR8GtTlO8jVBveA==";
+    }
+
+    private String getAtlasGrantType() {
+        return "OAuth2";
+    }
+
+    private String getMapSDKKey() {
+        return "gljnfmerxx8hctbc65hvpb6gry38x6yp";
+    }
+
+    private String getRestAPIKey() {
+        return "atutvi3rdz857flio1u6qkhaf5tnhnrq";
     }
 }

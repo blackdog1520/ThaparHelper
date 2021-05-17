@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appBackgroundDefault"
     tools:context=".dashboard.Explore.ExploreFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Explore"
+            android:textColor="@color/white"
+            android:alpha="0.9"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"
+            android:layout_marginStart="18sp"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_outline_add_box_24"
+            android:background="@null"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:id="@+id/action_add_post"
+            android:layout_gravity="center"
+            />
+
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,4 +45,4 @@
 
         />
 
-</FrameLayout>
+</LinearLayout>
