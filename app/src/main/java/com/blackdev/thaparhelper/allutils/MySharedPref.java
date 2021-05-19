@@ -19,6 +19,7 @@ public class MySharedPref {
         user.setRollNumber(myPref.getString("userRoll",""));
         user.setProfileImageLink(myPref.getString("userImageLink",""));
         user.setUid(myPref.getString("userUid",""));
+        user.setBio(myPref.getString("userBio",""));
         return user;
     }
 
@@ -32,6 +33,7 @@ public class MySharedPref {
         user.setUserType(myPref.getInt("userSubType",2));
         user.setProfileImageLink(myPref.getString("userImageLink",""));
         user.setUid(myPref.getString("userUid",""));
+        user.setBio(myPref.getString("userBio",""));
         return user;
     }
 
@@ -43,6 +45,7 @@ public class MySharedPref {
         editor.putString("userEmail",user.getEmail());
         editor.putString("userImageLink",user.getProfileImageLink());
         editor.putString("userUid",user.getUid());
+        editor.putString("userBio",user.getBio());
         editor.apply();
     }
 
@@ -55,6 +58,7 @@ public class MySharedPref {
         editor.putString("userUid",user.getUid());
         editor.putString("userDept",user.getDepartment());
         editor.putString("userDesignation",user.getDesignation());
+        editor.putString("userBio",user.getBio());
         editor.putInt("userSubType",user.getUserType());
         editor.apply();
     }

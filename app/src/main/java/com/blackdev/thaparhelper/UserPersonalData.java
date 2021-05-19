@@ -11,7 +11,8 @@ public class UserPersonalData {
         return branch;
     }
 
-    public UserPersonalData(String name, String uid, String batch, String email, String mobNumber, String rollNumber, String profileImageLink, String branch) {
+    public UserPersonalData(String bio, String name, String uid, String batch, String email, String mobNumber, String rollNumber, String profileImageLink, String branch) {
+        this.bio = bio;
         this.name = name;
         this.uid = uid;
         this.batch = batch;
@@ -21,6 +22,24 @@ public class UserPersonalData {
         this.profileImageLink = profileImageLink;
         this.branch = branch;
     }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    String bio;
 
     String name;
     String uid;

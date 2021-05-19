@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ShowUserProfile extends AppCompatActivity {
+public class ShowUserProfile extends AppCompatActivity implements ProfilePostAdapterClass.onPostClicked {
     private DatabaseReference mRef;
 
     private TextView userName, userSpecificDetail, emailId;
@@ -150,7 +150,7 @@ public class ShowUserProfile extends AppCompatActivity {
                     postList.add(post);
                 }
                 Collections.reverse(postList);
-                adapterClass = new ProfilePostAdapterClass(ShowUserProfile.this,postList);
+                adapterClass = new ProfilePostAdapterClass(ShowUserProfile.this::onPostClick,ShowUserProfile.this,postList);
                 recyclerView.setAdapter(adapterClass);
             }
 
@@ -159,6 +159,11 @@ public class ShowUserProfile extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onPostClick(int position) {
 
     }
 }

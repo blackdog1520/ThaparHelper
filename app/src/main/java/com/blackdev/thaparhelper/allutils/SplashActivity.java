@@ -19,9 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mapbox.mapboxsdk.MapmyIndia;
-import com.mmi.services.account.MapmyIndiaAccountManager;
-import com.mmi.services.api.autosuggest.model.AtlasExplaination;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -98,12 +95,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         start = System.currentTimeMillis();
-        MapmyIndiaAccountManager.getInstance().setRestAPIKey(getRestAPIKey());
-        MapmyIndiaAccountManager.getInstance().setMapSDKKey(getMapSDKKey());
-        //MapmyIndiaAccountManager.getInstance().setAtlasGrantType(getAtlasGrantType());
-        MapmyIndiaAccountManager.getInstance().setAtlasClientId(getAtlasClientId());
-        MapmyIndiaAccountManager.getInstance().setAtlasClientSecret(getAtlasClientSecret());
-        MapmyIndia.getInstance(getApplicationContext());
+//        MapmyIndiaAccountManager.getInstance().setRestAPIKey(getRestAPIKey());
+//        MapmyIndiaAccountManager.getInstance().setMapSDKKey(getMapSDKKey());
+//        //MapmyIndiaAccountManager.getInstance().setAtlasGrantType(getAtlasGrantType());
+//        MapmyIndiaAccountManager.getInstance().setAtlasClientId(getAtlasClientId());
+//        MapmyIndiaAccountManager.getInstance().setAtlasClientSecret(getAtlasClientSecret());
+//        MapmyIndia.getInstance(getApplicationContext());
         user = FirebaseAuth.getInstance().getCurrentUser();
 
     }

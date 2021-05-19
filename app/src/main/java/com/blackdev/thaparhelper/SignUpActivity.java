@@ -201,7 +201,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     private void addUserDetails(String email, String userName, String mobNumber, String rollNumber,String uid,String link, String batch,String branch) {
-        UserPersonalData data = new UserPersonalData(userName,email,mobNumber,rollNumber,uid,link,batch,branch);
+        UserPersonalData data = new UserPersonalData("",userName,email,mobNumber,rollNumber,uid,link,batch,branch);
         MySharedPref mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
         mySharedPref.saveUserType(userType);
         mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
@@ -218,7 +218,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void addUserFacultyDetails(String email, String userName, String mobNumber, String dept,String uid,String link, String designation) {
-        UserFacultyModelClass data = new UserFacultyModelClass(userType, userName,uid,designation,dept,email,mobNumber,link);
+        UserFacultyModelClass data = new UserFacultyModelClass( userName,uid,designation,userType,"",dept,email,mobNumber,link);
         MySharedPref mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
 
         mySharedPref.saveUserType(userType);

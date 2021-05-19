@@ -36,6 +36,11 @@
     <string name="fileLink">fileLink</string>
     <string name="senderName">senderName</string>
     <string name="circle">circle</string>
-
+    <string name="namedb">name</string>
+    <string name="biodb">bio</string>
+    <string name="deptdb">department</string>
+    <string name="mobdb">mobNumber</string>
+    <string name="dpLink">profileImageLink</string>
+    <string name="branchdb">branch</string>
 
 </resources>
