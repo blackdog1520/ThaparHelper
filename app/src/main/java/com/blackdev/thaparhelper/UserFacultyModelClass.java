@@ -18,18 +18,27 @@ public class UserFacultyModelClass {
     String designation;
     int userType;
 
-    public UserFacultyModelClass(int userType,String name, String uid, String designation, String department, String email, String mobNumber, String profileImageLink) {
+    String bio;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public UserFacultyModelClass(String name, String uid, String designation, int userType, String bio, String department, String email, String mobNumber, String profileImageLink) {
         this.name = name;
         this.uid = uid;
         this.designation = designation;
         this.userType = userType;
+        this.bio = bio;
         this.department = department;
         this.email = email;
         this.mobNumber = mobNumber;
         this.profileImageLink = profileImageLink;
     }
 
-
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public int getUserType() {
         return userType;

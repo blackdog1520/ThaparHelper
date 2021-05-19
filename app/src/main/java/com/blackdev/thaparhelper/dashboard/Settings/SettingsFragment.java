@@ -2,26 +2,34 @@ package com.blackdev.thaparhelper.dashboard.Settings;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.blackdev.thaparhelper.LoginActivity;
@@ -31,7 +39,9 @@ import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.Explore.Adapters.AdapterPosts;
 import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +52,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -54,7 +65,7 @@ import java.util.ListIterator;
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements ProfilePostAdapterClass.onPostClicked {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,18 +79,25 @@ public class SettingsFragment extends Fragment {
     private DatabaseReference mRef;
     private View view;
 
-    private TextView userName, userSpecificDetail, emailId;
+    private RelativeLayout rootLayout;
+    private DrawerLayout navigationDrawerLayout;
+    private NavigationView navView;
+    private TextView userName, userSpecificDetail, emailId, bioTv;
     private ImageView menuButton;
     private LottieAnimationView coverPic;
     private CircularImageView profilePic;
+    private View editProfile;
 
     private MySharedPref sharedPref;
     private int userType;
     private List<ModelPost> list = new ArrayList<>();
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, userSpecificPostRecyclerView;
+    private ScrollView scrollViewRoot;
     private ProfilePostAdapterClass adapterClass;
     private List<ModelPost> postList;
+    private ArrayList<ModelPost> userOnlyPostList;
+    private AdapterPosts adapterPosts;
 
     ProgressDialog pd;
 
@@ -109,15 +127,36 @@ public class SettingsFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mRef = Utils.getRefForBasicData(Utils.getCurrentUserType(getContext(), mAuth.getUid()), mAuth.getUid());
         //set this ref based on the type of user signing in
+        rootLayout = getView().findViewById(R.id.rootLayoutSettings);
+        navigationDrawerLayout = getView().findViewById(R.id.navigation_drawer);
+        navView = getView().findViewById(R.id.nav_view);
+        scrollViewRoot = getView().findViewById(R.id.scrollViewSettings);
         userName = getView().findViewById(R.id.userNameSettings);
         userSpecificDetail = getView().findViewById(R.id.userSpecificDetailSettings);
         emailId = getView().findViewById(R.id.userEmailIdSettings);
         profilePic = getView().findViewById(R.id.userProfileImageSettings);
         coverPic = getView().findViewById(R.id.showUserTypeLottieSettings);
         menuButton = getView().findViewById(R.id.optionsButton);
+        bioTv = getView().findViewById(R.id.userBioSettingsFragment);
+        editProfile = getView().findViewById(R.id.editProfileTab);
         sharedPref = new MySharedPref(getContext(), Utils.getStringPref(mAuth.getUid()), Constants.TYPE_SHARED_PREF);
         userType = sharedPref.getUserType();
         pd = new ProgressDialog(getActivity());
+        initUserData();
+        coverPic.playAnimation();
+
+        recyclerView = view.findViewById(R.id.postsRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(),3);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        postList = new ArrayList<>();
+
+        userSpecificPostRecyclerView = view.findViewById(R.id.userSpecificPostRV);
+        LinearLayoutManager linearLayoutManagerForRV = new LinearLayoutManager(getContext());
+        userSpecificPostRecyclerView.setLayoutManager(linearLayoutManagerForRV);
+    }
+
+    private void initUserData() {
         MySharedPref pref = new MySharedPref(getContext(), Utils.getStringPref(mAuth.getUid()), Constants.DATA_SHARED_PREF);
         switch (userType) {
             case Constants.USER_ADMINISTRATION:
@@ -133,17 +172,13 @@ public class SettingsFragment extends Fragment {
                 coverPic.setAnimation(R.raw.faculty);
                 break;
         }
-        coverPic.playAnimation();
-        recyclerView = view.findViewById(R.id.postsRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(),3);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        postList = new ArrayList<>();
     }
 
     void setStudent(UserPersonalData data) {
         emailId.setText(data.getEmail());
         userName.setText(data.getName());
+        bioTv.setText(data.getBio());
+
         userSpecificDetail.setText(data.getRollNumber());
         if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
             Picasso.get().load(data.getProfileImageLink()).into(profilePic);
@@ -153,6 +188,7 @@ public class SettingsFragment extends Fragment {
     void setOthers(UserFacultyModelClass data) {
         emailId.setText(data.getEmail());
         userName.setText(data.getName());
+        bioTv.setText(data.getBio());
         userSpecificDetail.setText(data.getDesignation());
         if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
             Picasso.get().load(data.getProfileImageLink()).into(profilePic);
@@ -178,10 +214,16 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        initUserData();
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_settings, container, false);
+        view = inflater.inflate(R.layout.nav_drawer, container, false);
         init();
 
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +234,19 @@ public class SettingsFragment extends Fragment {
         });
         fetchPostData();
 
+       navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+           @Override
+           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               switch (item.getItemId()) {
+                   case R.id.editProfileTab:
+                       Intent intent = new Intent(getContext(), EditProfileSettings.class);
+                       startActivity(intent);
+                       showEditOptions();
+                       return true;
+               }
+               return false;
+           }
+       });
         return view;
 
     }
@@ -206,7 +261,7 @@ public class SettingsFragment extends Fragment {
                     postList.add(post);
                 }
                 Collections.reverse(postList);
-                adapterClass = new ProfilePostAdapterClass(getContext(),postList);
+                adapterClass = new ProfilePostAdapterClass(SettingsFragment.this::onPostClick, getContext(),postList);
                 recyclerView.setAdapter(adapterClass);
             }
 
@@ -219,29 +274,40 @@ public class SettingsFragment extends Fragment {
     }
 
     private void showEditOptions() {
-        String options[] = {"Edit Name", "Edit Profile Photo", "Edit Cover Photo", "Edit Branch", "Edit Batch"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Edit Profile");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                    break;
-                }
-            }
-        });
-        builder.create().show();
+        if(navigationDrawerLayout.isDrawerOpen(GravityCompat.END))
+        {
+            navigationDrawerLayout.closeDrawer(GravityCompat.END);
+        }
+        else
+        {
+            navigationDrawerLayout.openDrawer(GravityCompat.END);
+        }
     }
 
+    @Override
+    public void onPostClick(int position) {
+        scrollViewRoot.setVisibility(View.GONE);
+        userSpecificPostRecyclerView.setVisibility(View.VISIBLE);
+        userOnlyPostList = new ArrayList<>();
+
+        mRef.child("UserPost").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userOnlyPostList.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    ModelPost post = snapshot1.getValue(ModelPost.class);
+                    userOnlyPostList.add(post);
+                }
+                Collections.reverse(userOnlyPostList);
+                adapterPosts = new AdapterPosts(getContext(),userOnlyPostList);
+                userSpecificPostRecyclerView.setAdapter(adapterPosts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }

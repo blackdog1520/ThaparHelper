@@ -17,16 +17,23 @@ import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfilePostAdapterClass extends RecyclerView.Adapter<ProfilePostAdapterClass.ViewHolder> {
 
     private Context mContext;
     private List<ModelPost> postList;
+    private onPostClicked listener;
 
-    public ProfilePostAdapterClass(Context mContext, List<ModelPost> postList){
+    public interface onPostClicked{
+        void onPostClick(int position);
+    }
+
+    public ProfilePostAdapterClass( onPostClicked listener,Context mContext, List<ModelPost> postList){
         this.mContext = mContext;
         this.postList = postList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -34,7 +41,14 @@ public class ProfilePostAdapterClass extends RecyclerView.Adapter<ProfilePostAda
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.profile_posts_display_layout,parent,false);
-        return new ProfilePostAdapterClass.ViewHolder(view);
+        ViewHolder holder = new ProfilePostAdapterClass.ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onPostClick(holder.getAdapterPosition());
+            }
+        });
+        return holder;
     }
 
     @Override
@@ -58,6 +72,6 @@ public class ProfilePostAdapterClass extends RecyclerView.Adapter<ProfilePostAda
 
         }
     }
-
-
 }
+
+

@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.blackdev.thaparhelper">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +19,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".allutils.SplashActivity"
+        <activity android:name=".dashboard.Settings.EditProfileSettings"></activity>
+<!--        <activity android:name=".dashboard.Settings.EditProfileActivity" />-->
+        <activity
+            android:name=".allutils.SplashActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,17 +38,16 @@
         <activity android:name=".ShowUserProfile" />
         <activity android:name=".dashboard.dashboardFrag.EditTimeTableActivity" />
         <activity android:name=".dashboard.dashboardFrag.TimeTableOptionsActivity" />
-        <activity android:name=".dashboard.Explore.AddPostDetailsActivity" />
-        <activity android:name=".dashboard.Explore.EditPostActivity" />
-        <activity android:name=".dashboard.Explore.CreatePostActivity" />
+        <activity android:name=".dashboard.Explore.AddPostDetailsActivity" android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"/>
+        <activity android:name=".dashboard.Explore.EditPostActivity" android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
+        <activity android:name=".dashboard.Explore.CreatePostActivity" android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"/>
         <activity
             android:name=".dashboard.Chat.UserChatHolderActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".dashboard.DashBoardActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".UserTypeActivity" /> <!-- <meta-data -->
         <!-- android:name="firebase_performance_logcat_enabled" -->
         <!-- android:value="true" /> -->
@@ -65,14 +76,5 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

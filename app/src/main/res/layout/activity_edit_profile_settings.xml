@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".dashboard.Settings.EditProfileSettings"
+    android:id="@+id/rootLayoutEditProfile"
+    android:background="@color/appBackgroundDefault">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/cross_button_edit_profile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/cancel_icon"
+                android:background="@null"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Edit Profile"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:textSize="20sp"
+                android:textColor="@color/textColorForBlackBack"
+                android:layout_toEndOf="@+id/cross_button_edit_profile"
+                android:layout_toStartOf="@+id/tick_button_edit_profile"/>
+
+            <ImageButton
+                android:id="@+id/tick_button_edit_profile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:src="@drawable/done_tick"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/profileImageEditView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        app:civ_border="true"
+        app:civ_circle_color="@color/appBackgroundDefault"
+        android:src="@drawable/ic_baseline_person_24"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="@color/textColorForBlackBack"
+        android:layout_marginTop="10dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/textColorForBlackBack"
+        android:hint="Name"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:backgroundTint="@color/white"
+        android:background="@android:color/black" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Department"
+        android:textColor="@color/textColorForBlackBack"
+        android:layout_marginTop="10dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/dept_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/textColorForBlackBack"
+        android:hint="Department"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:backgroundTint="@color/white"
+        android:background="@android:color/black" />
+    <TextView
+        android:id="@+id/bio"
+        android:textColor="@color/textColorForBlackBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bio"
+        android:layout_marginTop="10dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/bio_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="3"
+        android:maxLines="5"
+        android:gravity="start"
+        android:textColorHint="@color/textColorForBlackBack"
+        android:hint="Bio"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:backgroundTint="@color/white"
+        android:background="@android:color/black" />
+    <TextView
+        android:textColor="@color/textColorForBlackBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile No."
+        android:layout_marginTop="10dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/mob_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/textColorForBlackBack"
+        android:hint="Mobile No."/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white" />
+
+    <com.blackdev.thaparhelper.allutils.CustomButtonWithPD
+        android:id="@+id/resetPasswordEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/textSize"
+        android:text="Reset Password"
+        android:layout_marginVertical="@dimen/marginButtonText"
+        android:textColor="@color/ShadeLight"
+        android:backgroundTint="@color/colorButtonBackground"
+        android:layout_marginHorizontal="16dp"
+        android:clickable="true"
+        app:lb_buttonColor="@color/colorPrimary"
+        app:lb_isShadowEnable="true"
+        app:lb_isCircular="false"
+        app:lb_shadowColor="@color/colorPrimaryDark"
+        app:lb_shadowHeight="5dp"
+        />
+
+
+</LinearLayout>
