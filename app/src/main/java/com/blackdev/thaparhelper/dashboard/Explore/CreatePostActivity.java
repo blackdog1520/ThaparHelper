@@ -37,7 +37,6 @@ public class CreatePostActivity extends AppCompatActivity{
     GridLayoutManager manager;
     LinearLayout rootLayout;
 
-    Toolbar toolbar;
     void init() {
         recyclerView = findViewById(R.id.galleryViewRecyclerView);
         currImage = findViewById(R.id.currImageView);
@@ -67,7 +66,7 @@ public class CreatePostActivity extends AppCompatActivity{
         getSupportActionBar().setTitle("Create");
         if(!Utils.verifyStoragePermission(this)) {
             finish();
-        }
+        } else {
         recyclerView.setLayoutManager(manager);
         if(imageList.isEmpty()) {
             addAllImages();
@@ -91,6 +90,7 @@ public class CreatePostActivity extends AppCompatActivity{
                 }
             });
             recyclerView.setAdapter(adapter);
+            }
         }
         //recyclerView.setHasFixedSize(true);
     }
