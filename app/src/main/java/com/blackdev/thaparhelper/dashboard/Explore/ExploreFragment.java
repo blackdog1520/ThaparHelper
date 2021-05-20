@@ -103,8 +103,6 @@ public class ExploreFragment extends Fragment {
             }
         });
         loadPosts();
-
-
         return view;
     }
 
@@ -113,6 +111,7 @@ public class ExploreFragment extends Fragment {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for(DataSnapshot ds: snapshot.getChildren()) {
                     ModelPost modelPost = ds.getValue(ModelPost.class);
                     list.add(modelPost);

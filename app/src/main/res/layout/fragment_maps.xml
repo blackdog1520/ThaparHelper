@@ -78,6 +78,30 @@
                 android:lineSpacingExtra="4dp"
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Enter Source location"
+                android:textColorHint="@color/ShadeLight"
+                android:id="@+id/map_fragment_source"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/my_location"
+                    android:id="@+id/current_location"
+                    android:layout_marginHorizontal="8dp"
+                    android:contentDescription="Current Location"
+                    android:layout_gravity="end|center_vertical"/>
+            </LinearLayout>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,8 +132,8 @@
         app:mwhIsRunning="true"
         android:layout_gravity="bottom"
         android:id="@+id/ref_code_header_wave"
-        app:mwhCloseColor="@color/colorAccent"
-        app:mwhStartColor="@color/colorBackground"
+        app:mwhCloseColor="@color/appBackgroundDefault"
+        app:mwhStartColor="@color/red"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
