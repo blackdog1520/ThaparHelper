@@ -77,7 +77,7 @@ public class Utils {
                 mRef = FirebaseDatabase.getInstance().getReference("Users").child("BasicData").child("Faculty").child(uid);
                 return mRef;
             case Constants.USER_STUDENT:
-                mRef = FirebaseDatabase.getInstance().getReference("Users").child("BasicData").child("Student").child(uid);
+                mRef = FirebaseDatabase.getInstance().getReference("Users").child("BasicData").child("Students").child(uid);
                 return mRef;
         }
         return mRef;

@@ -112,7 +112,6 @@
                 android:letterSpacing="0.05"
                 android:lineSpacingExtra="3dp"
                 android:textStyle="bold"
-                android:text="General Secretary at BackSlash TIET\nAndroid Dev at Thapar Helper\n General Secretary at Code Crew\nDecor Head in Frosh Team\nHappy Father of many kids"
                 android:layout_below="@id/linearLayout"/>
 
             <View
