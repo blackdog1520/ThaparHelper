@@ -201,7 +201,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     private void addUserDetails(String email, String userName, String mobNumber, String rollNumber,String uid,String link, String batch,String branch) {
-        UserPersonalData data = new UserPersonalData("",userName,email,mobNumber,rollNumber,uid,link,batch,branch);
+        UserPersonalData data = new UserPersonalData("",userName,uid,batch,email,mobNumber,rollNumber,link,branch);
         MySharedPref mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TYPE_SHARED_PREF);
         mySharedPref.saveUserType(userType);
         mySharedPref = new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.DATA_SHARED_PREF);
@@ -468,11 +468,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void updateFirebaseToken() {
         int userType = Utils.getCurrentUserType(this,mAuth.getUid());
-        DatabaseReference databaseReference = Utils.getRefForBasicData(userType, mAuth.getUid());
+        final DatabaseReference databaseReference = Utils.getRefForBasicData(userType, mAuth.getUid());
         // choose path based on user type ;
-        Map<String, Object> map= new HashMap<>();
-        map.put("token", FirebaseMessaging.getInstance().getToken().toString());
-        databaseReference.updateChildren(map);
+        final Map<String, Object> map= new HashMap<>();
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                map.put("token",task.getResult());
+                new MySharedPref(SignUpActivity.this,Utils.getStringPref(mAuth.getUid()),Constants.TOKEN_SHARED_PREF).saveToken(task.getResult());
+                databaseReference.updateChildren(map);
+            }
+        });
+
     }
 
 }

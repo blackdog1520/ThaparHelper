@@ -1,10 +1,13 @@
 package com.blackdev.thaparhelper.dashboard.Settings;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,9 +42,17 @@ import com.blackdev.thaparhelper.allutils.MySharedPref;
 import com.blackdev.thaparhelper.R;
 import com.blackdev.thaparhelper.UserPersonalData;
 import com.blackdev.thaparhelper.allutils.Utils;
+import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
 import com.blackdev.thaparhelper.dashboard.Explore.Adapters.AdapterPosts;
+import com.blackdev.thaparhelper.dashboard.Explore.AddPostDetailsActivity;
 import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +60,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +70,7 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -247,8 +262,92 @@ public class SettingsFragment extends Fragment implements ProfilePostAdapterClas
                return false;
            }
        });
+
+       profilePic.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               ImagePicker.with(SettingsFragment.this).crop().compress(1024).maxResultSize(1080, 1080).start();
+           }
+       });
         return view;
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            Uri uri = data.getData();
+            uploadProfilePic();
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("ProfilePicture").child(mAuth.getUid());
+            storageReference.putFile(uri)
+                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                               @Override
+                                               public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                                   if(task.isSuccessful()) {
+                                                       Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
+                                                       boolean done  =false;
+                                                       while (!uriTask.isComplete()) {
+                                                           if(uriTask.isComplete()) {
+                                                               done = true;
+                                                               postDataInDB(uriTask.getResult().toString(), uri);
+                                                               break;
+                                                           }
+                                                       }
+                                                       if(!done) {
+                                                           postDataInDB(uriTask.getResult().toString(), uri);
+                                                       }
+
+                                                   }
+                                               }
+                                           }
+                    )
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Log.i("Post","Success");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Snackbar.make(rootLayout,"Failed to upload post. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
+                            pd.hide();
+                        }
+                    });
+        }
+        else if(resultCode == ImagePicker.RESULT_ERROR){
+            Snackbar.make(getView(),ImagePicker.getError(data),Snackbar.LENGTH_SHORT).show();
+        }
+        else{
+            Snackbar.make(getView(),"Task cancelled",Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void postDataInDB(final String downloadUrl, final Uri uri) {
+        DatabaseReference dbRef = Utils.getRefForBasicData(userType,FirebaseAuth.getInstance().getUid());
+        HashMap <String, Object> hm = new HashMap<>();
+        hm.put(getString(R.string.profileImageLink),downloadUrl);
+        dbRef.updateChildren(hm).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                pd.hide();
+                Snackbar.make(rootLayout, "Profile updated Successfully!",Snackbar.LENGTH_SHORT).show();
+                profilePic.setImageURI(uri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.hide();
+                Snackbar.make(rootLayout, "Something went wrong!",Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void uploadProfilePic() {
+        pd.setTitle("Set your profile");
+        pd.setMessage("Please wait while we are setting your profile");
+        pd.show();
     }
 
     private void fetchPostData() {

@@ -42,5 +42,6 @@
     <string name="mobdb">mobNumber</string>
     <string name="dpLink">profileImageLink</string>
     <string name="branchdb">branch</string>
+    <string name="profileImageLink">profileImageLink</string>
 
 </resources>
