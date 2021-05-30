@@ -46,6 +46,7 @@ import com.blackdev.thaparhelper.dashboard.DashBoardActivity;
 import com.blackdev.thaparhelper.dashboard.Explore.Adapters.AdapterPosts;
 import com.blackdev.thaparhelper.dashboard.Explore.AddPostDetailsActivity;
 import com.blackdev.thaparhelper.dashboard.Explore.Models.ModelPost;
+import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -206,7 +207,8 @@ public class SettingsFragment extends Fragment implements ProfilePostAdapterClas
         bioTv.setText(data.getBio());
         userSpecificDetail.setText(data.getDesignation());
         if (data.getProfileImageLink() != null && !data.getProfileImageLink().isEmpty()) {
-            Picasso.get().load(data.getProfileImageLink()).into(profilePic);
+//            Picasso.get().load(data.getProfileImageLink()).into(profilePic);
+            Glide.with(getActivity()).load(data.getProfileImageLink()).into(profilePic);
         }
     }
 
@@ -263,92 +265,86 @@ public class SettingsFragment extends Fragment implements ProfilePostAdapterClas
            }
        });
 
-       profilePic.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               ImagePicker.with(SettingsFragment.this).crop().compress(1024).maxResultSize(1080, 1080).start();
-           }
-       });
         return view;
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
-            Uri uri = data.getData();
-            uploadProfilePic();
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference("ProfilePicture").child(mAuth.getUid());
-            storageReference.putFile(uri)
-                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                               @Override
-                                               public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                                   if(task.isSuccessful()) {
-                                                       Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
-                                                       boolean done  =false;
-                                                       while (!uriTask.isComplete()) {
-                                                           if(uriTask.isComplete()) {
-                                                               done = true;
-                                                               postDataInDB(uriTask.getResult().toString(), uri);
-                                                               break;
-                                                           }
-                                                       }
-                                                       if(!done) {
-                                                           postDataInDB(uriTask.getResult().toString(), uri);
-                                                       }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == Activity.RESULT_OK){
+//            Uri uri = data.getData();
+//            uploadProfilePic();
+//            StorageReference storageReference = FirebaseStorage.getInstance().getReference("ProfilePicture").child(mAuth.getUid());
+//            storageReference.putFile(uri)
+//                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                                               @Override
+//                                               public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                                                   if(task.isSuccessful()) {
+//                                                       Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
+//                                                       boolean done  =false;
+//                                                       while (!uriTask.isComplete()) {
+//                                                           if(uriTask.isComplete()) {
+//                                                               done = true;
+//                                                               postDataInDB(uriTask.getResult().toString(), uri);
+//                                                               break;
+//                                                           }
+//                                                       }
+//                                                       if(!done) {
+//                                                           postDataInDB(uriTask.getResult().toString(), uri);
+//                                                       }
+//
+//                                                   }
+//                                               }
+//                                           }
+//                    )
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Log.i("Post","Success");
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Snackbar.make(rootLayout,"Failed to upload post. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
+//                            pd.hide();
+//                        }
+//                    });
+//        }
+//        else if(resultCode == ImagePicker.RESULT_ERROR){
+//            Snackbar.make(getView(),ImagePicker.getError(data),Snackbar.LENGTH_SHORT).show();
+//        }
+//        else{
+//            Snackbar.make(getView(),"Task cancelled",Snackbar.LENGTH_SHORT).show();
+//        }
+//    }
 
-                                                   }
-                                               }
-                                           }
-                    )
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Log.i("Post","Success");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Snackbar.make(rootLayout,"Failed to upload post. Try again!", BaseTransientBottomBar.LENGTH_SHORT).show();
-                            pd.hide();
-                        }
-                    });
-        }
-        else if(resultCode == ImagePicker.RESULT_ERROR){
-            Snackbar.make(getView(),ImagePicker.getError(data),Snackbar.LENGTH_SHORT).show();
-        }
-        else{
-            Snackbar.make(getView(),"Task cancelled",Snackbar.LENGTH_SHORT).show();
-        }
-    }
+//    private void postDataInDB(final String downloadUrl, final Uri uri) {
+//        DatabaseReference dbRef = Utils.getRefForBasicData(userType,FirebaseAuth.getInstance().getUid());
+//        HashMap <String, Object> hm = new HashMap<>();
+//        hm.put(getString(R.string.profileImageLink),downloadUrl);
+//        dbRef.updateChildren(hm).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                pd.hide();
+//                Snackbar.make(rootLayout, "Profile updated Successfully!",Snackbar.LENGTH_SHORT).show();
+//                profilePic.setImageURI(uri);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                pd.hide();
+//                Snackbar.make(rootLayout, "Something went wrong!",Snackbar.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
-    private void postDataInDB(final String downloadUrl, final Uri uri) {
-        DatabaseReference dbRef = Utils.getRefForBasicData(userType,FirebaseAuth.getInstance().getUid());
-        HashMap <String, Object> hm = new HashMap<>();
-        hm.put(getString(R.string.profileImageLink),downloadUrl);
-        dbRef.updateChildren(hm).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                pd.hide();
-                Snackbar.make(rootLayout, "Profile updated Successfully!",Snackbar.LENGTH_SHORT).show();
-                profilePic.setImageURI(uri);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                pd.hide();
-                Snackbar.make(rootLayout, "Something went wrong!",Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void uploadProfilePic() {
-        pd.setTitle("Set your profile");
-        pd.setMessage("Please wait while we are setting your profile");
-        pd.show();
-    }
+//    private void uploadProfilePic() {
+//        pd.setTitle("Set your profile");
+//        pd.setMessage("Please wait while we are setting your profile");
+//        pd.show();
+//    }
 
     private void fetchPostData() {
         mRef.child("UserPost").addValueEventListener(new ValueEventListener() {
